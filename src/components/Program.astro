@@ -1,0 +1,334 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Divider from './Divider.astro';
+import Icon from './Icon.astro';
+import program from '../data/program.json';
+
+// The evening as a vertical timeline, the same pattern as the sister site's
+// weekly labs: medallions on the line with the step's pictogram, the "when"
+// label on the side opposite the card (from md up), cards alternating left and
+// right. Above it, the two weekends with their availability badges: each one
+// leads to the booking.
+type Weekend = (typeof program.weekends)[number];
+// One badge excludes the other: sold out always wins (CMS-15)
+const status = (w: Weekend) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : null);
+---
+
+<section id="serata" class="bg-paper-warm pb-20 sm:pb-28">
+  <Divider from="paper" flip class="mb-16 sm:mb-20" />
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading eyebrow={program.eyebrow} title={program.title} intro={program.intro} />
+
+    <!-- The two weekends: what a parent looks for first -->
+    <div class="mx-auto mt-12 max-w-3xl">
+      {
+        program.weekendsTitle && (
+          <h3 class="sr-only">{program.weekendsTitle}</h3>
+        )
+      }
+      <ul class:list={['grid gap-4', program.weekends.length > 1 && 'sm:grid-cols-2']} data-animate-group>
+        {
+          program.weekends.map((w) => {
+            const s = status(w);
+            return (
+              <li>
+                <a
+                  href="#biglietti"
+                  class="lift flex h-full items-center gap-4 rounded-3xl bg-cream p-5 shadow-sm hover:shadow-lg hover:shadow-night/10 sm:p-6"
+                >
+                  <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-night text-lantern">
+                    <Icon name="moon" class="h-7 w-7" />
+                  </span>
+                  <span class="min-w-0 grow">
+                    <span class="block font-display text-2xl leading-tight tabular-nums">
+                      {w.date}
+                      <span class="sr-only">: vai alla prenotazione</span>
+                    </span>
+                    {program.weekendsNote && (
+                      <span class="mt-0.5 block text-sm text-night-soft tabular-nums">{program.weekendsNote}</span>
+                    )}
+                  </span>
+                  {s && (
+                    <span class:list={['badge', s === 'sold' ? 'badge-sold' : 'badge-last']}>
+                      <span class="badge-light" aria-hidden="true" />
+                      {s === 'sold' ? program.badge.soldOut : program.badge.lastSeats}
+                    </span>
+                  )}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    <ol class="tl mt-16" style="perspective: 1200px">
+      {
+        program.steps.map((step, i) => (
+          <li class="tl-step" data-animate={i % 2 === 0 ? 'fade-right' : 'fade-left'}>
+            <span class="tl-dot" aria-hidden="true">
+              {step.icon}
+            </span>
+            <p class="tl-when-side hidden text-sm font-bold tracking-[0.15em] text-lantern-deep uppercase md:block">
+              {step.when}
+            </p>
+            <article class="tl-card relative overflow-hidden rounded-[1.75rem] bg-cream p-7 shadow-md">
+              {/* watermark: the medallion's pictogram, large and faint. On
+                  hover it "wakes up" (see .tl-stamp) */}
+              <span
+                class="tl-stamp pointer-events-none absolute -right-3 -bottom-5 text-8xl opacity-10 select-none"
+                aria-hidden="true"
+              >
+                {step.icon}
+              </span>
+              <p class="text-sm font-bold tracking-[0.15em] text-lantern-deep uppercase md:hidden">{step.when}</p>
+              <h3 class="mt-2 text-2xl md:mt-0">{step.title}</h3>
+              <p class="mt-3 leading-relaxed text-pretty text-night-soft">{step.text}</p>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* Availability badge on a weekend: in the flow, pushed to the right */
+  .badge {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.7rem 0.3rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-sold {
+    background: var(--color-night);
+    color: var(--color-cream);
+  }
+  .badge-last {
+    background: color-mix(in srgb, var(--color-lantern) 14%, var(--color-cream));
+    color: var(--color-lantern-deep);
+    border: 1px solid color-mix(in srgb, var(--color-lantern) 45%, transparent);
+  }
+  /* the little light that pulses twice when the page opens, then rests */
+  .badge-light {
+    position: relative;
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--color-lantern);
+    animation: badge-blink 2.4s ease-in-out 2;
+  }
+  @keyframes badge-blink {
+    50% {
+      opacity: 0.55;
+    }
+  }
+
+  /* Centre line on desktop (cards alternating on the sides), on the left on phones */
+  .tl {
+    position: relative;
+  }
+  .tl::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.75rem;
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-night-soft) 35%, transparent),
+      color-mix(in srgb, var(--color-night) 45%, transparent)
+    );
+  }
+  .tl-step {
+    position: relative;
+    padding-left: 3.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .tl-step:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Medallion on the line: the step's pictogram in a little lit window */
+  .tl-dot {
+    position: absolute;
+    top: 0.35rem;
+    left: calc(0.75rem + 1.5px);
+    transform: translateX(-50%);
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: 9999px;
+    background: var(--color-cream);
+    border: 2px solid color-mix(in srgb, var(--color-night-soft) 35%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-night-soft) 10%, transparent);
+  }
+  /* when a step enters the screen a ring of light spreads from its medallion
+     twice, like a lantern catching, then rests (see the script). A ring that
+     scales, not an animated box-shadow (CODE-07). */
+  .tl-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 3px solid color-mix(in srgb, var(--color-lantern) 45%, transparent);
+    opacity: 0;
+  }
+  .tl-step.tl-lit .tl-dot::after {
+    animation: tl-glow 2.2s ease-out 2;
+  }
+  @keyframes tl-glow {
+    0% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+
+  /* The "when" label next to the medallion, opposite the card (md up only) */
+  .tl-when-side {
+    position: absolute;
+    top: 1.2rem; /* optically centred on the medallion */
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .tl::before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .tl-step {
+      width: calc(50% - 3rem);
+      padding-left: 0;
+      margin-bottom: 2.5rem;
+    }
+    .tl-step:nth-child(odd) {
+      margin-right: auto;
+    }
+    .tl-step:nth-child(even) {
+      margin-left: auto;
+    }
+    .tl-step:last-child {
+      margin-bottom: 0;
+    }
+    .tl-dot {
+      top: 0.6rem;
+    }
+    .tl-step:nth-child(odd) .tl-dot {
+      left: auto;
+      right: -3rem;
+      transform: translateX(50%);
+    }
+    .tl-step:nth-child(even) .tl-dot {
+      left: -3rem;
+      transform: translateX(-50%);
+    }
+    /* card on the left → label on the right of the line, and vice versa */
+    .tl-step:nth-child(odd) .tl-when-side {
+      left: calc(100% + 6rem);
+    }
+    .tl-step:nth-child(even) .tl-when-side {
+      right: calc(100% + 6rem);
+      text-align: right;
+    }
+  }
+
+  /* 3D tilt: the script writes the rotation into --rx/--ry */
+  .tl-card {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.25s var(--ease-soft);
+    will-change: transform;
+  }
+
+  /* The watermark rests tilted; on hover it wakes up (straightens, grows,
+     takes colour). The tilt lives in transform, never in the rotate property,
+     or the two would add up (CODE-07). */
+  .tl-stamp {
+    transform: rotate(-12deg);
+  }
+  @media (hover: hover) {
+    .tl-stamp {
+      transition:
+        transform 0.45s var(--ease-soft),
+        opacity 0.45s ease;
+    }
+    .tl-card:hover .tl-stamp {
+      transform: rotate(2deg) scale(1.18);
+      opacity: 0.24;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .badge-light,
+    .tl-step.tl-lit .tl-dot::after {
+      animation: none;
+    }
+    .tl-card {
+      transform: none;
+      transition: none;
+    }
+    .tl-stamp {
+      transition: none;
+    }
+    .tl-card:hover .tl-stamp {
+      transform: rotate(-12deg);
+      opacity: 0.1;
+    }
+  }
+</style>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const steps = Array.from(document.querySelectorAll<HTMLElement>('.tl-step'));
+
+  // Each medallion glows once, the first time its step comes on screen
+  if (!reduced && steps.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('tl-lit');
+          io.unobserve(e.target);
+        }),
+      { threshold: 0.4 }
+    );
+    steps.forEach((s) => io.observe(s));
+  }
+
+  // 3D tilt following the pointer: only with a real mouse
+  if (!reduced && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll<HTMLElement>('.tl-card').forEach((card) => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty('--ry', `${(x * 8).toFixed(2)}deg`);
+        card.style.setProperty('--rx', `${(-y * 8).toFixed(2)}deg`);
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+</script>

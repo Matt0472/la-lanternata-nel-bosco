@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Info pratiche",
+  "title": "Tutto quello che serve sapere",
+  "datesTitle": "Quando",
+  "datesText": "Sabato 14 e domenica 15, sabato 21 e domenica 22 novembre 2026.",
+  "slots": [
+    {
+      "label": "Turno unico",
+      "time": "15:30 – 18:30"
+    }
+  ],
+  "pricesTitle": "Prezzi",
+  "prices": [
+    {
+      "label": "Bambini dai 3 anni",
+      "note": "età consigliata 3–12 anni, con almeno un adulto pagante",
+      "price": "15 €"
+    },
+    {
+      "label": "Adulti (12+)",
+      "note": "accompagnatori",
+      "price": "5 €"
+    },
+    {
+      "label": "Sotto i 3 anni",
+      "note": "con un adulto pagante",
+      "price": "Gratis"
+    },
+    {
+      "label": "Bambini con disabilità",
+      "note": "accompagnatore pagante, presentare la [Disability Card](https://www.disabilitycard.it/) all'ingresso",
+      "price": "Gratis"
+    }
+  ],
+  "extrasTitle": "Ai mercatini",
+  "extras": [
+    "Il libro «Il richiamo delle lanterne» di Roberta Mari",
+    "Bancarelle, prodotti a km 0 e punto ristoro"
+  ],
+  "note": "Bosco della Luna, via Cusago 280, Milano. Parcheggio disponibile vicino all'ingresso, non custodito. L'evento si svolge all'aperto e finisce col buio: vestitevi a strati, con scarpe comode e qualcosa di caldo."
+}

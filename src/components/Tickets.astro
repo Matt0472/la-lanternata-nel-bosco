@@ -1,0 +1,235 @@
+---
+import Icon from './Icon.astro';
+import Divider from './Divider.astro';
+import tickets from '../data/tickets.json';
+import settings from '../data/settings.json';
+import hero from '../data/hero.json';
+---
+
+<!-- Below lg the bottom padding grows: it makes room for the scenic band with
+     the tree, which there sits under the content instead of beside it. -->
+<section id="biglietti" class="relative isolate overflow-hidden bg-night pb-[19rem] sm:pb-[23rem] lg:pb-28">
+  <!-- the crest joins the light section above, with the lanterns on it (DES-12) -->
+  <Divider from="paper-warm" lanterns class="mb-16 sm:mb-20" />
+
+  <!-- A tree in silhouette on the left edge, with lanterns hanging from its
+       branch: drawn to be anchored bottom-left. From lg up it sits beside the
+       content; below, it lives in the scenic band made by the section padding.
+       -z-10 with isolate: behind the text, in front of the section background.
+       The mask fades the right edge, where the branch would end in a hard cut.
+       It stands on the section's bottom edge, whatever separator follows. -->
+  <img
+    src="/decoration-lantern-tree.svg"
+    alt=""
+    width="320"
+    height="760"
+    loading="lazy"
+    class="pointer-events-none absolute bottom-0 left-0 -z-10 w-36 sm:w-44 lg:w-52 xl:w-56 2xl:w-72"
+    style="mask-image: linear-gradient(to right, black 55%, transparent 92%);"
+  />
+
+  <div class="mx-auto max-w-4xl px-4 sm:px-6">
+    <div class="text-center">
+      <p
+        class="mx-auto inline-flex text-sm font-bold tracking-[0.2em] text-lantern uppercase"
+        data-animate="fade-up"
+      >
+        {tickets.eyebrow}
+      </p>
+      <h2
+        class="mx-auto mt-6 max-w-2xl text-3xl leading-tight text-balance text-cream sm:text-4xl lg:text-5xl"
+        data-animate="fade-up"
+        data-delay="0.1"
+      >
+        {tickets.title}
+      </h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-pretty text-cream/80" data-animate="fade-up" data-delay="0.2">
+        {tickets.text}
+      </p>
+    </div>
+
+    <!-- The three steps are a real sequence: the numbering means something -->
+    <div class="mt-14">
+      {
+        tickets.stepsTitle && (
+          <p class="text-center text-sm font-bold tracking-[0.2em] text-cream/70 uppercase" data-animate="fade-up">
+            {tickets.stepsTitle}
+          </p>
+        )
+      }
+      <ol class="mt-6 grid gap-5 sm:grid-cols-3" data-animate-group>
+        {
+          tickets.steps.map((step, i) => (
+            <li class="rounded-2xl bg-cream/5 p-6 ring-1 ring-cream/10">
+              <span class="font-display text-2xl text-cream/70" aria-hidden="true">
+                {i + 1}
+              </span>
+              <h3 class="mt-2 text-lg text-cream">{step.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-cream/75">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    {tickets.limitedSeats && <p class="mt-10 text-center font-semibold text-cream" data-animate="fade-up">{tickets.limitedSeats}</p>}
+
+    <!-- The button is OURS: the TicketingHub script ("popover" embedding) just
+         hooks onto the element with data-th-popover and opens the checkout as
+         an overlay. Lighter than their generated button, and fonts,
+         geolocation and error tracking stay inside the checkout iframe. From
+         the panel only the widget code changes: if it is missing, a
+         placeholder keeps the section from looking empty. -->
+    <div class="mt-6 flex justify-center" data-animate="scale-in">
+      {
+        tickets.widgetId ? (
+          <div class="flex w-full justify-center" data-th-slot data-widget-id={tickets.widgetId} data-widget-src={tickets.widgetScript}>
+            {/* The button stays in the document but hidden until consent: the
+                script hooks by selector, so it must already exist when loaded. */}
+            <a
+              href="#"
+              data-th-popover
+              data-th-config={JSON.stringify({ widgetId: tickets.widgetId })}
+              data-th-manually-managed
+              data-th-button
+              class="lift hidden rounded-full bg-lantern px-8 py-4 text-base font-bold text-night shadow-xl shadow-black/30 hover:bg-lantern-light"
+            >
+              {tickets.buttonLabel || hero.ctaLabel}
+            </a>
+
+            {/* Prior blocking: the TicketingHub script (which brings Google
+                Analytics) only starts with consent to the "tickets" category —
+                from the banner or from this box, which counts as contextual
+                consent (CODE-09). */}
+            <div class="hidden w-full max-w-md rounded-3xl bg-dusk p-6 text-center shadow-xl shadow-black/30 ring-1 ring-cream/10 sm:p-8" data-th-consent>
+              <p class="text-sm leading-relaxed text-cream/80">
+                La biglietteria online è fornita da TicketingHub e utilizza cookie di terze parti (statistiche Google).
+                Attivandola li accetti.
+              </p>
+              <button
+                type="button"
+                class="lift mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-lantern px-6 py-3 font-bold text-night shadow-md shadow-black/25 hover:bg-lantern-light"
+                data-th-enable
+              >
+                Attiva la biglietteria
+              </button>
+              <p class="mt-2">
+                <button type="button" class="min-h-11 px-2 text-sm text-cream/75 underline hover:text-cream" data-th-preferences>
+                  Gestisci le preferenze cookie
+                </button>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div class="grid w-full max-w-md place-items-center rounded-2xl border-2 border-dashed border-cream/30 p-8 text-center">
+            <div>
+              <Icon name="ticket" class="mx-auto h-12 w-12 text-cream/60" />
+              <p class="mt-3 font-display text-xl text-cream">Biglietteria TicketingHub</p>
+              <p class="mt-1 text-sm text-cream/70">Inserire il codice del widget dal pannello.</p>
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    {
+      tickets.paymentNote && (
+        <p
+          class="mx-auto mt-8 flex max-w-2xl items-start gap-3 rounded-2xl bg-cream/8 p-4 text-sm font-semibold text-cream/80 sm:items-center sm:justify-center"
+          data-animate="fade-up"
+        >
+          <Icon name="card" class="h-5 w-5 shrink-0" />
+          {tickets.paymentNote}
+        </p>
+      )
+    }
+
+    {tickets.fallbackNote && <p class="mt-6 text-center text-sm text-cream/75" data-animate="fade-in">{tickets.fallbackNote}</p>}
+    <!-- a quiet notice, not a banner: the text lives in settings.json
+         (weekendNote), shown much more prominently next to the contact form -->
+    {
+      settings.weekendNote && (
+        <p class="mt-2 text-center text-sm text-cream/75" data-animate="fade-in">
+          {settings.weekendNote}
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  declare global {
+    interface Window {
+      TicketinghubWidget?: {
+        new (element: Element, config: Record<string, unknown>): { show: () => void };
+        widgetConfig: (element: Element) => Record<string, unknown> | null;
+      };
+    }
+  }
+
+  // Loads the TicketingHub widget only once consent is given (see
+  // src/scripts/consent.ts). With the "popover" embedding the script builds
+  // nothing: it hooks onto our data-th-popover link, which must already exist.
+  const slot = document.querySelector<HTMLElement>('[data-th-slot]');
+  if (slot) {
+    const box = slot.querySelector<HTMLElement>('[data-th-consent]');
+    const button = slot.querySelector<HTMLElement>('[data-th-button]');
+    let loaded = false;
+
+    const load = (fromBox = false) => {
+      if (loaded) return;
+      loaded = true;
+      box?.remove();
+      button?.classList.remove('hidden');
+      // consent given from the box: focus moves to the button that replaced it
+      if (fromBox) button?.focus();
+      const s = document.createElement('script');
+      s.src = slot.dataset.widgetSrc!;
+      // The library hooks itself up on DOMContentLoaded, long gone by the time
+      // consent arrives: the link is marked data-th-manually-managed and we
+      // connect it here, with the same logic the library uses for popovers. So
+      // there is no race either when consent comes from a previous visit.
+      s.addEventListener('load', () => {
+        const Widget = window.TicketinghubWidget;
+        if (!Widget || !button) return;
+        try {
+          const config = Widget.widgetConfig(button);
+          const widget = new Widget(button, { mode: 'modal', ...config });
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            widget.show();
+          });
+        } catch (error) {
+          console.error('TicketingHub: could not hook the button', error);
+        }
+      });
+      document.head.appendChild(s);
+    };
+
+    window.addEventListener('tickets-consent', () => load());
+    if (window.__ticketsConsent) {
+      load(); // consent already given on a previous visit
+    } else {
+      box?.classList.remove('hidden');
+      box?.querySelector('[data-th-enable]')?.addEventListener('click', () => {
+        // load first: accepting runs the consent callbacks synchronously, and
+        // the event they fire would load without moving focus off the box
+        load(true);
+        window.enableTickets?.();
+        // closing the banner can move focus to the body: bring it back
+        (slot.querySelector<HTMLElement>('[data-th-button]'))?.focus();
+      });
+      box?.querySelector('[data-th-preferences]')?.addEventListener('click', () => window.showCookiePreferences?.());
+    }
+  }
+</script>
+
+<style is:global>
+  /* The checkout overlay must sit above the fixed bar and the back-to-top
+     button. The rest of the checkout belongs to TicketingHub and lives in its
+     iframe. */
+  #ticketinghub-overlay-iframe,
+  [id^='ticketinghub-'][id$='-iframe'] {
+    z-index: 100;
+  }
+</style>

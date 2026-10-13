@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 760">
+  <!-- Decoration of the ticket section: a tree in silhouette on the left edge,
+       with lanterns hanging from its branch. Drawn to be anchored bottom-left;
+       the page fades its right side with a mask. -->
+  <defs>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ffd98e" stop-opacity="0.8"/>
+      <stop offset="0.35" stop-color="#f2a23c" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#f2a23c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glass" cx="0.5" cy="0.62" r="0.7">
+      <stop offset="0" stop-color="#fffcf5"/>
+      <stop offset="0.4" stop-color="#f7bd63"/>
+      <stop offset="1" stop-color="#f2a23c"/>
+    </radialGradient>
+    <symbol id="lantern" viewBox="-15 -7 30 53" overflow="visible">
+      <circle cx="0" cy="-2.5" r="3.5" fill="none" stroke="#0a0e20" stroke-width="2"/>
+      <path d="M0 1 L11 9 H-11 Z" fill="#0a0e20"/>
+      <rect x="-13" y="8" width="26" height="4.5" rx="2.2" fill="#0a0e20"/>
+      <rect x="-9.5" y="12.5" width="19" height="24" fill="url(#glass)"/>
+      <path d="M0 17 c2.8 3.4 4 5.6 4 7.4 a4 4 0 0 1-8 0 c0-1.8 1.2-4 4-7.4 Z" fill="#fffcf5"/>
+      <path d="M-9.5 12.5 V36.5 M9.5 12.5 V36.5" stroke="#0a0e20" stroke-width="2.2"/>
+      <rect x="-13" y="36.5" width="26" height="5" rx="2.2" fill="#0a0e20"/>
+      <rect x="-8.5" y="41.5" width="17" height="3.5" rx="1.5" fill="#0a0e20"/>
+    </symbol>
+  </defs>
+
+  <!-- the light of the lanterns, behind the tree -->
+  <circle cx="150" cy="272" r="78" fill="url(#glow)"/>
+  <circle cx="246" cy="338" r="62" fill="url(#glow)"/>
+  <circle cx="108" cy="420" r="54" fill="url(#glow)"/>
+
+  <g fill="#0a0e20">
+    <!-- trunk -->
+    <path d="M0 760 V0 H66 C60 110 90 205 82 300 C76 385 98 470 94 560 C92 640 118 712 156 760 Z"/>
+    <!-- main branch, tapering to the right -->
+    <path d="M76 186 C142 164 214 146 308 162 C310 170 306 175 299 175 C226 167 162 186 82 224 Z"/>
+    <!-- twigs -->
+    <path d="M204 160 C216 132 238 112 266 98 C268 102 266 106 262 108 C242 122 226 142 218 162 Z"/>
+    <path d="M128 176 C134 150 128 126 112 104 C116 102 120 103 122 106 C138 128 146 152 140 176 Z"/>
+    <path d="M84 330 C112 334 136 344 152 360 C150 364 146 365 142 362 C128 350 106 342 86 342 Z"/>
+    <!-- grass tufts at the foot -->
+    <path d="M90 760 L104 712 L112 760 Z M118 760 L136 700 L142 760 Z M148 760 L170 722 L172 760 Z M168 760 L196 734 L192 760 Z"/>
+  </g>
+
+  <!-- strings -->
+  <g stroke="#0a0e20" stroke-width="1.6">
+    <line x1="150" y1="180" x2="150" y2="244"/>
+    <line x1="246" y1="166" x2="246" y2="314"/>
+    <line x1="108" y1="338" x2="108" y2="398"/>
+  </g>
+
+  <use href="#lantern" x="132" y="240" width="36" height="64"/>
+  <use href="#lantern" x="231" y="310" width="30" height="53"/>
+  <use href="#lantern" x="94" y="394" width="28" height="50"/>
+</svg>

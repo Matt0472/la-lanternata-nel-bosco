@@ -1,0 +1,52 @@
+<button
+  id="back-to-top"
+  type="button"
+  aria-label="Torna in cima alla pagina"
+  class="pointer-events-none fixed right-5 bottom-5 z-50 grid h-12 w-12 translate-y-6 motion-reduce:translate-y-0 motion-reduce:scale-100 scale-90 place-items-center rounded-full bg-night text-cream opacity-0 shadow-lg shadow-night/30 ring-1 ring-cream/15 transition-all duration-500 ease-soft hover:bg-dusk hover:shadow-xl sm:right-8 sm:bottom-8"
+  tabindex="-1"
+>
+  <svg
+    class="h-6 w-6"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m18 15-6-6-6 6"></path>
+  </svg>
+</button>
+
+<script>
+  const btn = document.getElementById('back-to-top')!;
+  const hiddenCls = ['opacity-0', 'translate-y-6', 'scale-90', 'pointer-events-none'];
+  let visible = false;
+
+  function toggle() {
+    const shouldShow = window.scrollY > window.innerHeight * 0.8;
+    if (shouldShow === visible) return;
+    visible = shouldShow;
+    hiddenCls.forEach((c) => btn.classList.toggle(c, !visible));
+    // out of the tab order while invisible: a focus stop on nothing confuses
+    btn.tabIndex = visible ? 0 : -1;
+  }
+
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+
+  btn.addEventListener('click', () => {
+    const lenis = window.lenis;
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0 });
+    // focus goes back to the top of the document, not stranded on a hidden button
+    const top = document.getElementById('top');
+    if (top) {
+      top.setAttribute('tabindex', '-1');
+      top.focus({ preventScroll: true });
+    }
+    // drop any stale hash left by a menu click: at the top the address is clean
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  });
+</script>

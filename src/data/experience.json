@@ -1,0 +1,39 @@
+{
+  "eyebrow": "L'esperienza",
+  "title": "Cosa vivrete nel bosco",
+  "intro": "Una serata per i bambini dai 3 ai 12 anni, dal pomeriggio fino al buio, con i genitori accanto.",
+  "scrollHint": "Scorri per scoprirle tutte",
+  "extraBadge": "Extra a pagamento",
+  "items": [
+    {
+      "icon": "🏮",
+      "title": "Il laboratorio della lanterna",
+      "text": "Ogni bambino decora la sua lanterna insieme ai nostri animatori e ce la consegna: la ritroverà più tardi, pronta per il bosco.",
+      "extra": false
+    },
+    {
+      "icon": "📖",
+      "title": "La lettura animata",
+      "text": "Poco dopo il tramonto, sul palco, prende vita «Il richiamo delle lanterne» di Roberta Mari, il libro della serata.",
+      "extra": false
+    },
+    {
+      "icon": "🌕",
+      "title": "La passeggiata al chiaro di luna",
+      "text": "Con le lanterne accese ci si incammina tutti insieme sui sentieri del bosco, illuminati dalla luna e dalle vostre luci.",
+      "extra": false
+    },
+    {
+      "icon": "🗝️",
+      "title": "La caccia al tesoro",
+      "text": "Alla fine della passeggiata, l'ultima avventura: indizi da seguire e un tesoro da trovare, con la lanterna in mano.",
+      "extra": false
+    },
+    {
+      "icon": "🧺",
+      "title": "I mercatini",
+      "text": "Bancarelle, prodotti a km 0, punto ristoro e il libro della lettura animata.",
+      "extra": false
+    }
+  ]
+}

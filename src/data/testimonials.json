@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Testimonianze",
+  "title": "Dicono di noi",
+  "intro": "Le parole di chi è già stato al Bosco della Luna: famiglie e visitatori raccontano la loro esperienza.",
+  "items": [
+    {
+      "name": "Alessandro Montagna",
+      "text": "Siamo stati al Bosco della Luna in famiglia nel periodo di Halloween e ci siamo trovati bene. L'atmosfera è curata, piena di decorazioni e adatta ai bambini. Il percorso e le attività a tema Halloween sono divertenti e coinvolgenti, tutto organizzato con attenzione. Personale gentile e disponibile. Ottima esperienza per passare qualche ora in famiglia.",
+      "rating": 5
+    },
+    {
+      "name": "Chiara Boscaro",
+      "text": "Ho portato la mia famiglia per festeggiare Halloween e i bambini si sono divertiti tantissimo! Ben organizzato, ci sono diversi laboratori e la location è addobbata a tema. C'è una zona anche con gli asinelli, un pavone e le galline. Davvero molto carino, tutti i ragazzi sono stati molto bravi e gentili con i bambini, torneremo il prossimo anno!",
+      "rating": 5
+    },
+    {
+      "name": "Francesca Tucci",
+      "text": "Siamo una cooperativa che si occupa di bambini con disturbi del neurosviluppo e abbiamo trascorso una domenica davvero speciale al Bosco della Luna. Siamo stati accolti con grande dolcezza e delicatezza, facendoci sentire fin da subito a casa. I nostri bambini hanno potuto vivere tante esperienze autentiche a contatto con la natura, in un ambiente accogliente e attento ai loro bisogni. È stata una giornata ricca di emozioni, che porteranno con sé a lungo e che difficilmente dimenticheranno.",
+      "rating": 5
+    },
+    {
+      "name": "Chiara Addamiano",
+      "text": "Bellissima scoperta! Posto curato e pieno di cose da vedere e da fare, la casa di Dracula, il cimitero, la foresta, il labirinto e il laboratorio per costruire la ragnatela. Personale gentilissimo. Mia figlia era super entusiasta. Ci ritorneremo sicuramente",
+      "rating": 5
+    },
+    {
+      "name": "Francesca Mattioli",
+      "text": "Ci siamo stati in occasione del campo di zucche, veramente bellissimo sia per i bambini che per i grandi. Allestimento stupendo, belle attività per i bambini, personale gentilissimo e disponibile... e ciliegina sulla torta un ottimo pumpkin spice! Un ambiente davvero speciale, senza dubbio torneremo presto.",
+      "rating": 5
+    },
+    {
+      "name": "Sara Casanova",
+      "text": "Siamo stati al Bosco della Luna per il campo di zucche… pomeriggio divertente. Le streghe e gli stregoni sono bravi, tutto ben organizzato. I bambini si sono divertiti e hanno seguito il laboratorio con attenzione. Grazie",
+      "rating": 5
+    },
+    {
+      "name": "Gabriella Pelleriti",
+      "text": "Siamo stati qui ad Halloween, il posto molto più bello delle aspettative: i bambini si sono divertiti molto e le “streghe” che ci hanno accompagnato sono super carine e gentili! Torneremo di sicuro!",
+      "rating": 5
+    },
+    {
+      "name": "Viviana Bianchi",
+      "text": "I nostri bimbi si sono molto divertiti per Halloween, luogo molto piacevole anche per noi genitori, lo raccomando!",
+      "rating": 5
+    },
+    {
+      "name": "Emanuele Vinciguerra",
+      "text": "Posto davvero bello che oltre ad offrire attività per bambini durante il giorno organizza anche aperitivi ed attività a tema alla sera. Partecipato ad una per Halloween che consiglio davvero! Bravi!",
+      "rating": 5
+    },
+    {
+      "name": "Stefano Dell'Aglio",
+      "text": "Posto incredibile, alle porte di Milano, festa a tema Halloween con grande ambientazione e cura dei dettagli. I ragazzi dello staff davvero bravi e coinvolgenti, laboratori a tema con le zucche. Ci sono anche animali da visitare e un bel punto ristoro con bar per aperitivi e snack. Consigliatissimo!!",
+      "rating": 5
+    },
+    {
+      "name": "Alessandra Grygorash",
+      "text": "Siamo stati al Bosco della Luna e ci è piaciuto tantissimo! Bellissimo evento con campo di zucche, laboratorio, tunnel, labirinto e tentacoli horror giganti da paura. Tutto curato nei minimi dettagli, personale gentile e appassionato. Abbiamo decorato la zucca e arrostito marshmallow al fuoco, esperienza magica!",
+      "rating": 5
+    },
+    {
+      "name": "Morena Orbello",
+      "text": "Mio figlio di sei anni si è divertito tanto!! È stato un bel pomeriggio \"halloweenoso\" soprattutto quando è calato il buio!!!",
+      "rating": 5
+    },
+    {
+      "name": "Alex Kolomiiets",
+      "text": "Bellissimo posto, da passare il tempo in compagnia, aperitivo ottimo 5 stelle. Si può fare anche la grigliata, soft air, soprattutto serata Halloween da provare, consiglio per tutti",
+      "rating": 5
+    },
+    {
+      "name": "Marica Viagnò",
+      "text": "Pomeriggio stupendo al Bosco della Luna, super organizzati con laboratori tra zucche, streghe e truccabimbi, nerf per bambini, pumpkin spice latte al bar e aperitivo con divanetti per gli adulti. Atmosfera bellissima, i bambini super divertiti e tutto il personale gentile e disponibile. Ottimo servizio.",
+      "rating": 5
+    },
+    {
+      "name": "Francesca Vitagliano",
+      "text": "Un bel pomeriggio all'insegna delle magie di Halloween, nonostante la pioggia battente. Location davvero bella, bimbi coinvolti e soddisfatti! Da rivedere sicuramente con il sole :)",
+      "rating": 5
+    },
+    {
+      "name": "Olimpia De Arcayne",
+      "text": "Il Bosco della Luna è un luogo magico che ho visitato due volte, ed entrambe le esperienze sono state indimenticabili. La prima volta, con mia figlia di 5 anni, abbiamo partecipato a divertenti attività all'aperto per bambini: un vero spasso! La seconda, per Halloween, il bosco si è trasformato in un mondo horror spettacolare, con scenografie e personaggi incredibili che hanno reso la serata emozionante e coinvolgente. Un'esperienza che rifarei sicuramente e che consiglio a tutti, grandi e piccini!",
+      "rating": 5
+    },
+    {
+      "name": "Alessia Marte",
+      "text": "Siamo stati ieri al campo di zucche con amici… i bambini si sono molto divertiti, inutile dire quante volte hanno corso dentro e fuori dal labirinto, è stata decisamente la cosa che hanno apprezzato di più :) Noi non abbiamo fatto truccabimbi ma solo il laboratorio della creazione ragnatela e ho apprezzato il fatto che ci fosse qualcosa in più oltre alla solita zucca da colorare… ovviamente volendo c'è una zona dedicata anche a quello. Carini anche gli allestimenti di Halloween per fare un po' di foto!",
+      "rating": 5
+    },
+    {
+      "name": "Oleh Danylyuk · Abroads Tours",
+      "text": "Il campo di zucche è stato bellissimo, abbiamo portato i nostri bambini. Si sono divertiti tantissimo 🤩",
+      "rating": 5
+    }
+  ]
+}

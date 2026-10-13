@@ -1,0 +1,47 @@
+{
+  "eyebrow": "Foto",
+  "title": "Il Bosco della Luna in foto",
+  "intro": "Le foto della Lanternata arrivano presto: qui intanto i segnaposto.",
+  "images": [
+    {
+      "src": "/uploads/segnaposto-01.jpg",
+      "alt": "Segnaposto della galleria, foto 1 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-02.jpg",
+      "alt": "Segnaposto della galleria, foto 2 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-03.jpg",
+      "alt": "Segnaposto della galleria, foto 3 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-04.jpg",
+      "alt": "Segnaposto della galleria, foto 4 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-05.jpg",
+      "alt": "Segnaposto della galleria, foto 5 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-06.jpg",
+      "alt": "Segnaposto della galleria, foto 6 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-07.jpg",
+      "alt": "Segnaposto della galleria, foto 7 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-08.jpg",
+      "alt": "Segnaposto della galleria, foto 8 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-09.jpg",
+      "alt": "Segnaposto della galleria, foto 9 di 10: in arrivo"
+    },
+    {
+      "src": "/uploads/segnaposto-10.jpg",
+      "alt": "Segnaposto della galleria, foto 10 di 10: in arrivo"
+    }
+  ]
+}

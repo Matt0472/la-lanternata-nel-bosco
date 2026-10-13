@@ -1,0 +1,94 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Divider from './Divider.astro';
+import faq from '../data/faq.json';
+
+// FAQPage schema: the questions can show up directly in search results and in
+// AI answers (SEO-05, SEO-08).
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<section id="faq" class="bg-paper-warm pb-20 sm:pb-28">
+  <Divider from="paper" class="mb-16 sm:mb-20" />
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <SectionHeading eyebrow={faq.eyebrow} title={faq.title} />
+    <div class="mt-12 space-y-4" data-animate-group>
+      {
+        faq.items.map((item) => (
+          <details class="faq-item group rounded-2xl bg-cream shadow-sm open:shadow-md">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl p-6 font-semibold [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <span
+                class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-lantern/20 text-lantern-deep transition-transform duration-500 ease-soft group-open:rotate-45"
+                aria-hidden="true"
+              >
+                +
+              </span>
+            </summary>
+            <div class="faq-body overflow-hidden">
+              <p class="px-6 pb-6 leading-relaxed text-pretty text-night-soft">{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <style>
+    /* the ring sits just inside the card, along its rounded corners, instead
+       of cutting across the card's edge */
+    summary:focus-visible {
+      outline-offset: -3px;
+    }
+  </style>
+
+  <script>
+    import { EASE_SOFT_CSS } from '../scripts/easing';
+
+    // Animated opening and closing (height: auto cannot transition).
+    // Exclusive: one question open at a time, opening one closes the other (DES-11).
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const items = Array.from(document.querySelectorAll<HTMLDetailsElement>('.faq-item'));
+    const timing: KeyframeAnimationOptions = { duration: 450, easing: EASE_SOFT_CSS };
+
+    const close = (details: HTMLDetailsElement) => {
+      const body = details.querySelector<HTMLElement>('.faq-body')!;
+      const h = body.offsetHeight;
+      body.animate({ height: [`${h}px`, '0px'], opacity: [1, 0] }, timing).onfinish = () => {
+        details.open = false;
+      };
+    };
+
+    items.forEach((details) => {
+      const summary = details.querySelector('summary')!;
+      const body = details.querySelector<HTMLElement>('.faq-body')!;
+
+      summary.addEventListener('click', (e) => {
+        if (reduced) {
+          // no animation, but still only one open
+          items.forEach((d) => d !== details && (d.open = false));
+          return;
+        }
+        e.preventDefault();
+        if (details.open) {
+          close(details);
+        } else {
+          items.filter((d) => d !== details && d.open).forEach(close);
+          details.open = true;
+          const h = body.offsetHeight;
+          body.animate({ height: ['0px', `${h}px`], opacity: [0, 1] }, timing);
+        }
+      });
+    });
+  </script>
+</section>

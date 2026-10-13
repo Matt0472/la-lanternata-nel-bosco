@@ -1,0 +1,91 @@
+---
+// Shown when an address does not exist. Without this file Cloudflare Pages
+// falls back to the home page with a 200: "soft 404s" for Google, endless
+// valid addresses duplicating the home. With dist/404.html Pages answers with
+// the right status. The scene is the hero's (no new image to maintain).
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LanternMark from '../components/LanternMark.astro';
+import hero from '../data/hero.json';
+import notfound from '../data/notfound.json';
+import navigation from '../data/navigation.json';
+---
+
+<Base title={notfound.tabTitle} noindex>
+  <Header />
+
+  <main id="main" class="relative flex min-h-svh items-center justify-center overflow-hidden bg-night">
+    <div class="absolute inset-0">
+      <picture>
+        <source media="(max-width: 640px)" srcset={hero.imageMobile} />
+        <img src={hero.image} alt="" width="1920" height="1080" class="h-full w-full scale-110 object-cover" />
+      </picture>
+      <!-- a slightly thicker veil than the hero's: here the text is everything -->
+      <div class="absolute inset-0 bg-gradient-to-b from-night/55 via-night/35 to-night/75"></div>
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse 62% 48% at 50% 46%, color-mix(in srgb, var(--color-night) 68%, transparent) 0%, transparent 72%)"
+      >
+      </div>
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-2xl px-4 pt-28 pb-24 text-center sm:px-6">
+      <LanternMark class="mx-auto h-20 w-auto text-cream" />
+      <p class="mt-4 text-sm font-bold tracking-[0.2em] text-lantern uppercase" data-animate-now="fade-up">
+        {notfound.eyebrow}
+      </p>
+
+      <h1 class="mt-3 text-4xl leading-tight text-balance text-cream sm:text-6xl" data-animate-now="fade-up" style="--enter-delay: 0.08s">
+        {notfound.title}
+      </h1>
+
+      <p
+        class="mx-auto mt-5 max-w-xl leading-relaxed text-pretty text-cream/85 sm:text-lg"
+        data-animate-now="fade-up"
+        style="--enter-delay: 0.16s"
+      >
+        {notfound.text}
+      </p>
+
+      <div
+        class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        data-animate-now="fade-up"
+        style="--enter-delay: 0.24s"
+      >
+        <a
+          href="/"
+          class="lift w-full rounded-full bg-lantern px-8 py-4 text-base font-bold text-night shadow-xl shadow-black/30 hover:bg-lantern-light sm:w-auto"
+        >
+          {notfound.ctaHome}
+        </a>
+        <a
+          href="/#biglietti"
+          class="lift w-full rounded-full border-2 border-cream/45 px-8 py-4 text-base font-bold text-cream backdrop-blur-sm hover:border-cream hover:bg-cream/10 sm:w-auto"
+        >
+          {hero.ctaLabel}
+        </a>
+      </div>
+
+      <nav class="mt-12" aria-label="Scorciatoie" data-animate-now="fade-up" style="--enter-delay: 0.32s">
+        <p class="text-xs font-bold tracking-[0.2em] text-cream/70 uppercase">{notfound.shortcutsTitle}</p>
+        <ul class="mt-2 flex flex-wrap items-center justify-center gap-x-5 text-sm font-semibold text-cream/85">
+          {
+            navigation.items.map((s) => (
+              <li>
+                <a
+                  href={`/${s.target}`}
+                  class="inline-block py-3 underline decoration-cream/40 underline-offset-4 transition-colors duration-300 hover:text-lantern hover:decoration-lantern"
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

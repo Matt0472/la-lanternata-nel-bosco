@@ -1,0 +1,296 @@
+---
+import '../styles/global.css';
+// Both fonts are declared inside the @fontsource CSS, so the browser only
+// discovers it needs them after downloading the stylesheet. Importing the files
+// here gives the final address, hash included, to preload them (PERF-05).
+import fontFigtree from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
+import fontFraunces from '@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2?url';
+import BackToTop from '../components/BackToTop.astro';
+import CookiePreferences from '../components/CookiePreferences.astro';
+import DividerSymbols from '../components/DividerSymbols.astro';
+import settings from '../data/settings.json';
+import info from '../data/info.json';
+import program from '../data/program.json';
+import book from '../data/book.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title = settings.seoTitle, description = settings.seoDescription, noindex = false } = Astro.props;
+
+// Indexing gate (SEO-10): the whole site stays noindex until go-live. Only the
+// go-live build sets PUBLIC_SITE_INDEXABLE=true; robots.txt reads the same flag.
+const indexable = import.meta.env.PUBLIC_SITE_INDEXABLE === 'true' && !noindex;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(settings.ogImage, Astro.site);
+const siteRoot = new URL('/', Astro.site).toString();
+
+// ── Structured data (JSON-LD, SEO-05) ────────────────────────────────────────
+// All derived from the content JSON: nothing duplicated by hand, so if the
+// client changes a date or a price from the panel the schema follows. A value
+// that cannot be read omits its key instead of producing a wrong schema.
+
+const venue = settings.venue ?? {};
+
+// The PLACE. Without street, postcode and coordinates Google only knows
+// "Milano". Coordinates are optional: an empty field writes no key (better
+// absent than wrong, a misplaced pin sends families elsewhere).
+const place = {
+  '@type': 'Place',
+  name: venue.name,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: venue.street,
+    ...(venue.postalCode ? { postalCode: venue.postalCode } : {}),
+    addressLocality: venue.city,
+    ...(venue.region ? { addressRegion: venue.region } : {}),
+    addressCountry: 'IT',
+  },
+  ...(venue.lat && venue.lng
+    ? { geo: { '@type': 'GeoCoordinates', latitude: String(venue.lat), longitude: String(venue.lng) } }
+    : {}),
+  hasMap: settings.mapsUrl,
+  telephone: settings.phone,
+};
+
+// The ORGANISER, with its social profiles and Google listing: it ties this page
+// to the "Bosco della Luna" entity Google already knows.
+const organizer = {
+  '@type': 'Organization',
+  name: venue.name,
+  url: settings.parkUrl,
+  telephone: settings.phone,
+  email: settings.email,
+  sameAs: [settings.instagram, settings.facebook, settings.mapsUrl].filter(Boolean),
+};
+
+// WHO RUNS the evening: the park's own animators lead lab, walk and hunt.
+const performer = {
+  '@type': 'Organization',
+  name: `Animatori del ${venue.name}`,
+  url: settings.parkUrl,
+};
+
+// The BOOK of the reading, as its own entity, linked from the event as the
+// work performed (the animated reading is of this book).
+const bookId = `${siteRoot}#libro`;
+const bookSchema = {
+  '@type': 'Book',
+  '@id': bookId,
+  name: book.title,
+  author: { '@type': 'Person', name: book.author },
+  ...(book.publisher ? { publisher: { '@type': 'Organization', name: book.publisher } } : {}),
+  ...(book.isbn ? { isbn: book.isbn } : {}),
+  ...(Number(book.pages) > 0 ? { numberOfPages: Number(book.pages) } : {}),
+  ...(Number(book.minAge) > 0 ? { audience: { '@type': 'PeopleAudience', suggestedMinAge: Number(book.minAge) } } : {}),
+  inLanguage: 'it-IT',
+  ...(book.cover ? { image: new URL(book.cover, Astro.site).toString() } : {}),
+  ...(book.publisherUrl ? { url: book.publisherUrl } : {}),
+  ...(book.ctaUrl ? { sameAs: [book.ctaUrl] } : {}),
+  description: book.text,
+};
+
+// PRICES: one offer per price type instead of a generic range, so results read
+// "adulti 5 €". Free entries go in at price 0: useful information, not a gap.
+const offerFor = (availability: string) =>
+  info.prices
+    .map((p) => {
+      // the first number only: "15 € (libro escluso)" must not become 15 + whatever follows
+      const amount = parseFloat((String(p.price).match(/\d+(?:[.,]\d+)?/) || [''])[0].replace(',', '.'));
+      const price = Number.isFinite(amount) ? amount : /gratis|gratuito/i.test(String(p.price)) ? 0 : null;
+      if (price === null) return null;
+      return {
+        '@type': 'Offer',
+        name: p.label,
+        // a [text](link) in the note becomes plain text
+        ...(p.note ? { description: p.note.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') } : {}),
+        price: String(price),
+        priceCurrency: 'EUR',
+        availability,
+        url: `${siteRoot}#biglietti`,
+      };
+    })
+    .filter(Boolean);
+const offers = offerFor('https://schema.org/InStock');
+
+// The turn as a recurring Saturday and Sunday schedule: answers "what time".
+// Times are read from the info table ("15:30 – 18:30"): if one day the client
+// writes them differently, the entry is simply omitted.
+const turnHours = (time: string) => {
+  const hours = String(time).match(/(\d{1,2})[:.](\d{2})/g);
+  if (!hours || hours.length < 2) return null;
+  const norm = (h: string) => h.replace('.', ':').padStart(5, '0');
+  return { start: norm(hours[0]), end: norm(hours[1]) };
+};
+
+const eventSchedule = info.slots
+  .map((s) => {
+    const hours = turnHours(s.time);
+    if (!hours) return null;
+    return {
+      '@type': 'Schedule',
+      name: s.label,
+      byDay: ['https://schema.org/Saturday', 'https://schema.org/Sunday'],
+      startDate: settings.eventStartDate,
+      endDate: settings.eventEndDate,
+      startTime: hours.start,
+      endTime: hours.end,
+      repeatFrequency: 'P1W',
+      scheduleTimezone: 'Europe/Rome',
+    };
+  })
+  .filter(Boolean);
+
+const firstTurn = info.slots.map((s) => turnHours(s.time)).find(Boolean);
+const minutesOf = (hhmm: string) => {
+  const [h, m] = hhmm.split(':').map(Number);
+  return h * 60 + m;
+};
+const duration = firstTurn
+  ? (() => {
+      const minutes = minutesOf(firstTurn.end) - minutesOf(firstTurn.start);
+      return minutes > 0 ? `PT${Math.floor(minutes / 60)}H${minutes % 60}M` : undefined;
+    })()
+  : undefined;
+
+// ONE SUB-EVENT PER WEEKEND, with its availability: it answers "are there
+// still places on the 21st". The weekend dates are written for people
+// ("14–15 novembre") and translated into ISO dates here; a text that cannot be
+// read leaves the weekend out of the schema without breaking anything.
+const MONTHS = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
+const year = Number(String(settings.eventStartDate).slice(0, 4));
+
+const isoDate = (day: number, month?: string) => {
+  const m = month ? MONTHS.indexOf(month) + 1 : 0;
+  if (!day || m === 0 || !(year > 2000)) return null;
+  return `${year}-${String(m).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+};
+
+const weekendIso = (text: string) => {
+  const parts = String(text).split(/[–—-]/).map((x) => x.trim());
+  if (parts.length < 2) return null;
+  const read = (x: string) => ({
+    day: Number((x.match(/\d{1,2}/) || [])[0]),
+    month: (x.toLowerCase().match(new RegExp(MONTHS.join('|'))) || [])[0],
+  });
+  const a = read(parts[0]);
+  const b = read(parts[1]);
+  const start = isoDate(a.day, a.month || b.month);
+  const end = isoDate(b.day, b.month || a.month);
+  return start && end ? { start, end } : null;
+};
+
+// Rome's UTC offset on that day (+01:00 in November, +02:00 in summer), so a
+// date moved from the panel keeps the right time zone
+const romeOffset = (date: string) => {
+  const part = new Intl.DateTimeFormat('en', { timeZone: 'Europe/Rome', timeZoneName: 'longOffset' })
+    .formatToParts(new Date(`${date}T12:00:00Z`))
+    .find((p) => p.type === 'timeZoneName')?.value;
+  return part?.replace('GMT', '') || '+01:00';
+};
+const withTime = (date: string, time?: string) => (time ? `${date}T${time}:00${romeOffset(date)}` : date);
+
+const subEvent = program.weekends
+  .map((w) => {
+    const dates = weekendIso(w.date);
+    if (!dates) return null;
+    const availability = w.soldOut
+      ? 'https://schema.org/SoldOut'
+      : w.lastSeats
+        ? 'https://schema.org/LimitedAvailability'
+        : 'https://schema.org/InStock';
+    return {
+      '@type': 'Event',
+      name: `${settings.siteName} · ${w.date}`,
+      startDate: withTime(dates.start, firstTurn?.start),
+      endDate: withTime(dates.end, firstTurn?.end),
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      location: place,
+      organizer,
+      performer,
+      image: [ogImage.toString()],
+      offers: offerFor(availability),
+    };
+  })
+  .filter(Boolean);
+
+const eventSchema = {
+  '@type': 'Event',
+  name: settings.siteName,
+  description: settings.seoDescription,
+  url: siteRoot,
+  startDate: settings.eventStartDate,
+  endDate: settings.eventEndDate,
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  inLanguage: 'it-IT',
+  image: [ogImage.toString()],
+  location: place,
+  organizer,
+  performer,
+  workPerformed: { '@id': bookId },
+  ...(offers.length ? { offers } : {}),
+  ...(eventSchedule.length ? { eventSchedule } : {}),
+  ...(duration ? { duration } : {}),
+  ...(subEvent.length ? { subEvent } : {}),
+  isAccessibleForFree: false,
+};
+
+const graph = { '@context': 'https://schema.org', '@graph': [eventSchema, bookSchema] };
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {!indexable && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* crossorigin is mandatory even for our own fonts: without it the browser
+        downloads the file twice instead of reusing the preload */}
+    <link rel="preload" as="font" type="font/woff2" href={fontFigtree} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={fontFraunces} crossorigin />
+    {/* --color-night: a meta tag cannot read CSS variables */}
+    <meta name="theme-color" content="#141a33" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={settings.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="it_IT" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+  </head>
+  <body>
+    <DividerSymbols />
+    <a
+      href="#main"
+      class="sr-only z-60 rounded-full bg-lantern px-5 py-3 font-bold text-night focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Salta al contenuto
+    </a>
+    <slot />
+    <BackToTop />
+    <CookiePreferences />
+    <script src="../scripts/animations.js"></script>
+    <script src="../scripts/consent.ts"></script>
+  </body>
+</html>

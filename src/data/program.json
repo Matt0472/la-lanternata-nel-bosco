@@ -1,0 +1,61 @@
+{
+  "eyebrow": "La serata",
+  "title": "Come si svolge, passo dopo passo",
+  "intro": "Due weekend, lo stesso programma: si arriva alle 15:30, si torna a casa alle 18:30, e nel mezzo il pomeriggio diventa sera.",
+  "weekendsTitle": "Le date",
+  "weekendsNote": "Sabato e domenica · 15:30–18:30",
+  "weekends": [
+    {
+      "date": "14–15 novembre",
+      "soldOut": false,
+      "lastSeats": false
+    },
+    {
+      "date": "21–22 novembre",
+      "soldOut": false,
+      "lastSeats": false
+    }
+  ],
+  "badge": {
+    "soldOut": "Sold out",
+    "lastSeats": "Ultimi posti"
+  },
+  "steps": [
+    {
+      "icon": "🎨",
+      "when": "All'arrivo",
+      "title": "Ogni bambino decora la sua lanterna",
+      "text": "Con l'aiuto dei nostri animatori ognuno decora la sua lanterna e, finito il lavoro, ce la consegna."
+    },
+    {
+      "icon": "🍂",
+      "when": "Nel frattempo",
+      "title": "Si gioca nel bosco",
+      "text": "Mentre le lanterne asciugano, al riparo da occhi curiosi, i bambini giocano nel parco."
+    },
+    {
+      "icon": "📖",
+      "when": "Poco dopo il tramonto",
+      "title": "La lettura animata",
+      "text": "Tutti al palco per «Il richiamo delle lanterne»: la storia del riccio Belgiorno, della volpe Stellafiore e di una piccola lanterna di vetro."
+    },
+    {
+      "icon": "✨",
+      "when": "Dopo la storia",
+      "title": "Una sorpresa per i bambini",
+      "text": "Tornando verso il bar, ogni bambino ritrova la sua lanterna, pronta per il bosco. Come la ritrova è la sorpresa della serata: lasciamola a loro."
+    },
+    {
+      "icon": "🌕",
+      "when": "Al chiaro di luna",
+      "title": "La passeggiata al chiaro di luna",
+      "text": "Lanterna in mano, si parte tutti insieme lungo i sentieri, nel buio del bosco."
+    },
+    {
+      "icon": "🗝️",
+      "when": "Per finire",
+      "title": "La caccia al tesoro",
+      "text": "Per chiudere, ancora al chiaro di luna, una caccia al tesoro con la lanterna in mano."
+    }
+  ]
+}

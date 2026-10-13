@@ -1,0 +1,163 @@
+---
+import Divider from './Divider.astro';
+import Icon from './Icon.astro';
+import book from '../data/book.json';
+
+// The book of the evening gets a night band of its own, between the programme
+// and the little ones: the reading is the heart of the evening, and making the
+// book known is the site's second goal. Message first, then — gently — where to find it (COPY-07). The cover is
+// shown whole and untouched; its light stays outside the rectangle (DES-13).
+---
+
+<section id="libro" class="relative isolate overflow-hidden bg-night pb-20 sm:pb-28">
+  <Divider from="paper-warm" class="mb-16 sm:mb-20" />
+
+  <!-- a few still stars, so the band reads as sky -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <span class="star" style="top: 18%; left: 8%"></span>
+    <span class="star" style="top: 30%; left: 92%"></span>
+    <span class="star small" style="top: 12%; left: 70%"></span>
+    <span class="star small" style="top: 62%; left: 4%"></span>
+    <span class="star" style="top: 84%; left: 88%"></span>
+    <span class="star small" style="top: 48%; left: 52%"></span>
+  </div>
+
+  <div class="mx-auto grid max-w-6xl items-start gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-x-20 lg:gap-y-14">
+    <!-- The cover with its lantern light behind it -->
+    <div class="relative mx-auto w-56 sm:w-64 lg:col-start-1 lg:row-start-1 lg:w-80" data-animate="scale-in">
+      <div class="cover-glow absolute -inset-x-20 -inset-y-16 -z-10" aria-hidden="true"></div>
+      {
+        book.cover && (
+          <img
+            src={book.cover}
+            alt={book.coverAlt}
+            width="529"
+            height="794"
+            loading="lazy"
+            decoding="async"
+            class="cover relative w-full rounded-md shadow-2xl shadow-black/60"
+          />
+        )
+      }
+    </div>
+
+    <div class="mx-auto max-w-2xl lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:max-w-none">
+      <p class="text-sm font-bold tracking-[0.2em] text-lantern uppercase" data-animate="fade-up">{book.eyebrow}</p>
+      <h2 class="mt-4 text-4xl leading-tight text-balance text-cream sm:text-5xl" data-animate="fade-up" data-delay="0.1">
+        «{book.title}»
+      </h2>
+      <p class="mt-3 text-lg text-cream/80" data-animate="fade-up" data-delay="0.15">
+        di <span class="font-bold text-cream">{book.author}</span>
+        {book.publisher && <span> · {book.publisher}</span>}
+      </p>
+
+      <p class="mt-7 text-lg leading-relaxed text-pretty text-cream/85" data-animate="fade-up" data-delay="0.2">
+        {book.text}
+      </p>
+      {
+        book.message && (
+          <p
+            class="mt-5 border-l-2 border-cream/25 pl-4 font-display text-xl leading-snug text-pretty text-cream sm:text-2xl"
+            data-animate="fade-up"
+            data-delay="0.25"
+          >
+            {book.message}
+          </p>
+        )
+      }
+
+      {
+        book.details.length > 0 && (
+          <ul class="mt-7 flex flex-wrap gap-2" data-animate="fade-up" data-delay="0.3">
+            {book.details.map((d) => (
+              <li class="rounded-full bg-cream/8 px-3.5 py-1.5 text-sm font-semibold text-cream/85 ring-1 ring-cream/15">{d}</li>
+            ))}
+          </ul>
+        )
+      }
+
+      <div class="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center" data-animate="fade-up" data-delay="0.35">
+        {
+          book.buyText && (
+            <p class="flex items-start gap-3 text-base leading-relaxed text-cream sm:max-w-sm">
+              <Icon name="basket" class="mt-0.5 h-6 w-6 shrink-0 text-lantern" />
+              {book.buyText}
+            </p>
+          )
+        }
+        {
+          book.ctaUrl && book.ctaLabel && (
+            <a
+              href={book.ctaUrl}
+              target="_blank"
+              rel="noopener"
+              class="lift inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-full border-2 border-cream/40 px-6 py-3 font-bold text-cream hover:border-cream hover:bg-cream/10 sm:self-auto"
+            >
+              {book.ctaLabel}
+              <Icon name="external" class="h-4 w-4" />
+              <span class="sr-only">(si apre in una nuova scheda)</span>
+            </a>
+          )
+        }
+      </div>
+
+    </div>
+
+    <!-- The author: after the text in the reading order (headings stay in
+         order), placed under the cover from lg up so the columns balance -->
+    {
+      book.authorText && (
+        <div
+          class="mx-auto w-full max-w-2xl rounded-3xl bg-dusk/70 p-6 ring-1 ring-cream/10 lg:col-start-1 lg:row-start-2 lg:max-w-md"
+          data-animate="fade-up"
+        >
+          {book.authorTitle && <h3 class="text-xl text-cream">{book.authorTitle}</h3>}
+          <p class="mt-2 leading-relaxed text-pretty text-cream/80">{book.authorText}</p>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  /* an ellipse fitted to the tall box: the light reaches past every edge of
+     the cover, strongest just outside it */
+  .cover-glow {
+    background: radial-gradient(
+      ellipse closest-side,
+      color-mix(in srgb, var(--color-lantern) 55%, transparent) 0%,
+      color-mix(in srgb, var(--color-lantern) 30%, transparent) 55%,
+      transparent 100%
+    );
+  }
+  /* the book sits a little askew, like one just put down on a table; it
+     straightens under the pointer */
+  .cover {
+    transform: rotate(-3deg);
+    transition: transform 0.6s var(--ease-soft);
+  }
+  @media (hover: hover) {
+    .cover:hover {
+      transform: rotate(0deg) translateY(-6px);
+    }
+  }
+  .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 9999px;
+    background: var(--color-cream);
+    opacity: 0.7;
+    box-shadow: 0 0 8px 1px color-mix(in srgb, var(--color-cream) 45%, transparent);
+  }
+  .star.small {
+    width: 2px;
+    height: 2px;
+    opacity: 0.5;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cover {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+import Divider from './Divider.astro';
+import info from '../data/info.json';
+
+// A price note may hold a link written as [text](https://address): it serves
+// references like the Disability Card. The rest stays plain text (Astro
+// escapes it) and only http/https addresses are accepted.
+const LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+const noteParts = (note: string) => {
+  const parts: { text: string; url?: string }[] = [];
+  let last = 0;
+  for (const m of note.matchAll(LINK)) {
+    if (m.index > last) parts.push({ text: note.slice(last, m.index) });
+    parts.push({ text: m[1], url: m[2] });
+    last = m.index + m[0].length;
+  }
+  if (last < note.length) parts.push({ text: note.slice(last) });
+  return parts;
+};
+---
+
+<section id="info" class="bg-paper-warm pb-20 sm:pb-28">
+  <Divider from="paper" flip class="mb-16 sm:mb-20" />
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading eyebrow={info.eyebrow} title={info.title} />
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-3" data-animate-group>
+      <div class="rounded-3xl bg-cream p-8 shadow-sm">
+        <h3 class="flex items-center gap-2.5 text-xl">
+          <Icon name="calendar" class="h-6 w-6 text-lantern-deep" />
+          {info.datesTitle}
+        </h3>
+        <p class="mt-3 leading-relaxed text-pretty text-night-soft">{info.datesText}</p>
+        {
+          info.slots.length > 0 && (
+            <ul class="mt-5 space-y-3">
+              {info.slots.map((s) => (
+                <li class="flex items-center justify-between gap-4 border-b border-night/10 pb-3 text-sm last:border-0 last:pb-0">
+                  <span class="font-semibold">{s.label}</span>
+                  <span class="font-bold text-lantern-deep tabular-nums">{s.time}</span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        {info.note && <p class="mt-6 rounded-2xl bg-forest/10 p-4 text-sm leading-relaxed text-forest-deep">{info.note}</p>}
+      </div>
+
+      <div class="rounded-3xl bg-cream p-8 shadow-sm">
+        <h3 class="flex items-center gap-2.5 text-xl">
+          <Icon name="ticket" class="h-6 w-6 text-lantern-deep" />
+          {info.pricesTitle}
+        </h3>
+        <ul class="mt-5 space-y-3">
+          {
+            info.prices.map((p) => (
+              <li class="flex items-start justify-between gap-4 border-b border-night/10 pb-3 text-sm last:border-0 last:pb-0">
+                <span>
+                  <span class="font-semibold">{p.label}</span>
+                  {p.note && (
+                    <span class="mt-0.5 block text-xs leading-relaxed text-night-soft">
+                      {noteParts(p.note).map((x) =>
+                        x.url ? (
+                          <a
+                            href={x.url}
+                            target="_blank"
+                            rel="noopener"
+                            class="font-semibold text-lantern-deep underline underline-offset-2 transition-colors duration-300 hover:text-night"
+                          >
+                            {x.text}
+                          </a>
+                        ) : (
+                          x.text
+                        )
+                      )}
+                    </span>
+                  )}
+                </span>
+                <span class="shrink-0 text-right font-bold text-lantern-deep tabular-nums">{p.price}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="rounded-3xl bg-cream p-8 shadow-sm">
+        <h3 class="flex items-center gap-2.5 text-xl">
+          <Icon name="basket" class="h-6 w-6 text-lantern-deep" />
+          {info.extrasTitle}
+        </h3>
+        <ul class="mt-5 space-y-3">
+          {
+            info.extras.map((e) => (
+              <li class="flex gap-2 text-sm leading-relaxed text-night-soft">
+                <span class="text-lantern-deep" aria-hidden="true">
+                  ✦
+                </span>
+                {e}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

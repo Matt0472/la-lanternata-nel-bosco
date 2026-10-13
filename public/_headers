@@ -1,0 +1,16 @@
+# HTTP headers for Cloudflare Pages.
+#
+# WARNING: a noindex must NEVER appear in this file (SEO-12). The indexing gate
+# is the PUBLIC_SITE_INDEXABLE build flag (robots meta + robots.txt): a
+# leftover X-Robots-Tag here would take the site out of Google after go-live
+# without anything visibly breaking.
+#
+# Only cache rules in here.
+
+# Everything Astro emits in /_astro/ carries a content hash in its name: if the
+# content changes, the name changes. Immutable by definition.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Do NOT lengthen the cache of the files in public/ (logo, photos, cover):
+# their names are fixed, and a long cache would make them impossible to update.

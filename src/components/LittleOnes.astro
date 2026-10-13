@@ -1,0 +1,128 @@
+---
+import Divider from './Divider.astro';
+import littleOnes from '../data/little-ones.json';
+import hero from '../data/hero.json';
+
+// Under-3s: they come in free with a paying adult. It was the most frequent
+// question on the phone for the sister site, so it has a section of its own,
+// identical in structure, right after the book. Light ground (paper-warm): the
+// crest on top joins the night of the book, and the gallery's Divider, right
+// after, starts from this colour.
+// The grid follows the number of boxes, which the panel can add or remove:
+// with two, a four-column row would leave half a row empty. With three, below
+// lg they stay in a column (and narrower): three per row on a tablet would
+// wrap the text at every word.
+const n = littleOnes.points.length;
+const grid =
+  n >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : n === 3 ? 'max-w-xl lg:max-w-none lg:grid-cols-3' : 'max-w-3xl sm:grid-cols-2';
+---
+
+<section id="piccoli" class="relative isolate overflow-hidden bg-paper-warm pb-20 sm:pb-28">
+  <Divider from="night" flip class="mb-16 sm:mb-20" />
+
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="mx-auto max-w-2xl text-center">
+      {
+        littleOnes.image && (
+          <div class="relative mx-auto w-fit" data-animate="scale-in">
+            {/* warm halo behind the mascot, without blur: on the light ground
+                the filter left a blurred rectangle around the image */}
+            <div
+              class="absolute -inset-12 rounded-full"
+              style="background: radial-gradient(circle closest-side, color-mix(in srgb, var(--color-lantern) 26%, transparent) 0%, transparent 100%)"
+              aria-hidden="true"
+            />
+            {/* The owlet is generated with Gemini (scripts/generate-image.mjs)
+                and cut out: transparent WebP at twice the height shown.
+                Decorative: the heading already says it all (A11Y-03). */}
+            <img
+              src={littleOnes.image}
+              alt=""
+              width="326"
+              height="400"
+              loading="lazy"
+              decoding="async"
+              class="mascot relative h-40 w-auto sm:h-48"
+            />
+          </div>
+        )
+      }
+
+      <p class="mt-8 text-sm font-bold tracking-[0.2em] text-lantern-deep uppercase" data-animate="fade-up">{littleOnes.eyebrow}</p>
+      <h2 class="mt-4 text-3xl leading-tight text-balance sm:text-4xl lg:text-5xl" data-animate="fade-up" data-delay="0.1">
+        {littleOnes.title}
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-pretty text-night-soft" data-animate="fade-up" data-delay="0.2">
+        {littleOnes.text}
+      </p>
+    </div>
+
+    <ul class:list={['mx-auto mt-14 grid gap-5', grid]} data-animate-group>
+      {
+        littleOnes.points.map((point) => (
+          <li class="rounded-3xl bg-cream p-7 shadow-sm">
+            <span class="text-4xl" aria-hidden="true">
+              {point.icon}
+            </span>
+            <h3 class="mt-4 text-xl">{point.title}</h3>
+            <p class="mt-2 leading-relaxed text-pretty text-night-soft">{point.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-12 text-center" data-animate="fade-up">
+      <a
+        href="#biglietti"
+        class="lift inline-block rounded-full border-2 border-night/25 px-8 py-4 font-bold text-night hover:border-night hover:bg-night/5"
+      >
+        {littleOnes.cta || hero.ctaLabel}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The mascot sways twice, like a lantern swinging from a hand, when it comes
+     on screen; then it rests (A11Y-07). It lives on an inner element: the
+     container gets the entrance from Motion, and two animations on the same
+     transform would step on each other. */
+  .mascot {
+    transform-origin: 50% 12%;
+  }
+  .mascot[data-awake] {
+    animation: mascot-sway 1.8s ease-in-out 2;
+  }
+  @keyframes mascot-sway {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-5deg);
+    }
+    75% {
+      transform: rotate(5deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mascot[data-awake] {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const mascot = document.querySelector<HTMLElement>('#piccoli .mascot');
+  if (mascot && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        mascot.setAttribute('data-awake', '');
+        io.disconnect();
+      },
+      { threshold: 0.6 }
+    );
+    io.observe(mascot);
+  }
+</script>

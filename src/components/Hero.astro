@@ -1,0 +1,220 @@
+---
+import Icon from './Icon.astro';
+import hero from '../data/hero.json';
+import settings from '../data/settings.json';
+
+// Fireflies of the intro: pseudo-random but deterministic positions (same
+// build, same swarm), so the HTML stays cacheable. They rise from below into
+// their place and stay there, glowing still: the movement lasts a few seconds
+// and then the scene rests (A11Y-07).
+const rnd = (i: number, salt: number) => {
+  const x = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+const fireflies = Array.from({ length: 18 }, (_, i) => {
+  // keep the column behind the text clear: half on each side
+  const side = i % 2 === 0 ? 2 + rnd(i, 1) * 26 : 72 + rnd(i, 1) * 26;
+  const y = 38 + rnd(i, 2) * 52;
+  return {
+    // on phones the text spans the whole width: only the fireflies below it stay
+    phoneHidden: y < 74,
+    x: side.toFixed(1),
+    y: y.toFixed(1),
+    size: (4 + rnd(i, 3) * 5).toFixed(1), // px
+    delay: (0.2 + rnd(i, 4) * 1.6).toFixed(2), // s
+    duration: (2 + rnd(i, 5) * 1.6).toFixed(2), // s
+    rise: (40 + rnd(i, 6) * 90).toFixed(0), // px
+    drift: ((rnd(i, 7) - 0.5) * 40).toFixed(0), // px
+    opacity: (0.45 + rnd(i, 8) * 0.5).toFixed(2),
+  };
+});
+---
+
+<section id="top" class="relative flex min-h-svh items-center justify-center overflow-hidden bg-night">
+  <!-- Full-page scene: an img (not a CSS background) for alt text and load priority -->
+  <div class="absolute inset-0">
+    <!-- Portrait screens (phones, upright tablets) get the vertical scene: the
+         centre crop of the wide one would cut the moon out (DES-09) -->
+    <picture>
+      <source media="(max-aspect-ratio: 1/1)" srcset={hero.imageMobile} />
+      <img
+        src={hero.image}
+        alt={hero.imageAlt}
+        width="1920"
+        height="1080"
+        fetchpriority="high"
+        class="h-full w-full scale-110 object-cover"
+        data-parallax="40"
+      />
+    </picture>
+    <!-- Light veil for legibility: the scene must not go dark -->
+    <div class="absolute inset-0 bg-gradient-to-b from-night/20 via-night/15 to-night/70"></div>
+    <!-- the bottom fades into solid night: the separator below starts from
+         that same colour, with no seam where the scene ends -->
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-night"></div>
+    <!-- a darker band behind the text block, only where it is needed -->
+    <div
+      class="absolute inset-0"
+      style="background: radial-gradient(ellipse 60% 45% at 50% 47%, color-mix(in srgb, var(--color-night) 62%, transparent) 0%, transparent 72%)"
+    >
+    </div>
+  </div>
+
+  <!-- Fireflies: they rise into place at the first paint and stay lit -->
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    {
+      fireflies.map((f) => (
+        <span
+          class:list={['firefly absolute rounded-full', f.phoneHidden && 'max-sm:hidden']}
+          style={`left:${f.x}%; top:${f.y}%; --size:${f.size}px; --delay:${f.delay}s; --duration:${f.duration}s; --rise:${f.rise}px; --drift:${f.drift}px; --glow:${f.opacity}`}
+        />
+      ))
+    }
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-4xl px-4 pt-24 pb-20 text-center sm:px-6 sm:pt-28 sm:pb-24">
+    <!-- the whole pill links to the park -->
+    <a
+      href={settings.parkUrl}
+      target="_blank"
+      rel="noopener"
+      class="mb-5 hidden min-h-11 items-center gap-2 rounded-full border border-cream/25 bg-night/45 px-5 py-2.5 text-sm font-bold tracking-wide text-cream backdrop-blur-sm transition duration-350 ease-soft hover:-translate-y-1 hover:border-cream/50 hover:bg-night/65 sm:inline-flex"
+      data-animate-now="fade-up"
+    >
+      <Icon name="moon" class="h-4 w-4 text-lantern" />
+      {hero.eyebrow}
+    </a>
+
+    <h1
+      class="text-[clamp(2.5rem,12.4vw,7.5rem)] leading-[0.95] text-balance text-cream drop-shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
+      data-animate-now="fade-up"
+      style="--enter-delay: 0.12s"
+    >
+      {hero.title}
+      {
+        hero.tagline && (
+          <span class="mt-1 block text-[clamp(1.6rem,6vw,3rem)] leading-tight text-lantern-light sm:mt-2">{hero.tagline}</span>
+        )
+      }
+    </h1>
+
+    <p
+      class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-pretty whitespace-pre-line text-cream/90 sm:mt-7 sm:text-xl"
+      data-animate-now="fade-up"
+      style="--enter-delay: 0.24s"
+    >
+      {hero.subtitle}
+    </p>
+
+    <p
+      class="mt-5 text-sm font-bold tracking-[0.2em] text-lantern uppercase tabular-nums sm:mt-7"
+      data-animate-now="fade-up"
+      style="--enter-delay: 0.36s"
+    >
+      {
+        hero.datesLabel.split(' · ').map((part, i) => (
+          <>
+            {i > 0 && (
+              <span class="max-sm:hidden" aria-hidden="true">
+                {' · '}
+              </span>
+            )}
+            <span class="whitespace-nowrap max-sm:block">{part}</span>
+          </>
+        ))
+      }
+    </p>
+
+    <div
+      class="mt-7 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4"
+      data-animate-now="fade-up"
+      style="--enter-delay: 0.48s"
+    >
+      <a
+        href="#biglietti"
+        class="lift w-full rounded-full bg-lantern px-8 py-4 text-base font-bold text-night shadow-xl shadow-black/30 hover:bg-lantern-light sm:w-auto"
+      >
+        {hero.ctaLabel}
+      </a>
+      <a
+        href="#serata"
+        class="lift w-full rounded-full border-2 border-cream/45 px-8 py-4 text-base font-bold text-cream backdrop-blur-sm hover:border-cream hover:bg-cream/10 sm:w-auto"
+      >
+        {hero.ctaSecondaryLabel}
+      </a>
+    </div>
+  </div>
+
+  <a
+    href="#esperienza"
+    class="absolute bottom-5 left-1/2 z-10 grid h-11 w-11 -translate-x-1/2 place-items-center text-cream/75 transition-colors duration-300 hover:text-cream"
+    aria-label="Scorri per scoprire di più"
+    data-animate-now="fade-in"
+    style="--enter-delay: 0.9s"
+  >
+    <svg
+      class="h-7 w-7 motion-safe:animate-bounce motion-safe:[animation-iteration-count:3]"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+  </a>
+
+  <!-- Intro: a veil of night that lifts at the first paint while the fireflies
+       rise. CSS only (it never blocks rendering), at every landing (DES-10). -->
+  <div id="night-intro" class="night-veil pointer-events-none absolute inset-0 z-30 bg-night" aria-hidden="true"></div>
+
+  <script is:inline>
+    // Safety net: once the animation is over, the veil leaves the DOM
+    setTimeout(() => document.getElementById('night-intro')?.remove(), 2500);
+  </script>
+
+  <style>
+    .firefly {
+      width: var(--size);
+      height: var(--size);
+      background: radial-gradient(circle, var(--color-cream) 0%, var(--color-lantern-light) 45%, transparent 72%);
+      box-shadow: 0 0 calc(var(--size) * 2.2) calc(var(--size) * 0.6)
+        color-mix(in srgb, var(--color-lantern) 55%, transparent);
+      opacity: var(--glow);
+      animation: firefly-rise var(--duration) var(--ease-soft) var(--delay) both;
+    }
+    @keyframes firefly-rise {
+      from {
+        opacity: 0;
+        transform: translate(var(--drift), var(--rise)) scale(0.4);
+      }
+      55% {
+        opacity: 1;
+      }
+      to {
+        opacity: var(--glow);
+        transform: translate(0, 0) scale(1);
+      }
+    }
+    .night-veil {
+      opacity: 0.7;
+      animation: veil-lift 1.2s ease-out 0.15s forwards;
+    }
+    @keyframes veil-lift {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .firefly {
+        animation: none;
+      }
+      .night-veil {
+        display: none;
+      }
+    }
+  </style>
+</section>

@@ -1,0 +1,370 @@
+# Pages CMS configuration (https://pagescms.org)
+# Access at https://app.pagescms.org: with a GitHub account (full access) or as
+# a collaborator invited by email (content and images only).
+# Entries are numbered in the order the sections appear on the page (CMS-05).
+
+settings:
+  commit:
+    # Every save carries the name and email of who edited (CMS-07)
+    identity: user
+
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  - name: hero
+    label: '1 · Hero (testata)'
+    type: file
+    path: src/data/hero.json
+    fields:
+      - { name: eyebrow, label: 'Occhiello (la pillola in alto, porta al sito del parco)', type: string }
+      - { name: title, label: Titolo principale, type: string }
+      - { name: tagline, label: 'Seconda riga del titolo, in color lanterna (vuoto = nascosta)', type: string }
+      - { name: subtitle, label: Sottotitolo, type: text, description: 'Per andare a capo basta un a capo nel testo.' }
+      - { name: datesLabel, label: Riga date e orario, type: string }
+      - name: ctaLabel
+        label: Testo del pulsante di prenotazione
+        type: string
+        description: 'È lo stesso testo su tutta la pagina: barra in alto, hero, sezione «L''esperienza» e pagina 404.'
+      - { name: ctaShortLabel, label: 'Testo breve del pulsante (barra in alto, sul telefono)', type: string }
+      - { name: ctaSecondaryLabel, label: 'Testo del pulsante secondario (porta a «La serata»)', type: string }
+      - { name: image, label: Immagine hero (schermi larghi), type: image }
+      - { name: imageMobile, label: Immagine hero (telefono, verticale), type: image }
+      - { name: imageAlt, label: Descrizione dell'immagine (per Google e accessibilità), type: string }
+
+  - name: experience
+    label: "2 · L'esperienza"
+    type: file
+    path: src/data/experience.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: intro, label: Introduzione, type: text }
+      - { name: scrollHint, label: 'Invito a scorrere le card (solo su computer; vuoto = nascosto)', type: string }
+      - { name: extraBadge, label: 'Testo del cartellino «extra a pagamento»', type: string }
+      - name: items
+        label: Attività (le card che si impilano)
+        type: object
+        list: true
+        fields:
+          - { name: icon, label: 'Emoji (es. 🏮 📖 🌕 🗝️ 🧺)', type: string }
+          - { name: title, label: Nome dell'attività, type: string }
+          - { name: text, label: Descrizione, type: text }
+          - { name: extra, label: 'Attività extra a pagamento (mostra il cartellino sulla card)', type: boolean, default: false }
+
+  - name: program
+    label: '3 · La serata (programma e date)'
+    type: file
+    path: src/data/program.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: intro, label: Introduzione, type: text }
+      - { name: weekendsTitle, label: 'Titolo del blocco date (letto dai lettori di schermo)', type: string }
+      - { name: weekendsNote, label: 'Riga sotto ogni data (es. Sabato e domenica · 15:30–18:30)', type: string }
+      - name: weekends
+        label: I weekend
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: 'Date del weekend (es. 14–15 novembre)'
+            type: string
+            description: 'Scrivete giorno, trattino e mese come nell''esempio: Google legge questa data per i risultati di ricerca.'
+          - { name: soldOut, label: 'SOLD OUT: mostra il badge «posti finiti»', type: boolean, default: false }
+          - name: lastSeats
+            label: 'ULTIMI POSTI: mostra il badge «posti in esaurimento» (ignorato se è attivo Sold out)'
+            type: boolean
+            default: false
+      - name: badge
+        label: Testo dei due badge di disponibilità
+        type: object
+        fields:
+          - { name: soldOut, label: 'Badge posti finiti (es. Sold out)', type: string }
+          - { name: lastSeats, label: 'Badge posti in esaurimento (es. Ultimi posti)', type: string }
+      - name: steps
+        label: Le tappe della serata, in ordine (timeline)
+        type: object
+        list: true
+        fields:
+          - { name: icon, label: 'Emoji (es. 🎨 📖 ✨ 🌕 🗝️)', type: string }
+          - { name: when, label: 'Quando (es. Poco dopo il tramonto)', type: string }
+          - { name: title, label: Titolo della tappa, type: string }
+          - { name: text, label: Descrizione, type: text }
+
+  - name: book
+    label: '4 · Il libro'
+    type: file
+    path: src/data/book.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: 'Titolo del libro (senza virgolette: le aggiunge il sito)', type: string }
+      - { name: author, label: Autrice, type: string }
+      - { name: publisher, label: Editore, type: string }
+      - { name: cover, label: 'Copertina (dall''editore, intera e senza modifiche)', type: image }
+      - { name: coverAlt, label: Descrizione della copertina (per Google e accessibilità), type: string }
+      - { name: text, label: La storia, type: text }
+      - { name: message, label: 'Frase in evidenza, in color lanterna (vuoto = nascosta)', type: text }
+      - { name: details, label: 'Dettagli (le pillole: pagine, età, collana…)', type: string, list: true }
+      - { name: authorTitle, label: Titolo del riquadro sull'autrice, type: string }
+      - { name: authorText, label: 'Testo sull''autrice (vuoto = riquadro nascosto)', type: text }
+      - { name: buyText, label: Dove si trova il libro, type: text }
+      - { name: ctaLabel, label: 'Testo del pulsante (es. Vedi su Amazon)', type: string }
+      - name: ctaUrl
+        label: Link del pulsante (la pagina del libro su Amazon)
+        type: string
+        description: "L'indirizzo completo della scheda del libro su Amazon, che comincia con https://"
+      - { name: publisherUrl, label: "Pagina del libro sul sito dell'editore (non si vede: serve a Google)", type: string }
+      - { name: isbn, label: 'Codice ISBN/EAN (non si vede: serve a Google)', type: string }
+      - { name: pages, label: 'Numero di pagine (non si vede: serve a Google)', type: string }
+      - { name: minAge, label: 'Età minima di lettura (non si vede: serve a Google)', type: string }
+
+  - name: littleOnes
+    label: '5 · I più piccoli (sotto i 3 anni)'
+    type: file
+    path: src/data/little-ones.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: image, label: 'Illustrazione in cima (PNG o WebP con sfondo trasparente)', type: image }
+      - { name: title, label: Titolo, type: string }
+      - { name: text, label: Testo introduttivo, type: text }
+      - name: points
+        label: Riquadri
+        type: object
+        list: true
+        fields:
+          - { name: icon, label: 'Emoji (es. 🎟️ 🏮 🐐)', type: string }
+          - { name: title, label: Titolo del riquadro, type: string }
+          - { name: text, label: Testo, type: text }
+      - { name: cta, label: Testo del pulsante verso i biglietti, type: string }
+
+  - name: gallery
+    label: '6 · Gallery'
+    type: file
+    path: src/data/gallery.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: intro, label: Introduzione, type: text }
+      - name: images
+        label: Foto
+        type: object
+        list: true
+        fields:
+          - { name: src, label: Immagine, type: image }
+          - { name: alt, label: Descrizione della foto (per Google e accessibilità), type: string }
+
+  - name: info
+    label: '7 · Info pratiche'
+    type: file
+    path: src/data/info.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: datesTitle, label: Titolo del blocco date, type: string }
+      - { name: datesText, label: Testo delle date, type: text }
+      - name: slots
+        label: Turni
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Nome del turno, type: string }
+          - name: time
+            label: 'Orario (es. 15:30 – 18:30)'
+            type: string
+            description: 'Scrivete le ore come nell''esempio: Google legge questo orario per i risultati di ricerca.'
+      - { name: pricesTitle, label: Titolo del blocco prezzi, type: string }
+      - name: prices
+        label: Prezzi
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Categoria, type: string }
+          - name: note
+            label: Nota sotto la categoria (facoltativa)
+            type: string
+            description: 'Per inserire un link scrivete [testo](https://indirizzo), per esempio [Disability Card](https://www.disabilitycard.it/).'
+          - { name: price, label: 'Prezzo (es. 15 € oppure Gratis)', type: string }
+      - { name: extrasTitle, label: Titolo del terzo blocco, type: string }
+      - { name: extras, label: Voci del terzo blocco, type: string, list: true }
+      - { name: note, label: 'Nota finale (riquadro verde; vuoto = nascosta)', type: text }
+
+  - name: tickets
+    label: '8 · Biglietti'
+    type: file
+    path: src/data/tickets.json
+    fields:
+      - { name: eyebrow, label: Frase d'impatto (in alto), type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: text, label: Testo introduttivo, type: text }
+      - { name: stepsTitle, label: 'Titolo dei passaggi (es. Come funziona)', type: string }
+      - name: steps
+        label: Passaggi della prenotazione
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Titolo del passaggio, type: string }
+          - { name: text, label: Descrizione, type: text }
+      - name: widgetId
+        label: Codice del widget TicketingHub
+        type: string
+        description: 'Il codice che identifica la biglietteria (es. 4441b8d2-1c1b-4b96-ad28-69a5edebc303): nel pezzo di programma che manda TicketingHub è la sequenza dopo "widgetId". Lasciandolo vuoto compare un segnaposto al posto della biglietteria.'
+      - { name: buttonLabel, label: Testo del pulsante che apre la biglietteria, type: string }
+      - name: widgetScript
+        label: Indirizzo dello script TicketingHub (non modificare)
+        type: string
+        description: Va cambiato solo se TicketingHub comunica un nuovo indirizzo.
+      - { name: limitedSeats, label: 'Avviso sui posti limitati (vuoto = nascosto)', type: string }
+      - { name: paymentNote, label: 'Nota sul pagamento (vuoto = nascosta)', type: string }
+      - { name: fallbackNote, label: 'Nota «problemi con la prenotazione» (vuoto = nascosta)', type: string }
+
+  - name: testimonials
+    label: '9 · Recensioni'
+    type: file
+    path: src/data/testimonials.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: intro, label: Sottotitolo sotto il titolo, type: text }
+      - name: items
+        label: Recensioni
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Nome, type: string }
+          - { name: text, label: Testo della recensione, type: text }
+          - { name: rating, label: 'Stelle (un numero intero da 1 a 5)', type: number }
+
+  - name: faq
+    label: '10 · FAQ'
+    type: file
+    path: src/data/faq.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - name: items
+        label: Domande
+        type: object
+        list: true
+        fields:
+          - { name: q, label: Domanda, type: string }
+          - { name: a, label: Risposta, type: text }
+
+  - name: contact
+    label: '11 · Contatti'
+    type: file
+    path: src/data/contact.json
+    fields:
+      - { name: eyebrow, label: Occhiello, type: string }
+      - { name: title, label: Titolo, type: string }
+      - { name: text, label: Testo, type: text }
+      - name: subjects
+        label: Argomenti del modulo (il menu «Oggetto della richiesta»)
+        type: string
+        list: true
+        description: 'Arrivano nella casella email come oggetto del messaggio, preceduti dal nome del sito.'
+      - { name: successMessage, label: Messaggio dopo l'invio del modulo, type: string }
+      - { name: parkTagline, label: Frase sul Bosco della Luna (in fondo alla pagina), type: text }
+      - { name: parkCta, label: Testo del link al Bosco della Luna, type: string }
+      - name: google
+        label: Badge recensioni Google (nel riquadro del Bosco della Luna, in fondo alla pagina)
+        type: object
+        fields:
+          - { name: show, label: Mostra il badge, type: boolean, default: true }
+          - { name: score, label: 'Punteggio da 0 a 5 (es. 4,8): decide anche le stelle piene', type: string }
+          - { name: count, label: 'Quante recensioni (es. 334 recensioni)', type: string }
+          - { name: url, label: Link che si apre cliccando il badge, type: string }
+
+  - name: navigation
+    label: '☰ Menu (barra in alto e pagina 404)'
+    type: file
+    path: src/data/navigation.json
+    fields:
+      - name: items
+        label: Voci del menu, in ordine
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Testo della voce, type: string }
+          - name: target
+            label: Sezione a cui porta
+            type: select
+            options:
+              values:
+                - { value: '#esperienza', label: "L'esperienza" }
+                - { value: '#serata', label: 'La serata' }
+                - { value: '#libro', label: 'Il libro' }
+                - { value: '#piccoli', label: 'I più piccoli' }
+                - { value: '#gallery', label: 'Gallery' }
+                - { value: '#info', label: 'Info pratiche' }
+                - { value: '#biglietti', label: 'Biglietti' }
+                - { value: '#recensioni', label: 'Recensioni' }
+                - { value: '#faq', label: 'FAQ' }
+                - { value: '#contatti', label: 'Contatti' }
+
+  - name: privacy
+    label: '⚖️ Privacy Policy'
+    type: file
+    path: src/pages/privacy.md
+    fields:
+      - { name: layout, type: string, hidden: true }
+      - { name: title, label: Titolo per la linguetta del browser, type: string }
+      - { name: heading, label: Titolo della pagina, type: string }
+      - { name: updated, label: 'Riga «ultimo aggiornamento» (es. ottobre 2026)', type: string }
+      - { name: body, label: Testo della pagina, type: rich-text }
+
+  - name: cookie
+    label: '⚖️ Cookie Policy'
+    type: file
+    path: src/pages/cookie.md
+    fields:
+      - { name: layout, type: string, hidden: true }
+      - { name: title, label: Titolo per la linguetta del browser, type: string }
+      - { name: heading, label: Titolo della pagina, type: string }
+      - { name: updated, label: 'Riga «ultimo aggiornamento» (es. ottobre 2026)', type: string }
+      - { name: body, label: 'Testo della pagina (il pulsante «Gestisci le preferenze» si aggiunge da solo in fondo)', type: rich-text }
+
+  - name: notfound
+    label: '⚠️ Pagina non trovata (404)'
+    type: file
+    path: src/data/notfound.json
+    fields:
+      - { name: tabTitle, label: Titolo per la linguetta del browser, type: string }
+      - { name: eyebrow, label: 'Occhiello (es. Errore 404)', type: string }
+      - { name: title, label: Titolo grande, type: string }
+      - { name: text, label: Testo, type: text }
+      - { name: ctaHome, label: Testo del pulsante che riporta all'inizio, type: string }
+      - { name: shortcutsTitle, label: 'Riga sopra le scorciatoie (es. Oppure vai dritto a:)', type: string }
+
+  - name: settings
+    label: '⚙️ Impostazioni sito e SEO'
+    type: file
+    path: src/data/settings.json
+    fields:
+      - { name: siteName, label: Nome del sito, type: string }
+      - { name: seoTitle, label: 'Titolo per Google (max ~60 caratteri)', type: string }
+      - { name: seoDescription, label: 'Descrizione per Google (max ~155 caratteri)', type: text }
+      - { name: ogImage, label: 'Immagine per le condivisioni social (1200×630, PNG o JPG)', type: image }
+      - { name: parkUrl, label: URL del Bosco della Luna, type: string }
+      - { name: phone, label: Telefono, type: string }
+      - { name: email, label: Email, type: string }
+      - { name: weekendNote, label: 'Avviso weekend (nei biglietti e accanto al modulo contatti; vuoto = nascosto)', type: string }
+      - name: venue
+        label: Dove si svolge l'evento (indirizzo esatto, serve a Google per le ricerche locali)
+        type: object
+        fields:
+          - { name: name, label: 'Nome del luogo (es. Bosco della Luna)', type: string }
+          - { name: street, label: 'Via e numero civico (es. Via Cusago 280)', type: string }
+          - { name: postalCode, label: 'CAP (es. 20153)', type: string }
+          - { name: city, label: 'Città (es. Milano)', type: string }
+          - { name: region, label: 'Regione (es. Lombardia)', type: string }
+          - { name: lat, label: 'Latitudine (facoltativa, dalla scheda Google del parco)', type: string }
+          - { name: lng, label: 'Longitudine (facoltativa, dalla scheda Google del parco)', type: string }
+      - { name: mapsUrl, label: Link Google Maps (pulsante «Dove siamo»), type: string }
+      - { name: instagram, label: Link Instagram, type: string }
+      - { name: facebook, label: Link Facebook, type: string }
+      - { name: web3formsKey, label: Access key Web3Forms (per il modulo contatti), type: string }
+      - { name: copyrightHolder, label: 'Titolare del copyright (riga in fondo alla pagina)', type: string }
+      - { name: eventStartDate, label: 'Data di inizio evento (AAAA-MM-GG)', type: string }
+      - { name: eventEndDate, label: 'Data di fine evento (AAAA-MM-GG)', type: string }

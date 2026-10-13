@@ -1,0 +1,52 @@
+---
+// The Lanternata mark: a glass lantern with its flame lit. The metal frame
+// follows the text colour (currentColor), so the same mark works on the night
+// header and on paper; the glass always glows with the lantern tokens.
+// `glow` adds the soft halo of light around it.
+interface Props {
+  class?: string;
+  glow?: boolean;
+}
+const { class: cls = 'h-10 w-auto', glow = true } = Astro.props;
+
+// Each instance needs its own gradient ids: the mark appears more than once
+// per page (header, footer), and duplicated ids would make them share defs.
+// A counter, not a random number: the same build gives the same HTML.
+const g = globalThis as { __lanternMarks?: number };
+g.__lanternMarks = (g.__lanternMarks ?? 0) + 1;
+const id = `lm${g.__lanternMarks}`;
+---
+
+<svg class={cls} viewBox="-10 -2 68 80" aria-hidden="true">
+  <defs>
+    <radialGradient id={`${id}-glass`} cx="0.5" cy="0.62" r="0.7">
+      <stop offset="0" stop-color="var(--color-cream)" />
+      <stop offset="0.38" stop-color="var(--color-lantern-light)" />
+      <stop offset="1" stop-color="var(--color-lantern)" />
+    </radialGradient>
+    <radialGradient id={`${id}-halo`}>
+      <stop offset="0" stop-color="var(--color-lantern)" stop-opacity="0.45" />
+      <stop offset="1" stop-color="var(--color-lantern)" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  {glow && <circle cx="24" cy="41" r="34" fill={`url(#${id}-halo)`} />}
+  <g fill="currentColor">
+    <circle cx="24" cy="6" r="4.6" fill="none" stroke="currentColor" stroke-width="2.6" />
+    <rect x="22.8" y="10" width="2.4" height="4" rx="1" />
+    <path d="M24 13 L36 22 H12 Z" />
+    <rect x="9.5" y="21" width="29" height="5" rx="2.5" />
+    <rect x="9.5" y="56" width="29" height="5.5" rx="2.5" />
+    <rect x="14" y="61" width="20" height="4.5" rx="1.8" />
+  </g>
+  <rect x="13.5" y="26" width="21" height="30" fill={`url(#${id}-glass)`} />
+  <path
+    d="M24 33.5 c3.4 4.2 4.8 7 4.8 9.4 a4.8 4.8 0 0 1-9.6 0 c0-2.4 1.4-5.2 4.8-9.4 Z"
+    fill="var(--color-cream)"
+  />
+  <path
+    d="M13.5 26 V56 M34.5 26 V56 M24 26 V31"
+    stroke="currentColor"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+</svg>

@@ -1,0 +1,699 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Divider from './Divider.astro';
+import gallery from '../data/gallery.json';
+
+// The fan only needs the thumbnails (640px WebP, generated at every build by
+// scripts/build-thumbnails.mjs): the full original is for the lightbox, which
+// reads it from data-full. External images are used as they are.
+const thumbnail = (src: string) =>
+  src.startsWith('/uploads/') ? '/uploads/thumbnails/' + src.split('/').pop()!.replace(/\.[^.]+$/, '.webp') : src;
+---
+
+<section id="gallery" class="overflow-hidden bg-paper pb-20 sm:pb-28">
+  <Divider from="paper-warm" class="mb-16 sm:mb-20" />
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading eyebrow={gallery.eyebrow} title={gallery.title} intro={gallery.intro} />
+  </div>
+
+  <!-- Fan carousel: photos laid out as a hand of cards, they open on hover and turn with the arrows -->
+  <div class="mt-14 flex flex-col items-center">
+    <div class="fan-layout" id="fan">
+      {
+        gallery.images.map((img, i) => (
+          <button
+            type="button"
+            class="fan-card"
+            data-index={i}
+            aria-label={`Ingrandisci foto ${i + 1} di ${gallery.images.length}: ${img.alt}`}
+          >
+            <img
+              src={thumbnail(img.src)}
+              data-full={img.src}
+              alt={img.alt}
+              loading="lazy"
+              width="480"
+              height="840"
+              draggable="false"
+            />
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="mt-6 flex items-center justify-center gap-4 md:mt-8" id="fan-nav" hidden>
+      <button type="button" class="fan-arrow" data-dir="left" aria-label="Foto precedenti">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      {/* Below 768px a counter replaces the dots: with many photos a row of
+          dots does not fit, they look alike and nobody hits an 8px target.
+          The counter says where you are at a glance, and the arrows — 48px
+          targets — do the moving. */}
+      <p class="fan-count" aria-live="polite"><span id="fan-count">1</span> / {gallery.images.length}</p>
+
+      <div class="hidden items-center gap-3 md:flex" id="fan-dots">
+        {gallery.images.map((_, i) => <button type="button" class="fan-dot" data-dot={i} aria-label={`Vai alla foto ${i + 1}`} />)}
+      </div>
+      <button type="button" class="fan-arrow" data-dir="right" aria-label="Foto successive">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <dialog
+    id="lightbox"
+    class="fixed inset-0 m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-night/95 backdrop:backdrop-blur-md"
+    aria-label="Galleria fotografica a schermo intero"
+  >
+    <div class="lb-stage flex h-full w-full touch-pan-y items-center justify-center px-4 py-16 sm:px-20">
+      <figure class="m-0 flex max-h-full flex-col items-center">
+        <img src="" alt="" class="lb-img max-h-[78vh] w-auto max-w-full rounded-3xl shadow-2xl shadow-black/50" />
+      </figure>
+      <button type="button" class="lb-btn lb-prev absolute top-1/2 left-3 sm:left-6" aria-label="Foto precedente">‹</button>
+      <button type="button" class="lb-btn lb-next absolute top-1/2 right-3 sm:right-6" aria-label="Foto successiva">›</button>
+      <button type="button" class="lb-btn lb-close absolute top-4 right-4 text-base!" aria-label="Chiudi la galleria">✕</button>
+      <p aria-live="polite" class="lb-counter absolute top-6 left-1/2 -translate-x-1/2 text-sm font-bold tracking-widest text-cream/75 tabular-nums"></p>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  .fan-layout {
+    --fan-h: 26rem;
+    --card-w: 9.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: var(--fan-h);
+    /* pan-y leaves vertical scrolling to the page: the finger scrolls, a
+       horizontal drag leafs through the fan */
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none;
+  }
+  .fan-layout[data-dragging] {
+    cursor: grabbing;
+  }
+  @media (min-width: 480px) {
+    .fan-layout {
+      --fan-h: 29rem;
+      --card-w: 11rem;
+    }
+  }
+  @media (min-width: 640px) {
+    .fan-layout {
+      --fan-h: 28rem;
+      --card-w: 12rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .fan-layout {
+      --fan-h: 34rem;
+      --card-w: 14.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .fan-layout {
+      --fan-h: 38rem;
+      --card-w: 16rem;
+    }
+  }
+
+  .fan-card {
+    position: absolute;
+    width: var(--card-w);
+    aspect-ratio: 4 / 7;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background: var(--color-night);
+    box-shadow: 0 18px 45px -12px color-mix(in srgb, var(--color-night) 55%, transparent);
+    cursor: inherit;
+    will-change: transform;
+  }
+  /* positions come from the script: hidden only when it runs, so without JS
+     the photos still show (CODE-11) */
+  :global(html.js) .fan-card {
+    opacity: 0;
+  }
+  .fan-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-cream) 20%, transparent);
+    pointer-events: none;
+  }
+  .fan-card img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    /* without this the browser starts the native image drag and steals the pointer */
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+  }
+  .fan-card:focus-visible {
+    outline: 3px solid var(--color-lantern-deep);
+    outline-offset: 3px;
+    /* the stacking comes inline from the script: a focused card always on top */
+    z-index: 20 !important;
+  }
+
+  /* The arrows are always there: without them the gallery could only be
+     driven by finger — no keyboard, no screen reader, and no hint for whoever
+     does not imagine they can drag. */
+  .fan-arrow {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    border: 1.5px solid color-mix(in srgb, var(--color-night) 25%, transparent);
+    background: color-mix(in srgb, var(--color-night) 5%, transparent);
+    color: var(--color-night-soft);
+    transition:
+      color 0.3s var(--ease-soft),
+      border-color 0.3s var(--ease-soft),
+      transform 0.3s var(--ease-soft);
+  }
+  .fan-arrow svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .fan-arrow:hover {
+    color: var(--color-lantern-deep);
+    border-color: color-mix(in srgb, var(--color-lantern-deep) 60%, transparent);
+    transform: scale(1.08);
+  }
+  .fan-arrow:active {
+    transform: scale(0.96);
+  }
+
+  .fan-count {
+    /* fixed-width digits: going from 9 to 10 the line does not move */
+    font-variant-numeric: tabular-nums;
+    min-width: 4rem;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-night-soft);
+  }
+  /* from 768px the dots take its place on screen, but it stays for screen
+     readers: it is the live region that announces the photo in front */
+  @media (min-width: 768px) {
+    .fan-count {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  /* 1rem with 12px of gap: centres 28px apart, more than the 24 required, so
+     the dots are valid targets. It works because from 768px up the row fits;
+     below, the counter takes their place. */
+  .fan-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-night) 50%, transparent);
+    transition: all 0.3s var(--ease-soft);
+  }
+  .fan-dot:hover {
+    background: color-mix(in srgb, var(--color-lantern-deep) 60%, transparent);
+  }
+  .fan-dot[data-active] {
+    background: var(--color-lantern-deep);
+    transform: scale(1.4);
+  }
+
+  .lb-btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-cream) 14%, transparent);
+    color: var(--color-cream);
+    font-size: 1.75rem;
+    line-height: 1;
+    backdrop-filter: blur(4px);
+    transition:
+      background 0.3s var(--ease-soft),
+      transform 0.3s var(--ease-soft);
+  }
+  .lb-btn:hover {
+    background: color-mix(in srgb, var(--color-cream) 26%, transparent);
+    transform: scale(1.08);
+  }
+  .lb-prev,
+  .lb-next {
+    transform: translateY(-50%);
+  }
+  .lb-prev:hover,
+  .lb-next:hover {
+    transform: translateY(-50%) scale(1.08);
+  }
+  dialog#lightbox[open] {
+    animation: lb-in 0.45s var(--ease-soft);
+  }
+  @keyframes lb-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    dialog#lightbox[open] {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { animate } from 'motion';
+  import { EASE_SOFT } from '../scripts/easing';
+
+  // ── Fan carousel (vanilla port of aayush-duhan's "Card Fan Carousel") ──
+  const MAX_VISIBLE = 7;
+  const HALF = 3;
+
+  // Each fan "slot": rotation, scale, offset and depth
+  const FAN = [
+    { rot: -21, scale: 0.7756, x: -30, y: 7.3, z: 1 },
+    { rot: -14, scale: 0.8498, x: -22, y: 4.0, z: 2 },
+    { rot: -7, scale: 0.9346, x: -11, y: 1.3, z: 3 },
+    { rot: 0, scale: 1.0, x: 0, y: 0.0, z: 10 },
+    { rot: 7, scale: 0.9346, x: 11, y: 1.3, z: 3 },
+    { rot: 14, scale: 0.8498, x: 22, y: 4.0, z: 2 },
+    { rot: 21, scale: 0.7756, x: 30, y: 7.3, z: 1 },
+  ];
+
+  const layout = document.getElementById('fan');
+  const nav = document.getElementById('fan-nav');
+  const cards = Array.from(document.querySelectorAll<HTMLButtonElement>('.fan-card'));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('.fan-dot'));
+  const counter = document.getElementById('fan-count');
+  const total = cards.length;
+  const paginated = total > MAX_VISIBLE;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Start with the FIRST photo in front, so the counter says "1 / n" when the
+  // gallery opens. The fan is circular (visibleMap wraps), so the last three
+  // photos sit to the left of the first one.
+  let center = paginated ? 0 : total >> 1;
+  let animating = false;
+  let entered = false;
+  let dir: 'left' | 'right' = 'right';
+  let prevVisible = new Set<number>();
+  let hoveredSlot: number | null = null;
+  let moved = false; // true if the pointer dragged: then the lightbox does not open
+  let downCard: HTMLButtonElement | null = null;
+
+  // With few photos the fan narrows proportionally
+  const slotConfig = (slot: number) => {
+    const slots = paginated ? MAX_VISIBLE : total;
+    if (slots >= MAX_VISIBLE) return FAN[slot];
+    const c = slots >> 1;
+    const d = slots > 1 ? (slot - c) / c : 0;
+    const ad = Math.abs(d);
+    return { rot: d * 21, scale: 1 - 0.2244 * ad * ad, x: d * 30, y: ad * ad * 7.3, z: 10 - Math.abs(slot - c) };
+  };
+
+  // The fan shrinks on small screens and short viewports
+  const widthMult = () => {
+    const w = window.innerWidth;
+    if (w < 480) return 0.28;
+    if (w < 640) return 0.38;
+    if (w < 768) return 0.5;
+    if (w < 1024) return 0.75;
+    return 1;
+  };
+  const heightMult = () => {
+    const w = window.innerWidth;
+    const ideal = (w < 480 ? 26 : w < 640 ? 29 : w < 768 ? 28 : w < 1024 ? 34 : 38) * 16;
+    return Math.min(1, (window.innerHeight * 0.7) / ideal);
+  };
+
+  const visibleMap = (c: number) => {
+    const map = new Map<number, number>();
+    if (!paginated) {
+      cards.forEach((_, i) => map.set(i, i));
+      return map;
+    }
+    for (let slot = 0; slot < MAX_VISIBLE; slot++) {
+      map.set((((c + slot - HALF) % total) + total) % total, slot);
+    }
+    return map;
+  };
+
+  // Layout, with an optional card "lifted" by the mouse
+  function place(hover: number | null, opts: { first?: boolean } = {}) {
+    const map = visibleMap(center);
+    const m = widthMult();
+    const hM = heightMult();
+    const slots = paginated ? MAX_VISIBLE : total;
+    const centerSlot = slots >> 1;
+
+    cards.forEach((card, i) => {
+      const slot = map.get(i);
+      const wasVisible = prevVisible.has(i);
+
+      if (slot === undefined) {
+        if (wasVisible) {
+          const exit = dir === 'right' ? -40 : 40;
+          animate(
+            card,
+            { x: `${exit}rem`, opacity: 0, scale: 0.5, rotate: dir === 'right' ? -30 : 30 },
+            { duration: reduced ? 0 : 0.4, ease: [0.4, 0, 1, 1] }
+          );
+        } else {
+          card.style.opacity = '0';
+        }
+        card.style.zIndex = '0';
+        card.tabIndex = -1;
+        return;
+      }
+
+      const base = slotConfig(slot);
+      let x = base.x * m;
+      let y = base.y * hM;
+      let rot = base.rot;
+      let scale = base.scale;
+      let delay = Math.abs(slot - centerSlot) * 0.02;
+
+      // The fan spreads around the card under the pointer
+      if (hover !== null) {
+        const distance = Math.abs(slot - hover);
+        delay = distance * 0.02;
+        if (slot === hover) {
+          y -= 2.5 * hM;
+          scale *= 1.08;
+        } else {
+          const norm = centerSlot > 0 ? (slot - centerSlot) / centerSlot : 0;
+          const push = 8 * (1 - Math.abs(norm)) * (1 + 0.2 * Math.max(0, 3 - distance));
+          if (slot < hover) {
+            x -= push * m;
+            rot -= 3 / (distance + 1);
+          } else {
+            x += push * m;
+            rot += 3 / (distance + 1);
+          }
+        }
+      }
+
+      card.style.zIndex = String(base.z);
+      card.tabIndex = 0;
+      const target = { x: `${x}rem`, y: `${y}rem`, rotate: rot, scale, opacity: 1 };
+
+      if (reduced) {
+        animate(card, target, { duration: 0 });
+      } else if (opts.first) {
+        // Entrance: the cards rise from below and open as a fan with a bounce
+        animate(card, { x: 0, y: `${12 * hM}rem`, rotate: 0, scale: 0.5, opacity: 0 }, { duration: 0 });
+        animate(card, target, { type: 'spring', bounce: 0.42, duration: 1.2, delay: 0.2 + slot * 0.06 });
+      } else if (!wasVisible) {
+        const enter = dir === 'right' ? 40 : -40;
+        animate(
+          card,
+          { x: `${enter}rem`, y: `${y}rem`, rotate: dir === 'right' ? 30 : -30, scale: 0.5, opacity: 0 },
+          { duration: 0 }
+        );
+        animate(card, target, { duration: 0.6, ease: EASE_SOFT });
+      } else if (hover !== null || hoveredSlot !== null) {
+        animate(card, target, { type: 'spring', bounce: 0.35, duration: 0.7, delay });
+      } else {
+        animate(card, target, { duration: 0.5, ease: EASE_SOFT });
+      }
+    });
+
+    prevVisible = new Set(map.keys());
+    hoveredSlot = hover;
+    dots.forEach((d, i) => (i === center ? d.setAttribute('data-active', '') : d.removeAttribute('data-active')));
+    if (counter) counter.textContent = String(center + 1);
+  }
+
+  function cycle(direction: 'left' | 'right') {
+    if (animating || !paginated) return;
+    animating = true;
+    dir = direction;
+    center = direction === 'right' ? (center + 1) % total : (center - 1 + total) % total;
+    place(null);
+    // keyboard focus follows the photo in front: otherwise it stays on a card
+    // that has just slid out of the fan (2.4.7)
+    if (document.activeElement instanceof HTMLElement && document.activeElement.classList.contains('fan-card')) {
+      cards[center].focus({ preventScroll: true });
+    }
+    setTimeout(() => (animating = false), 620);
+  }
+
+  // Goes to the given photo taking the shortest way round the circle
+  function goTo(index: number) {
+    if (animating || !paginated || index === center) return;
+    const forward = (index - center + total) % total;
+    const steps = Math.min(forward, total - forward);
+    const direction: 'left' | 'right' = forward <= total - forward ? 'right' : 'left';
+    let done = 0;
+    const step = () => {
+      cycle(direction);
+      if (++done < steps) setTimeout(step, 180);
+    };
+    step();
+  }
+
+  if (total && layout) {
+    if (paginated) nav?.removeAttribute('hidden');
+
+    // The entrance starts when the section enters the viewport. The scroll
+    // safety net below is removed as soon as the fan has entered.
+    let check = () => {};
+    const start = () => {
+      if (entered) return;
+      entered = true;
+      window.removeEventListener('scroll', check);
+      place(null, { first: true });
+      animating = true;
+      setTimeout(() => (animating = false), 1500);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.isIntersecting && (start(), io.disconnect())),
+        { threshold: 0.25 }
+      );
+      io.observe(layout);
+      // Safety net: if the fan is already on screen (direct #gallery link,
+      // scroll restored by the browser) it starts anyway.
+      check = () => {
+        if (entered) return;
+        const r = layout.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          start();
+          io.disconnect();
+        }
+      };
+      window.addEventListener('scroll', check, { passive: true });
+      requestAnimationFrame(check);
+    } else {
+      start();
+    }
+
+    cards.forEach((card, i) => {
+      card.addEventListener('mouseenter', () => {
+        if (animating || !entered) return;
+        const slot = visibleMap(center).get(i);
+        if (slot !== undefined && slot !== hoveredSlot) place(slot);
+      });
+    });
+    layout.addEventListener('mouseleave', () => {
+      if (animating || !entered) return;
+      place(null);
+    });
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+    nav?.querySelectorAll<HTMLButtonElement>('.fan-arrow').forEach((btn) => {
+      btn.addEventListener('click', () => cycle(btn.dataset.dir as 'left' | 'right'));
+    });
+
+    // ── Drag (mouse) and swipe (finger) on the fan ──
+    let dragX = 0;
+    let dragY = 0;
+    let dragging = false;
+    let axisLocked: 'x' | 'y' | null = null;
+    const STEP = 55; // px of drag to move to the next photo
+
+    // The native drag of images/links would steal the pointer mid-drag
+    layout.addEventListener('dragstart', (e) => e.preventDefault());
+
+    layout.addEventListener('pointerdown', (e) => {
+      if (!entered) return;
+      downCard = (e.target as HTMLElement).closest<HTMLButtonElement>('.fan-card');
+      dragging = true;
+      moved = false;
+      axisLocked = null;
+      dragX = e.clientX;
+      dragY = e.clientY;
+      layout.setAttribute('data-dragging', '');
+      // Capture: moves keep coming even when leaving the fan
+      try {
+        layout.setPointerCapture(e.pointerId);
+      } catch {
+        /* if the browser refuses, the drag still works inside the area */
+      }
+    });
+
+    layout.addEventListener(
+      'pointermove',
+      (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - dragX;
+        const dy = e.clientY - dragY;
+
+        // On the first move, decide whether it is a horizontal swipe or a vertical scroll
+        if (!axisLocked && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+          axisLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+          if (axisLocked === 'y') {
+            dragging = false;
+            layout.removeAttribute('data-dragging');
+            return;
+          }
+        }
+        if (axisLocked !== 'x') return;
+
+        moved = true;
+        if (!paginated) return; // with few photos there is nothing to leaf through
+        if (Math.abs(dx) >= STEP && !animating) {
+          cycle(dx < 0 ? 'right' : 'left');
+          dragX = e.clientX; // a continuous drag leafs through several photos
+          dragY = e.clientY;
+          layout.style.transform = '';
+          return;
+        }
+        // A little elastic resistance while dragging
+        if (!reduced) layout.style.transform = `translateX(${dx * 0.22}px)`;
+      },
+      { passive: true }
+    );
+
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      layout.removeAttribute('data-dragging');
+      if (layout.style.transform) {
+        animate(layout, { x: 0 }, { type: 'spring', bounce: 0.4, duration: 0.6 }).finished.then(() => {
+          layout.style.transform = '';
+        });
+      }
+      // Pointer still on a photo = click: opens the lightbox (with pointer
+      // capture the click event is not reliable)
+      if (!moved && downCard) openLightbox(Number(downCard.dataset.index), downCard);
+      downCard = null;
+    };
+    layout.addEventListener('pointerup', endDrag);
+    layout.addEventListener('pointercancel', endDrag);
+
+    window.addEventListener('resize', () => entered && !animating && place(hoveredSlot), { passive: true });
+
+    // Arrow keys while the fan has focus
+    layout.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') cycle('right');
+      if (e.key === 'ArrowLeft') cycle('left');
+    });
+  }
+
+  // ── Lightbox ──
+  const lightbox = document.getElementById('lightbox') as HTMLDialogElement;
+  const lbImg = lightbox.querySelector<HTMLImageElement>('.lb-img')!;
+  const lbCounter = lightbox.querySelector<HTMLElement>('.lb-counter')!;
+  // In the lightbox only the photo shows: the alt stays for screen readers and
+  // search. The source is the full original (data-full), not the thumbnail.
+  const photos = cards.map((c) => {
+    const img = c.querySelector('img')!;
+    return { src: img.dataset.full || img.src, alt: img.alt };
+  });
+  let current = 0;
+  let opener: HTMLElement | null = null;
+
+  function render(index: number) {
+    current = (index + photos.length) % photos.length;
+    lbImg.src = photos[current].src;
+    lbImg.alt = photos[current].alt;
+    lbCounter.textContent = `${current + 1} / ${photos.length}`;
+    [current + 1, current - 1].forEach((i) => {
+      new Image().src = photos[(i + photos.length) % photos.length].src;
+    });
+  }
+
+  function openLightbox(index: number, from: HTMLElement) {
+    opener = from;
+    render(index);
+    lightbox.showModal();
+  }
+
+  function show(index: number, d: 1 | -1 = 1) {
+    if (reduced) return render(index);
+    animate(lbImg, { opacity: 0, x: -32 * d }, { duration: 0.18, ease: [0.4, 0, 1, 1] }).finished.then(() => {
+      render(index);
+      animate(lbImg, { opacity: [0, 1], x: [32 * d, 0] }, { duration: 0.42, ease: EASE_SOFT });
+    });
+  }
+
+  // Keyboard: Enter/Space on the focused photo opens the lightbox
+  cards.forEach((card) => {
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(Number(card.dataset.index), card);
+      }
+    });
+  });
+  lightbox.querySelector('.lb-prev')!.addEventListener('click', () => show(current - 1, -1));
+  lightbox.querySelector('.lb-next')!.addEventListener('click', () => show(current + 1, 1));
+  lightbox.querySelector('.lb-close')!.addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === lightbox.querySelector('.lb-stage')) lightbox.close();
+  });
+  // focus goes back to the photo the lightbox was opened from (A11Y-08)
+  lightbox.addEventListener('close', () => opener?.focus({ preventScroll: true }));
+  lightbox.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') show(current + 1, 1);
+    if (e.key === 'ArrowLeft') show(current - 1, -1);
+  });
+  let startX = 0;
+  lightbox.addEventListener('pointerdown', (e) => (startX = e.clientX), { passive: true });
+  lightbox.addEventListener(
+    'pointerup',
+    (e) => {
+      const delta = e.clientX - startX;
+      if (Math.abs(delta) > 48) show(current + (delta < 0 ? 1 : -1), delta < 0 ? 1 : -1);
+    },
+    { passive: true }
+  );
+</script>

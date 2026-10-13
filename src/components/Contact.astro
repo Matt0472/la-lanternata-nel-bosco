@@ -1,0 +1,364 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+import Divider from './Divider.astro';
+import contact from '../data/contact.json';
+import settings from '../data/settings.json';
+
+const phoneHref = `tel:${settings.phone.replace(/\s/g, '')}`;
+const venue = settings.venue;
+const fieldCls =
+  'w-full rounded-xl border border-night-soft bg-cream px-4 py-3 transition-colors duration-300 outline-none focus:border-lantern-deep focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-lantern aria-[invalid=true]:border-lantern-deep';
+---
+
+<section id="contatti" class="bg-paper pb-20 sm:pb-28">
+  <Divider from="paper-warm" flip class="mb-16 sm:mb-20" />
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+    <div>
+      <SectionHeading eyebrow={contact.eyebrow} title={contact.title} intro={contact.text} align="left" />
+
+      <ul class="mt-10 space-y-4" data-animate-group>
+        <li>
+          <a href={phoneHref} class="lift flex items-center gap-4 rounded-2xl border border-night/10 bg-cream p-5 hover:border-lantern/60">
+            <Icon name="phone" class="h-6 w-6 shrink-0 text-lantern-deep" />
+            <div>
+              <p class="text-xs font-bold tracking-wider text-night-soft uppercase">Telefono</p>
+              <p class="font-semibold tabular-nums">{settings.phone}</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            href={`mailto:${settings.email}`}
+            class="lift flex items-center gap-4 rounded-2xl border border-night/10 bg-cream p-5 hover:border-lantern/60"
+          >
+            <Icon name="email" class="h-6 w-6 shrink-0 text-lantern-deep" />
+            <div>
+              <p class="text-xs font-bold tracking-wider text-night-soft uppercase">Email</p>
+              <p class="font-semibold">{settings.email}</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            href={settings.mapsUrl}
+            target="_blank"
+            rel="noopener"
+            class="lift flex items-center gap-4 rounded-2xl border border-night/10 bg-cream p-5 hover:border-lantern/60"
+          >
+            <Icon name="pin" class="h-6 w-6 shrink-0 text-lantern-deep" />
+            <div>
+              <p class="text-xs font-bold tracking-wider text-night-soft uppercase">Dove siamo</p>
+              {/* Name + street + postcode + city: the same data as the park's
+                  Google listing, written in plain text and not only in the
+                  structured data (SEO-08) */}
+              <p class="font-semibold">{venue.name}</p>
+              <p class="font-semibold">
+                {venue.street}, {venue.postalCode} {venue.city}
+              </p>
+              <p class="mt-0.5 text-sm font-semibold text-lantern-deep">Apri in Google Maps <span aria-hidden="true">→</span></p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <form
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      class="flex h-full flex-col rounded-[2rem] bg-paper-warm p-6 sm:p-10"
+      data-animate="fade-left"
+      novalidate
+    >
+      <!-- Here the weekend notice is prominent, unlike the quiet version in
+           the ticket section: whoever is about to write must know it -->
+      {
+        settings.weekendNote && (
+          <p class="mb-6 flex items-start gap-3 rounded-2xl bg-lantern/15 p-4 text-sm font-semibold text-night">
+            <Icon name="moon" class="mt-0.5 h-5 w-5 shrink-0" />
+            <span>{settings.weekendNote}</span>
+          </p>
+        )
+      }
+
+      <!-- Web3Forms: the access key is a CMS field (CMS-11) -->
+      <input type="hidden" name="access_key" value={settings.web3formsKey} />
+      {/* Without this, the notification sender is called "Notifications" and
+          the inbox does not say where the message comes from. "replyto" is NOT
+          set: without it Web3Forms uses the writer's email, which is exactly
+          what is needed to answer. */}
+      <input type="hidden" name="from_name" value={`${settings.siteName} — modulo contatti`} />
+      <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label for="cf-name" class="mb-1.5 block text-sm font-bold">Nome</label>
+          <input id="cf-name" type="text" name="name" required autocomplete="name" class={fieldCls} />
+          <p id="cf-name-error" class="mt-1.5 hidden text-sm font-semibold text-lantern-deep">Scrivete il vostro nome.</p>
+        </div>
+        <div>
+          <label for="cf-email" class="mb-1.5 block text-sm font-bold">Email</label>
+          <input
+            id="cf-email"
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            class={fieldCls}
+          />
+          <p id="cf-email-error" class="mt-1.5 hidden text-sm font-semibold text-lantern-deep">
+            Serve un indirizzo email valido, per potervi rispondere (es. nome@email.it).
+          </p>
+        </div>
+        <div>
+          <label for="cf-phone" class="mb-1.5 block text-sm font-bold">
+            Telefono <span class="font-normal text-night-soft">(facoltativo)</span>
+          </label>
+          {/* Italian key on purpose: it is the label the client reads in the Web3Forms email */}
+          <input id="cf-phone" type="tel" name="telefono" autocomplete="tel" inputmode="tel" class={fieldCls} />
+        </div>
+        <div>
+          <label for="cf-subject" class="mb-1.5 block text-sm font-bold">Oggetto della richiesta</label>
+          <!-- The field is called "subject": Web3Forms uses it as the email
+               subject, so requests arrive already sorted in the inbox. -->
+          <span class="relative block">
+            <select id="cf-subject" name="subject" required class={`${fieldCls} appearance-none pr-11`}>
+              <option value="" disabled selected>Scegli un argomento…</option>
+              {contact.subjects.map((s) => <option value={`${settings.siteName} — ${s}`}>{s}</option>)}
+            </select>
+            <!-- drawn arrow: appearance-none removes the system one -->
+            <svg
+              class="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-night-soft"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </span>
+          <p id="cf-subject-error" class="mt-1.5 hidden text-sm font-semibold text-lantern-deep">Scegliete un argomento.</p>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <label for="cf-message" class="mb-1.5 block text-sm font-bold">Messaggio</label>
+        <textarea
+          id="cf-message"
+          name="message"
+          rows="5"
+          required
+          aria-describedby="cf-message-hint"
+          class={`${fieldCls} resize-y`}></textarea>
+        <p id="cf-message-hint" class="mt-1.5 text-sm text-night-soft">Quante persone siete, per quale data, cosa vi serve.</p>
+        <p id="cf-message-error" class="mt-1.5 hidden text-sm font-semibold text-lantern-deep">Scriveteci il vostro messaggio.</p>
+      </div>
+
+      <!-- mt-auto: consent and button stay at the bottom of the panel -->
+      <div class="mt-auto pt-5">
+        {/* hCaptcha: the script is NOT loaded with the page but at the first
+            interaction with the form (CODE-09): it pulls in third-party
+            domains, and the banner promises "technical cookies only" to whoever
+            does not write. The min-height reserves the space (PERF-03). */}
+        <div class="h-captcha mb-5 min-h-[78px]" data-captcha="true"></div>
+
+        <div>
+          <label class="flex items-start gap-3 text-sm text-night-soft">
+            <input
+              id="cf-privacy"
+              type="checkbox"
+              required
+              class="mt-0.5 h-5 w-5 shrink-0 accent-lantern-deep"
+            />
+            <span>
+              Ho letto l'<a href="/privacy/" class="font-semibold text-lantern-deep underline">informativa privacy</a> e acconsento al
+              trattamento dei dati.
+            </span>
+          </label>
+          <p id="cf-privacy-error" class="mt-1.5 hidden text-sm font-semibold text-lantern-deep">
+            Per inviare il messaggio serve il consenso al trattamento dei dati.
+          </p>
+        </div>
+        <button
+          type="submit"
+          class="lift mt-6 w-full rounded-full bg-night px-7 py-4 font-bold text-cream shadow-lg shadow-night/25 hover:bg-dusk disabled:cursor-wait disabled:opacity-80 sm:w-auto"
+        >
+          Invia il messaggio
+        </button>
+        <div aria-live="polite">
+          <p class="form-success mt-4 hidden rounded-xl bg-forest/15 p-4 text-sm font-semibold text-forest-deep">
+            {contact.successMessage}
+          </p>
+          <p class="form-error mt-4 hidden rounded-xl bg-lantern/15 p-4 text-sm font-semibold text-night"></p>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <style>
+    /* Custom dropdown in the site's style where the browser allows styling a
+       select; elsewhere the system menu stays, fully working. */
+    @supports (appearance: base-select) {
+      select,
+      select::picker(select) {
+        appearance: base-select;
+      }
+      select::picker-icon {
+        display: none;
+      }
+      select::picker(select) {
+        margin-top: 0.4rem;
+        padding: 0.4rem;
+        border: 1px solid color-mix(in srgb, var(--color-night) 12%, transparent);
+        border-radius: 1rem;
+        background: var(--color-cream);
+        box-shadow: 0 18px 40px -12px color-mix(in srgb, var(--color-night) 40%, transparent);
+        opacity: 0;
+        transform: translateY(-0.4rem);
+        transition:
+          opacity 0.25s var(--ease-soft),
+          transform 0.25s var(--ease-soft),
+          overlay 0.25s allow-discrete,
+          display 0.25s allow-discrete;
+      }
+      select:open::picker(select) {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      @starting-style {
+        select:open::picker(select) {
+          opacity: 0;
+          transform: translateY(-0.4rem);
+        }
+      }
+      option {
+        padding: 0.6rem 0.8rem;
+        border-radius: 0.7rem;
+        cursor: pointer;
+        transition: background 0.2s var(--ease-soft);
+      }
+      option:hover,
+      option:focus {
+        background: color-mix(in srgb, var(--color-lantern) 18%, transparent);
+      }
+      option:checked {
+        font-weight: 700;
+        color: var(--color-lantern-deep);
+      }
+      option:disabled {
+        color: var(--color-night-soft);
+      }
+      option::checkmark {
+        display: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        select::picker(select) {
+          transition: none;
+        }
+      }
+    }
+  </style>
+
+  <script>
+    // Sends without leaving the page, with inline validation and outcome (A11Y-12)
+    const form = document.querySelector<HTMLFormElement>('#contatti form')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const success = form.querySelector<HTMLElement>('.form-success')!;
+    const failure = form.querySelector<HTMLElement>('.form-error')!;
+    const idleLabel = button.textContent!.trim();
+
+    // hCaptcha loaded at the first interaction with the form, not with the
+    // page: whoever passes by without writing contacts no external domain. The
+    // script is Web3Forms', which mounts the widget inside div.h-captcha.
+    let captchaStarted = false;
+    const startCaptcha = () => {
+      if (captchaStarted) return;
+      captchaStarted = true;
+      const s = document.createElement('script');
+      s.src = 'https://web3forms.com/client/script.js';
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    };
+    // focusin covers fields reached by keyboard; pointerdown whoever taps the panel
+    form.addEventListener('focusin', startCaptcha, { once: true });
+    form.addEventListener('pointerdown', startCaptcha, { once: true });
+
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]'));
+    const errorOf = (f: Element) => form.querySelector<HTMLElement>(`#${f.id}-error`);
+    // The error joins the field's description only while it is shown: a hidden
+    // error referenced from the start would be read before any mistake.
+    const check = (f: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      const ok = f.checkValidity();
+      const error = errorOf(f);
+      f.setAttribute('aria-invalid', String(!ok));
+      error?.classList.toggle('hidden', ok);
+      if (error) {
+        const ids = (f.getAttribute('aria-describedby') ?? '').split(' ').filter((id) => id && id !== error.id);
+        if (!ok) ids.push(error.id);
+        if (ids.length) f.setAttribute('aria-describedby', ids.join(' '));
+        else f.removeAttribute('aria-describedby');
+      }
+      return ok;
+    };
+    // required fields start explicitly valid: browsers expose an empty required
+    // field as invalid before the person has typed anything
+    fields.forEach((f) => f.setAttribute('aria-invalid', 'false'));
+    // once a field has been marked wrong, it is re-checked as the person fixes it
+    fields.forEach((f) => f.addEventListener('input', () => f.getAttribute('aria-invalid') === 'true' && check(f)));
+    fields.forEach((f) => f.addEventListener('change', () => f.getAttribute('aria-invalid') === 'true' && check(f)));
+
+    const showFailure = (message: string) => {
+      failure.textContent = message;
+      failure.classList.remove('hidden');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      success.classList.add('hidden');
+      failure.classList.add('hidden');
+
+      const invalid = fields.filter((f) => !check(f));
+      if (invalid.length) {
+        invalid[0].focus();
+        return;
+      }
+
+      // Without the captcha token Web3Forms refuses the message: better to
+      // stop here with clear words than to send a request bound to fail. The
+      // widget not ready yet is a matter of waiting, not the person's mistake.
+      const token = form.querySelector<HTMLTextAreaElement>('[name="h-captcha-response"]');
+      if (!token || !token.value) {
+        showFailure(
+          token
+            ? 'Confermate di non essere un robot con la casella qui sopra, poi inviate di nuovo.'
+            : 'La verifica antispam si sta caricando: riprovate fra un istante.'
+        );
+        startCaptcha();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Invio in corso…';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error('submit failed');
+        success.classList.remove('hidden');
+        form.reset();
+        fields.forEach((f) => f.setAttribute('aria-invalid', 'false'));
+        button.textContent = 'Inviato ✓';
+      } catch {
+        button.disabled = false;
+        button.textContent = idleLabel;
+        showFailure('Il messaggio non è partito: controllate la connessione e riprovate, oppure chiamateci.');
+      }
+    });
+  </script>
+</section>

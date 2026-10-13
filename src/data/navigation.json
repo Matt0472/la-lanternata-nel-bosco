@@ -1,0 +1,11 @@
+{
+  "items": [
+    { "label": "La serata", "target": "#serata" },
+    { "label": "Il libro", "target": "#libro" },
+    { "label": "Foto", "target": "#gallery" },
+    { "label": "Info", "target": "#info" },
+    { "label": "Biglietti", "target": "#biglietti" },
+    { "label": "FAQ", "target": "#faq" },
+    { "label": "Contatti", "target": "#contatti" }
+  ]
+}

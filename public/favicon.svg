@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The lantern of the mark on a night tile: it reads on light and dark tabs
+       alike. Simplified (no halo, thicker frame) to stay legible at 16px. -->
+  <defs>
+    <radialGradient id="g" cx="0.5" cy="0.62" r="0.7">
+      <stop offset="0" stop-color="#fffcf5"/>
+      <stop offset="0.4" stop-color="#f7bd63"/>
+      <stop offset="1" stop-color="#f2a23c"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#141a33"/>
+  <g fill="#f6f1e6">
+    <circle cx="32" cy="8.5" r="4" fill="none" stroke="#f6f1e6" stroke-width="3"/>
+    <path d="M32 12 L43 20 H21 Z"/>
+    <rect x="18" y="19.5" width="28" height="5" rx="2.5"/>
+    <rect x="18" y="49" width="28" height="5.5" rx="2.5"/>
+  </g>
+  <rect x="21.5" y="24.5" width="21" height="24.5" fill="url(#g)"/>
+  <path d="M32 30.5 c3 3.6 4.2 6 4.2 8 a4.2 4.2 0 0 1-8.4 0 c0-2 1.2-4.4 4.2-8 Z" fill="#fffcf5"/>
+  <path d="M21.5 24.5 V49 M42.5 24.5 V49" stroke="#f6f1e6" stroke-width="3"/>
+</svg>

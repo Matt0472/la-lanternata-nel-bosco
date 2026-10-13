@@ -1,0 +1,21 @@
+{
+  "eyebrow": "Contatti",
+  "title": "Domande? Scriveteci",
+  "text": "Per gruppi o qualsiasi domanda sulla Lanternata: compilate il modulo e vi rispondiamo entro un giorno lavorativo.",
+  "subjects": [
+    "Informazioni generali",
+    "Biglietti e prenotazioni",
+    "Gruppi",
+    "Il libro",
+    "Altro"
+  ],
+  "successMessage": "Messaggio inviato. Vi rispondiamo entro un giorno lavorativo.",
+  "parkTagline": "La Lanternata al chiaro di luna è un evento del Bosco della Luna, il parco nella natura alle porte di Milano.",
+  "parkCta": "Scopri il Bosco della Luna",
+  "google": {
+    "show": true,
+    "score": "4,8",
+    "count": "334 recensioni",
+    "url": "https://www.trustindex.io/reviews/www.boscodellaluna.it-1"
+  }
+}

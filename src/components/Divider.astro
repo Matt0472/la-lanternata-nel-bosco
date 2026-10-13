@@ -1,0 +1,58 @@
+---
+// Separator between two sections: the alternating moon arc (DES-12).
+//
+// The divider opens a section and fills its top with the colour of the
+// section above (`from`), cut by one broad, regular arc. Normally the arc
+// bends up: this section rises into the one above like the edge of a moon.
+// With `flip` it bends down: the section above hangs into this one. The seams
+// alternate, so every other section bulges at both ends like a lens.
+//
+// `lanterns` sets three lit lanterns on the arc: only on the passage into the
+// ticket section, where the arc bends up.
+type Tone = 'night' | 'paper' | 'paper-warm';
+interface Props {
+  from: Tone;
+  flip?: boolean;
+  lanterns?: boolean;
+  class?: string;
+}
+const { from, flip = false, lanterns: withLanterns = false, class: cls = '' } = Astro.props;
+
+// A quadratic curve from the bottom corners whose peak touches the top edge in
+// the middle; stretched in width it stays a smooth arc. The flipped one hangs
+// from the top corners down to the bottom edge.
+const ARC_UP = 'M0 0 H1440 V100 Q720 -100 0 100 Z';
+const ARC_DOWN = 'M0 0 H1440 Q720 200 0 0 Z';
+
+// On the upward curve y = 100·(1 − 2t)², so at 25% and 75% of the width the arc
+// is at 75% of the height from the bottom, and at the top in the middle; a few
+// points less plant the lanterns' feet
+const lanterns = [
+  { left: 25, bottom: 72, width: 'w-6 sm:w-7 lg:w-8' },
+  { left: 50, bottom: 96, width: 'w-7 sm:w-8 lg:w-10' },
+  { left: 75, bottom: 72, width: 'w-6 sm:w-7 lg:w-8' },
+];
+---
+
+<div class={`pointer-events-none relative h-10 w-full sm:h-14 lg:h-20 ${cls}`} aria-hidden="true">
+  {/* The fill bleeds 1px into the section above (same colour, invisible):
+      without it, fractional phone DPRs left a hairline along the seam */}
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="absolute inset-x-0 -top-px h-[calc(100%+1px)] w-full">
+    <path d={flip ? ARC_DOWN : ARC_UP} fill={`var(--color-${from})`} />
+  </svg>
+  {
+    withLanterns &&
+      !flip &&
+      lanterns.map((l) => (
+        // the drawing's glow reaches below the lantern's foot (24 of its 70
+        // units): lowered by that much, the foot stands on the arc
+        <svg
+          viewBox="-22 -46 44 70"
+          class={`absolute -translate-x-1/2 translate-y-[34%] ${l.width}`}
+          style={`left:${l.left}%; bottom:${l.bottom}%`}
+        >
+          <use href="#divider-lantern" x="-22" y="-46" width="44" height="70" />
+        </svg>
+      ))
+  }
+</div>

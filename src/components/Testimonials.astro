@@ -1,0 +1,149 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Divider from './Divider.astro';
+import testimonials from '../data/testimonials.json';
+
+// Vertical columns that scroll forever, the "testimonials columns" pattern of
+// 21st.dev rewritten without a framework. Reviews are dealt round-robin: the
+// lengths mix and the columns stay balanced when more are added from the panel.
+type Review = (typeof testimonials.items)[number];
+const COLUMNS = 3;
+const columns: Review[][] = Array.from({ length: COLUMNS }, () => []);
+testimonials.items.forEach((t, i) => columns[i % COLUMNS].push(t));
+
+// On phones only one column shows: if it were one of the three, two thirds of
+// the reviews would never exist for mobile readers (most of them). So below
+// md a dedicated track runs ALL the reviews, proportionally slower.
+const all = testimonials.items;
+
+// The rating comes from a free number field: rounded and kept within 1–5, so
+// a typo can neither break the build ('☆'.repeat(-1) throws) nor draw half a
+// star. Missing → no stars at all (CMS-10).
+const stars = (rating: unknown) => {
+  const n = Math.round(Number(rating));
+  return Number.isFinite(n) && n > 0 ? Math.min(5, n) : 0;
+};
+
+// Staggered speeds, slow: the reviews are meant to be read
+const durations = ['55s', '70s', '62s'];
+const mobileDuration = '170s';
+---
+
+<section id="recensioni" class="bg-paper pb-20 sm:pb-28">
+  <Divider from="night" flip class="mb-16 sm:mb-20" />
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeading eyebrow={testimonials.eyebrow} title={testimonials.title} intro={testimonials.intro} />
+
+    <!-- Each column holds its cards twice: the second copy (aria-hidden) only
+         makes the loop seamless. The vertical gap is the cards' margin-bottom,
+         not a flex gap: that way translateY(-50%) restarts exactly. -->
+    <div
+      class="t-marquee mt-14 grid max-h-[38rem] grid-cols-1 gap-6 overflow-hidden md:max-h-[46rem] md:grid-cols-2 lg:grid-cols-3"
+      data-marquee
+    >
+      {
+        [
+          { reviews: all, duration: mobileDuration, cls: 'md:hidden' },
+          { reviews: columns[0], duration: durations[0], cls: 'hidden md:block' },
+          { reviews: columns[1], duration: durations[1], cls: 'hidden md:block' },
+          { reviews: columns[2], duration: durations[2], cls: 'hidden lg:block' },
+        ].map(({ reviews, duration, cls }) => (
+          <div class:list={['t-col', cls]}>
+            <div class="t-track" style={`--duration: ${duration}`}>
+              {[false, true].map((copy) => (
+                <div class={copy ? 't-copy' : undefined} aria-hidden={copy || undefined}>
+                  {reviews.map((t) => (
+                    <figure class="mb-6 flex flex-col rounded-3xl border border-night/10 bg-cream p-7 shadow-sm">
+                      {stars(t.rating) > 0 && (
+                        <p class="text-lg tracking-wider text-lantern-deep">
+                          {/* a label only works on an element with a role: the
+                              stars become one image named by the score */}
+                          <span role="img" aria-label={`${stars(t.rating)} stelle su 5`}>
+                            {'★'.repeat(stars(t.rating))}
+                            {'☆'.repeat(5 - stars(t.rating))}
+                          </span>
+                        </p>
+                      )}
+                      <blockquote class="mt-4 grow leading-relaxed text-night-soft">"{t.text}"</blockquote>
+                      <figcaption class="mt-5 font-bold">{t.name}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fade at the top and bottom: the cards come out of nothing */
+  .t-marquee {
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  }
+  .t-track {
+    animation: t-scroll var(--duration) linear infinite;
+    will-change: transform;
+  }
+  /* Paused under the pointer, to read in peace. Only with a real pointer: on
+     touch the pseudo-hover sticks to the tap and the column would never
+     restart (there is a timed pause for touch, see the script). */
+  @media (hover: hover) {
+    .t-col:hover .t-track {
+      animation-play-state: paused;
+    }
+  }
+  .t-col[data-paused] .t-track,
+  .t-marquee[data-offscreen] .t-track {
+    animation-play-state: paused;
+  }
+  @keyframes t-scroll {
+    to {
+      transform: translateY(-50%);
+    }
+  }
+  /* Without motion: a complete static list, no copies and no mask */
+  @media (prefers-reduced-motion: reduce) {
+    .t-marquee {
+      max-height: none;
+      mask-image: none;
+    }
+    .t-track {
+      animation: none;
+    }
+    .t-copy {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // The marquee only runs while on screen: off-screen it stays paused.
+  const marquee = document.querySelector<HTMLElement>('[data-marquee]');
+  if (marquee && 'IntersectionObserver' in window) {
+    marquee.setAttribute('data-offscreen', '');
+    new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) marquee.removeAttribute('data-offscreen');
+        else marquee.setAttribute('data-offscreen', '');
+      }
+    }).observe(marquee);
+  }
+
+  // On touch: a tap pauses the column to read, then it restarts by itself
+  const TOUCH_PAUSE = 6000;
+  marquee?.querySelectorAll<HTMLElement>('.t-col').forEach((col) => {
+    let timer: ReturnType<typeof setTimeout>;
+    col.addEventListener(
+      'touchstart',
+      () => {
+        col.setAttribute('data-paused', '');
+        clearTimeout(timer);
+        timer = setTimeout(() => col.removeAttribute('data-paused'), TOUCH_PAUSE);
+      },
+      { passive: true }
+    );
+  });
+</script>

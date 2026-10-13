@@ -1,0 +1,114 @@
+---
+import LanternMark from './LanternMark.astro';
+import settings from '../data/settings.json';
+import hero from '../data/hero.json';
+import navigation from '../data/navigation.json';
+
+// On the home page anchors stay bare (#section: smooth in-page scroll); from
+// the other pages (privacy, cookie, 404) they must lead back home: /#section.
+const base = Astro.url.pathname === '/' ? '' : '/';
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-cream/10 bg-night/85 backdrop-blur-md">
+  <div class="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6">
+    <a href={`${base}#top`} class="flex h-11 min-w-11 items-center gap-1.5 text-cream" aria-label="La Lanternata, torna all'inizio">
+      <LanternMark class="h-11 w-auto shrink-0 -my-1" />
+      <!-- under 420px the name collides with the centred park logo, and from
+           768 to 1279px it steals the room the section links need: the
+           lantern stays, the name is read in the hero title right below -->
+      <span class="font-display text-lg whitespace-nowrap max-[419px]:hidden md:max-xl:hidden">La Lanternata</span>
+    </a>
+
+    <!-- On phones the park mark is just a logo, centred in the bar; from tablet
+         up it goes back in line as a pill next to the booking button. Its
+         colours need a light ground: on the night bar it sits on cream. -->
+    <a
+      href={settings.parkUrl}
+      target="_blank"
+      rel="noopener"
+      class="absolute top-1/2 left-1/2 inline-flex h-11 -translate-x-1/2 -translate-y-1/2 items-center rounded-full bg-cream px-3 sm:hidden"
+      title="Un evento del Bosco della Luna"
+      aria-label="Bosco della Luna, vai al sito del parco"
+    >
+      <img src="/logo-bosco-419.png" alt="" width="419" height="283" class="h-6 w-auto" />
+    </a>
+
+    <nav class="hidden items-center gap-4 text-sm font-semibold text-cream/80 md:flex lg:gap-6" aria-label="Sezioni della pagina">
+      {
+        navigation.items.map((link) => (
+          <a
+            href={`${base}${link.target}`}
+            class="nav-link relative min-w-11 py-3 text-center transition-colors duration-300 hover:text-lantern after:absolute after:bottom-1.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-lantern after:transition-transform after:duration-500 after:ease-soft aria-[current]:text-lantern aria-[current]:after:scale-x-100"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- The two pills always share the same size, whatever the button text
+         from the panel (DES-15): two equal columns of one grid -->
+    <div class="flex items-center sm:grid sm:auto-cols-fr sm:grid-flow-col sm:gap-3">
+      <a
+        href={settings.parkUrl}
+        target="_blank"
+        rel="noopener"
+        class="lift hidden h-11 items-center justify-center rounded-full bg-cream px-4 hover:shadow-md hover:shadow-black/20 sm:inline-flex"
+        title="Un evento del Bosco della Luna"
+        aria-label="Bosco della Luna, vai al sito del parco"
+      >
+        <img src="/logo-bosco-419.png" alt="" width="419" height="283" class="h-8 w-auto" />
+      </a>
+      <a
+        href={`${base}#biglietti`}
+        class="lift inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-lantern px-4 text-sm font-bold whitespace-nowrap text-night shadow-md shadow-black/25 hover:bg-lantern-light"
+      >
+        <!-- the long label only where the menu leaves room for it -->
+        <span class="lg:hidden">{hero.ctaShortLabel}</span>
+        <span class="hidden lg:inline">{hero.ctaLabel}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Scrollspy: lights up the menu entry of the current section. An entry stays
+  // lit from the start of its section to the start of the next one in the menu
+  // (sections in between turn nothing off).
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-link'));
+  const targets = links
+    .map((link) => ({ link, section: document.querySelector<HTMLElement>(link.hash) }))
+    .filter((t): t is { link: HTMLAnchorElement; section: HTMLElement } => t.section !== null);
+
+  let ticking = false;
+  function updateActive() {
+    ticking = false;
+    // reference line: 35% of the viewport below the top edge
+    const line = window.scrollY + window.innerHeight * 0.35;
+    let current: HTMLAnchorElement | null = null;
+    for (const { link, section } of targets) {
+      if (section.offsetTop <= line) current = link;
+    }
+    // at the very bottom the last section wins even if it never reaches the line
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
+      current = targets[targets.length - 1]?.link ?? current;
+    }
+    for (const { link } of targets) {
+      if (link === current) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    }
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateActive);
+      }
+    },
+    { passive: true }
+  );
+  window.addEventListener('resize', updateActive, { passive: true });
+  updateActive();
+</script>

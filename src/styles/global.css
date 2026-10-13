@@ -1,0 +1,179 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces/soft.css';
+@import '@fontsource-variable/figtree';
+/* Lenis' own rules (html height, overscroll) for when it is running */
+@import 'lenis/dist/lenis.css';
+
+@theme {
+  /* "Night storybook" palette: blue night, moon-coloured paper, lantern light.
+     Contrast pairs are measured in design-system/lanternata/MASTER.md. */
+  --color-night: #141a33;
+  --color-night-soft: #4a5276;
+  --color-dusk: #232c52;
+  --color-paper: #f6f1e6;
+  --color-paper-warm: #ece3cf;
+  --color-cream: #fffcf5;
+  --color-lantern: #f2a23c;
+  --color-lantern-light: #f7bd63;
+  --color-lantern-deep: #9a4d10;
+  --color-forest: #3f5b47;
+  --color-forest-deep: #2b4233;
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Figtree Variable', system-ui, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  /* the fixed header is 4rem tall: anchors and focused elements land below it.
+     animations.js reads this same value for the Lenis offset. */
+  scroll-padding-top: 5rem;
+  /* the floating corner buttons must not cover what keyboard focus reaches */
+  scroll-padding-bottom: 5rem;
+}
+/* Without Lenis (reduced motion) jumps are instant: smooth only for whoever wants motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-night);
+  -webkit-font-smoothing: antialiased;
+  /* clip, not hidden: hidden would create a scroll container and break
+     position: sticky (the card stack of "L'esperienza") on Safari */
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  /* the soft axis gives Fraunces the rounded terminals of a picture book */
+  font-variation-settings: 'SOFT' 100;
+  font-synthesis: none;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 560;
+  letter-spacing: -0.005em;
+}
+
+/* Initial state of the on-scroll animated elements (see src/scripts/animations.js).
+   Without JS, or with reduced motion, everything stays visible. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-animate] {
+    opacity: 0;
+  }
+
+  /* Above-the-fold elements do not go through Motion but through CSS: waiting
+     for the JS module pushed LCP past 3 s on the sister site. Same movement
+     (0.8 s, --ease-soft, 36px rise), started at first paint. Each element's
+     delay comes from --enter-delay in the markup. */
+  [data-animate-now] {
+    animation: enter-rise 0.8s var(--ease-soft) var(--enter-delay, 0s) both;
+  }
+  [data-animate-now='fade-in'] {
+    animation-name: enter-fade;
+  }
+}
+
+@keyframes enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::selection {
+  background-color: var(--color-lantern);
+  color: var(--color-night);
+}
+
+/* House micro-interaction for cards and buttons */
+.lift {
+  transition:
+    transform 0.35s var(--ease-soft),
+    box-shadow 0.35s var(--ease-soft),
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+}
+.lift:active {
+  transform: translateY(-1px);
+}
+
+/* The ring must reach 3:1 on its ground (1.4.11): the deep amber on paper,
+   the light amber on night (lantern-deep on night is only 2.8:1) */
+:focus-visible {
+  outline: 3px solid var(--color-lantern-deep);
+  outline-offset: 3px;
+}
+:is(header, footer, dialog, #top, #libro, #biglietti, .bg-night, .bg-dusk) :focus-visible {
+  outline-color: var(--color-lantern);
+}
+/* Sections receive focus programmatically after an in-page jump (skip link,
+   menu, back to top) so the next Tab starts there: no ring around a whole
+   section, the reader already sees where they landed */
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+/* ── Cookie banner (vanilla-cookieconsent), dressed in the site palette ── */
+#cc-main {
+  --cc-font-family: var(--font-body);
+  --cc-bg: var(--color-cream);
+  --cc-primary-color: var(--color-night);
+  --cc-secondary-color: var(--color-night-soft);
+  --cc-btn-primary-bg: var(--color-lantern);
+  --cc-btn-primary-border-color: var(--color-lantern);
+  --cc-btn-primary-hover-bg: var(--color-lantern-light);
+  --cc-btn-primary-hover-border-color: var(--color-lantern-light);
+  --cc-btn-primary-color: var(--color-night);
+  --cc-btn-primary-hover-color: var(--color-night);
+  --cc-btn-secondary-bg: transparent;
+  --cc-btn-secondary-color: var(--color-night);
+  --cc-btn-secondary-border-color: color-mix(in srgb, var(--color-night) 25%, transparent);
+  --cc-btn-secondary-hover-bg: color-mix(in srgb, var(--color-night) 6%, transparent);
+  --cc-btn-secondary-hover-color: var(--color-night);
+  --cc-btn-secondary-hover-border-color: var(--color-night);
+  --cc-separator-border-color: color-mix(in srgb, var(--color-night) 10%, transparent);
+  --cc-toggle-on-bg: var(--color-forest);
+  --cc-toggle-off-bg: var(--color-night-soft);
+  --cc-toggle-readonly-bg: color-mix(in srgb, var(--color-forest) 55%, transparent);
+  --cc-cookie-category-block-bg: var(--color-paper);
+  --cc-cookie-category-block-hover-bg: var(--color-paper-warm);
+  --cc-modal-border-radius: 1.5rem;
+  --cc-btn-border-radius: 9999px;
+  --cc-modal-transition-duration: 0.35s;
+  --cc-link-color: var(--color-lantern-deep);
+  --cc-overlay-bg: color-mix(in srgb, var(--color-night) 60%, transparent);
+}
+#cc-main .cm__title,
+#cc-main .pm__title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+}

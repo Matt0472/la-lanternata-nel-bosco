@@ -1,0 +1,24 @@
+{
+  "eyebrow": "Bambini sotto i 3 anni",
+  "image": "/uploads/gufetto-piccoli.webp",
+  "title": "La Lanternata è anche per i più piccoli",
+  "text": "Per entrare nella storia non serve un'altezza minima: anche chi non ha ancora compiuto 3 anni può venire insieme a voi. Entra gratis, accompagnato da un adulto pagante, e partecipa anche al laboratorio della lanterna.",
+  "points": [
+    {
+      "icon": "🎟️",
+      "title": "Entrano gratis",
+      "text": "I bambini sotto i 3 anni non pagano il biglietto: basta che siano accompagnati da un adulto pagante."
+    },
+    {
+      "icon": "🏮",
+      "title": "Laboratorio compreso",
+      "text": "Decorano anche loro la propria lanterna. I nostri animatori guidano l'attività, ma il bambino resta sotto la responsabilità del genitore, che lo segue per tutta la durata del laboratorio."
+    },
+    {
+      "icon": "🐐",
+      "title": "Tra gli animali",
+      "text": "Si può andare a trovare le capre e le galline del parco, e accarezzare gli asinelli."
+    }
+  ],
+  "cta": "Prenota per tutta la famiglia"
+}

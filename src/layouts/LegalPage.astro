@@ -1,0 +1,83 @@
+---
+// Layout of the legal pages (privacy and cookie policy), whose texts live in
+// Markdown (src/pages/*.md) and are edited from Pages CMS. Here are the parts
+// that must never break: structure, typography and — in the cookie policy —
+// the "manage preferences" button.
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { frontmatter } = Astro.props;
+
+// The preferences button only shows on the cookie policy: derived from the
+// path, so the panel can neither switch it off nor delete it by mistake.
+const withPreferences = Astro.url.pathname.startsWith('/cookie');
+---
+
+<Base title={frontmatter.title} noindex>
+  <Header />
+  <main id="main" class="mx-auto max-w-3xl px-4 pt-32 pb-20 sm:px-6">
+    <h1 class="text-4xl leading-tight text-balance sm:text-5xl">{frontmatter.heading}</h1>
+    <div class="legal mt-8">
+      <slot />
+    </div>
+
+    {
+      withPreferences && (
+        <p class="mt-8">
+          <button
+            type="button"
+            class="lift inline-flex items-center justify-center rounded-full bg-lantern px-7 py-3.5 font-bold text-night shadow-lg shadow-night/20 hover:bg-lantern-light"
+            onclick="window.showCookiePreferences?.()"
+          >
+            Gestisci le preferenze cookie
+          </button>
+        </p>
+      )
+    }
+
+    {frontmatter.updated && <p class="mt-8 text-sm text-night-soft">Ultimo aggiornamento: {frontmatter.updated}.</p>}
+  </main>
+  <Footer />
+</Base>
+
+<style is:global>
+  /* Typography of the legal pages' Markdown */
+  .legal {
+    color: var(--color-night-soft);
+    line-height: 1.7;
+  }
+  .legal h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    color: var(--color-night);
+  }
+  .legal p,
+  .legal ul,
+  .legal ol {
+    margin-bottom: 1.25rem;
+  }
+  .legal ul,
+  .legal ol {
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+  .legal li {
+    margin-bottom: 0.5rem;
+  }
+  .legal a {
+    font-weight: 600;
+    color: var(--color-lantern-deep);
+    text-decoration: underline;
+  }
+  .legal strong {
+    color: var(--color-night);
+  }
+  .legal code {
+    font-size: 0.9em;
+    background: color-mix(in srgb, var(--color-night) 6%, transparent);
+    padding: 0.1em 0.4em;
+    border-radius: 0.4em;
+  }
+</style>
