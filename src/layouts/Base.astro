@@ -82,7 +82,11 @@ const bookSchema = {
   '@type': 'Book',
   '@id': bookId,
   name: book.title,
-  author: { '@type': 'Person', name: book.author },
+  author: {
+    '@type': 'Person',
+    name: book.author,
+    ...(book.authorInstagram ? { sameAs: [book.authorInstagram] } : {}),
+  },
   ...(book.publisher ? { publisher: { '@type': 'Organization', name: book.publisher } } : {}),
   ...(book.isbn ? { isbn: book.isbn } : {}),
   ...(Number(book.pages) > 0 ? { numberOfPages: Number(book.pages) } : {}),

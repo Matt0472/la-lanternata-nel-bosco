@@ -113,6 +113,23 @@ import book from '../data/book.json';
         >
           {book.authorTitle && <h3 class="text-xl text-cream">{book.authorTitle}</h3>}
           <p class="mt-2 leading-relaxed text-pretty text-cream/80">{book.authorText}</p>
+          {
+            book.authorInstagram && book.authorInstagramLabel && (
+              // one chip, icon and words together: it reads as a single action.
+              // On a phone the words can take two lines: then it is a rounded
+              // box rather than a pill, which would look swollen
+              <a
+                href={book.authorInstagram}
+                target="_blank"
+                rel="noopener"
+                class="lift mt-4 inline-flex min-h-11 max-w-full items-center gap-2.5 rounded-2xl bg-cream/10 px-4 py-2.5 text-sm leading-snug font-semibold text-cream ring-1 ring-cream/20 hover:bg-cream/15 hover:ring-cream/40 sm:rounded-full"
+              >
+                <Icon name="instagram" class="h-5 w-5 shrink-0 text-lantern" />
+                {book.authorInstagramLabel}
+                <span class="sr-only">(si apre in una nuova scheda)</span>
+              </a>
+            )
+          }
         </div>
       )
     }

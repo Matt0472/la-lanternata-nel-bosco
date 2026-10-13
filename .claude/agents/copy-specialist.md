@@ -34,7 +34,7 @@ phone, and make them curious about a book they have never heard of. You write fo
 Only these, and what the client adds (`COPY-03`):
 
 - **When**: 14–15 and 21–22 November, one turn a day, 15:30–18:30 (from `src/data/info.json`).
-- **Who**: every child is welcome; recommended age 3–12. From 3 they pay, with at least one paying adult; under-3s are free, decorate their lantern with a parent and take it home. Everyone can join the moonlit walk with the lanterns.
+- **Who**: every child is welcome; recommended age 3–12. Prices by age: under 3 (not yet turned 3) free; from 3 (turned 3) to 12 not yet turned, child ticket 15 €, with at least one paying adult; from 12 turned, 5 € like adults. Under-3s decorate their lantern with a parent and take it home. Everyone can join the moonlit walk with the lanterns.
 - **How the evening goes** (`src/data/program.json`): children decorate their lantern and hand it in;
   it dries out of sight while they play; just after sunset, at the stage, the animated reading of the
   book; walking back towards the bar they find **all the lanterns lit**; each takes theirs and the

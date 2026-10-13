@@ -21,8 +21,10 @@ const badgeAttrs = g.url ? { href: g.url, target: '_blank', rel: 'noopener' } : 
 
 <footer class="bg-night text-cream/80">
   <Divider from="paper" />
-  <!-- less room below the closing line than above: the page ends there -->
-  <div class="mx-auto max-w-6xl px-4 pt-14 pb-6 sm:px-6">
+  <!-- the room at the bottom keeps the closing line clear of the two floating
+     buttons in the corners (cookie preferences, back to top); the line goes
+     horizontal only from xl, where the side margins leave the corners free -->
+  <div class="mx-auto max-w-6xl px-4 pt-14 pb-24 sm:px-6 xl:pb-8">
     <div class="mb-12 flex items-center justify-center gap-2 text-cream md:justify-start">
       <LanternMark class="h-14 w-auto" />
       <p class="font-display text-2xl leading-tight">
@@ -149,12 +151,12 @@ const badgeAttrs = g.url ? { href: g.url, target: '_blank', rel: 'noopener' } : 
     </div>
 
     <div
-      class="mt-12 flex flex-col items-center gap-3 border-t border-cream/10 pt-8 text-center text-xs sm:flex-row sm:items-center sm:justify-between sm:text-left"
+      class="mt-12 flex flex-col items-center gap-3 border-t border-cream/10 pt-8 text-center text-xs xl:flex-row xl:items-center xl:justify-between xl:text-left"
     >
       <p>Copyright © {year} {settings.copyrightHolder}. Tutti i diritti sono riservati.</p>
 
       <!-- Developer's signature, in the middle of the closing line -->
-      <p class="flex items-center justify-center gap-2 text-sm" lang="en">
+      <p class="flex items-center justify-center gap-2 text-sm whitespace-nowrap" lang="en">
         <span>Made with</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0" role="img" aria-label="love">
           <path

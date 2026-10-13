@@ -60,7 +60,7 @@ messaggio, venderne qualche copia ai mercatini.
 - **Foto vere** per la gallery (oggi 10 segnaposto «Foto in arrivo», `public/uploads/segnaposto-*.jpg`) e **recensioni** da tenere o cambiare
   (quelle del parco parlano di Halloween).
 - **La lanterna si porta a casa**: confermato dall'utente il 13 ott 2026 (anche i bimbi sotto i 3 anni la preparano con i genitori e la portano a casa). La FAQ dedicata era stata tolta: si può rimettere. Resta da sapere se la luce va via con la lanterna.
-- **Età**: consigliata 3–12 anni (decisione dell'utente, 13 ott 2026), tutti i bambini benvenuti. Da chiarire il prezzo dei 12enni: oggi «Adulti (12+)» a 5 € si sovrappone all'età consigliata.
+- **Età e prezzi** (decisione dell'utente, 13 ott 2026): consigliata 3–12 anni, tutti i bambini benvenuti. Gratis fino a 3 anni non compiuti; 15 € dai 3 compiuti ai 12 non compiuti; 5 € dai 12 compiuti, come gli adulti.
 - **Pioggia**: l'evento si fa lo stesso? Come si avvisano le famiglie? Il voucher del 22 novembre per
   quale data? La FAQ riprende la regola del gemello.
 - **Animali** (capre, galline, asinelli) visitabili tra le 15:30 e le 18:30? È nel riquadro dei più

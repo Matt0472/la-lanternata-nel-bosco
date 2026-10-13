@@ -12,18 +12,18 @@
   "pricesTitle": "Prezzi",
   "prices": [
     {
-      "label": "Bambini dai 3 anni",
-      "note": "età consigliata 3–12 anni, con almeno un adulto pagante",
+      "label": "Bambini dai 3 ai 12 anni",
+      "note": "dai 3 anni compiuti ai 12 non compiuti, con almeno un adulto pagante",
       "price": "15 €"
     },
     {
-      "label": "Adulti (12+)",
-      "note": "accompagnatori",
+      "label": "Dai 12 anni compiuti",
+      "note": "ragazzi e adulti accompagnatori",
       "price": "5 €"
     },
     {
       "label": "Sotto i 3 anni",
-      "note": "con un adulto pagante",
+      "note": "non compiuti, con un adulto pagante",
       "price": "Gratis"
     },
     {
