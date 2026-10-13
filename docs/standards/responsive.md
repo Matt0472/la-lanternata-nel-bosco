@@ -4,8 +4,10 @@
   **1920**, un **telefono basso** (375×667) accanto a uno alto (390×844) e un tablet in verticale
   (768×1024). La maggior parte delle famiglie arriva dal telefono, da un social o da WhatsApp.
 - **RESP-02** — **Nessuno scroll orizzontale** e nessun overflow a nessuna larghezza. Le decorazioni
-  grandi (alone della luna, albero con le lanterne, lucciole) sono ritagliate dalla loro sezione (`overflow: hidden` o
-  `clip`), mai lasciate allargare la pagina.
+  grandi (alone della luna, albero con le lanterne, lucciole) sono ritagliate dalla loro sezione, mai
+  lasciate allargare la pagina. Una sezione che apre con l'arco (`Divider`) ritaglia **solo in
+  orizzontale** (`overflow-x: clip`, mai `hidden`): `hidden` taglierebbe il pixel con cui l'arco sborda
+  nella sezione sopra, e sui telefoni comparirebbe una riga sottile lungo il bordo.
 - **RESP-03** — Gutter laterale **≥ 16px su mobile, ≥ 24px da tablet** (`px-4 sm:px-6`).
 - **RESP-04** — **Tap target ≥ 44px** per ogni elemento interattivo.
 - **RESP-05** — **Immagini fluide** (`max-width: 100%`, `object-fit` corretto, nessuna larghezza fissa

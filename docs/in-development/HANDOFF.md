@@ -1,6 +1,6 @@
 # HANDOFF — La Lanternata al chiaro di luna
 
-Aggiornato: **13 ott 2026, ore 21:30**, primo commit e anteprima online. Prima versione: progetto creato da zero (canone, team di agenti
+Aggiornato: **13 ott 2026, ore 22:00**: anteprima online in HTTPS, età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta. Prima versione: progetto creato da zero (canone, team di agenti
 e skill, sito completo in locale, revisioni di codice, copy, CMS, accessibilità e design già applicate).
 Nessun commit ancora.
 
@@ -20,11 +20,14 @@ messaggio, venderne qualche copia ai mercatini.
 
 ## Stato attuale
 
-- **Repo:** `Matt0472/la-lanternata-nel-bosco` (pubblico), branch `main`, primo commit del 13 ott 2026.
-  **Anteprima** su GitHub Pages: https://lanternata-anteprima.mapped-dev.it (`noindex`), pubblicata a
-  ogni push da `.github/workflows/pages.yml`. Il DNS è su register.it: record CNAME
-  `lanternata-anteprima` → `matt0472.github.io.` (lo aggiunge l'utente, `GIT-08`). Pages CMS e
-  hosting di produzione **non ancora creati**.
+- **Repo:** `Matt0472/la-lanternata-nel-bosco` (pubblico), branch `main`.
+  **Anteprima** su GitHub Pages: **https://lanternata-anteprima.mapped-dev.it** (`noindex`, HTTPS
+  obbligatorio attivo dal 13 ott 2026), pubblicata a ogni push da `.github/workflows/pages.yml`. DNS su
+  register.it: CNAME `lanternata-anteprima` → `matt0472.github.io.`. Pages CMS e hosting di
+  produzione **non ancora creati**.
+- **Push:** da questa rete l'SSH verso GitHub va in timeout (porte 22 e 443). Si pubblica via HTTPS
+  con le credenziali di `gh` (che ora ha lo scope `workflow`):
+  `git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push https://github.com/Matt0472/la-lanternata-nel-bosco.git main`.
 - **Canone e team** sul modello di softairmilano: `CLAUDE.md`, `docs/standards/*` (10 file, con
   `copy.md` per il libro e il tono), `design-system/lanternata/MASTER.md`, 9 agenti in
   `.claude/agents/` (gli 8 di softairmilano + `copy-specialist`), skill `ship`, `audit`, `handoff`,
@@ -91,6 +94,13 @@ filo di luci, sentiero, fogli sovrapposti, arco) l'utente ha scelto l'**arco alt
 - **Immagine social** renderizzata da Chrome headless con i font veri: `node scripts/build-og-image.mjs`.
 
 ## Cosa NON ha funzionato / trappole
+
+- GitHub Pages attivato su un repo ancora vuoto autorizza a pubblicare `master`: il primo deploy da
+  `main` fallisce senza log. Si corregge la regola dell'ambiente `github-pages` (branch `main`).
+- Il certificato HTTPS non parte se il dominio personalizzato è stato impostato prima del DNS: si toglie
+  e si rimette il dominio (API `pages`, `cname`), poi si attiva `https_enforced`.
+- Una sezione con `overflow: hidden` taglia il pixel con cui l'arco sborda sopra: sui telefoni compare
+  una riga sottile. Sezioni con l'arco: solo `overflow-x: clip` (`RESP-02`).
 
 - SVG: sottopercorsi con verso opposto nello stesso `<path>` si **bucano** (regola nonzero).
 - `rotate-[...]` di Tailwind è la proprietà `rotate`: sommata a un `transform: rotate()` raddoppia

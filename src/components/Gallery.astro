@@ -10,7 +10,7 @@ const thumbnail = (src: string) =>
   src.startsWith('/uploads/') ? '/uploads/thumbnails/' + src.split('/').pop()!.replace(/\.[^.]+$/, '.webp') : src;
 ---
 
-<section id="gallery" class="overflow-hidden bg-paper pb-20 sm:pb-28">
+<section id="gallery" class="overflow-x-clip bg-paper pb-20 sm:pb-28">
   <Divider from="paper-warm" class="mb-16 sm:mb-20" />
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <SectionHeading eyebrow={gallery.eyebrow} title={gallery.title} intro={gallery.intro} />

@@ -36,7 +36,9 @@ const lanterns = [
 
 <div class={`pointer-events-none relative h-10 w-full sm:h-14 lg:h-20 ${cls}`} aria-hidden="true">
   {/* The fill bleeds 1px into the section above (same colour, invisible):
-      without it, fractional phone DPRs left a hairline along the seam */}
+      without it, fractional phone DPRs left a hairline along the seam. A
+      section that clips its overflow must clip only sideways (overflow-x:
+      clip), or it cuts the bleed off and the hairline comes back */}
   <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="absolute inset-x-0 -top-px h-[calc(100%+1px)] w-full">
     <path d={flip ? ARC_DOWN : ARC_UP} fill={`var(--color-${from})`} />
   </svg>
