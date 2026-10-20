@@ -1,17 +1,17 @@
 {
   "eyebrow": "La serata",
   "title": "Come si svolge, passo dopo passo",
-  "intro": "Due weekend, lo stesso programma: si arriva alle 15:30, si torna a casa alle 18:30, e nel mezzo il pomeriggio diventa sera.",
+  "intro": "Dalla lanterna ancora da decorare all'ultimo indizio della caccia al tesoro, quando nel bosco è ormai buio: un turno al giorno, uguale in tutte e quattro le date.",
   "weekendsTitle": "Le date",
   "weekendsNote": "Sabato e domenica · 15:30–18:30",
   "weekends": [
     {
-      "date": "14–15 novembre",
+      "date": "7–8 novembre",
       "soldOut": false,
       "lastSeats": false
     },
     {
-      "date": "21–22 novembre",
+      "date": "14–15 novembre",
       "soldOut": false,
       "lastSeats": false
     }
@@ -25,37 +25,37 @@
       "icon": "🎨",
       "when": "All'arrivo",
       "title": "Ogni bambino decora la sua lanterna",
-      "text": "Con l'aiuto dei nostri animatori ognuno decora la sua lanterna e, finito il lavoro, ce la consegna."
+      "text": "I nostri animatori aiutano i bambini, ma le idee sono tutte loro. Finita la lanterna, ognuno ce la consegna."
     },
     {
       "icon": "🍂",
       "when": "Nel frattempo",
       "title": "Si gioca nel bosco",
-      "text": "Mentre le lanterne asciugano, al riparo da occhi curiosi, i bambini giocano nel parco."
+      "text": "Mentre le lanterne asciugano, i bambini giocano nel parco e il sole scende dietro gli alberi."
     },
     {
       "icon": "📖",
       "when": "Poco dopo il tramonto",
       "title": "La lettura animata",
-      "text": "Tutti al palco per «Il richiamo delle lanterne»: la storia del riccio Belgiorno, della volpe Stellafiore e di una piccola lanterna di vetro."
+      "text": "Il cielo si scurisce e tutti, genitori compresi, si raccolgono davanti al palco. Si fa silenzio, e una voce comincia a raccontare."
     },
     {
-      "icon": "✨",
+      "icon": "🏮",
       "when": "Dopo la storia",
-      "title": "Una sorpresa per i bambini",
-      "text": "Tornando verso il bar, ogni bambino ritrova la sua lanterna, pronta per il bosco. Come la ritrova è la sorpresa della serata: lasciamola a loro."
+      "title": "Ognuno ritrova la sua lanterna",
+      "text": "Tornando verso il bar, ogni bambino riprende la lanterna che ha decorato con le sue mani, ormai asciutta, già accesa e pronta per la passeggiata."
     },
     {
       "icon": "🌕",
-      "when": "Al chiaro di luna",
+      "when": "Subito dopo",
       "title": "La passeggiata al chiaro di luna",
-      "text": "Lanterna in mano, si parte tutti insieme lungo i sentieri, nel buio del bosco."
+      "text": "Lanterna in mano, si parte lungo i sentieri: una fila di piccole luci nel buio del bosco."
     },
     {
       "icon": "🗝️",
       "when": "Per finire",
       "title": "La caccia al tesoro",
-      "text": "Per chiudere, ancora al chiaro di luna, una caccia al tesoro con la lanterna in mano."
+      "text": "La passeggiata si chiude con la caccia al tesoro: gli ultimi passi nel bosco, a cercare indizi alla luce delle lanterne."
     }
   ]
 }

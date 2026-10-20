@@ -22,6 +22,15 @@ nell'agente `copy-specialist`.
 - **COPY-05** — **Si prenota un posto, non si compra un biglietto**: il verbo dell'azione principale è
   "prenotare", e l'oggetto è "il posto" (un turno al giorno). L'etichetta del pulsante principale è
   una sola su tutta la pagina (`DES-05`).
+- **COPY-09** — **Si racconta una serata magica, non si compila una scheda** (decisione dell'utente,
+  20 ott 2026). Ogni testo narrativo (hero, esperienza, programma, libro, piccoli, galleria, inviti
+  alle sezioni) porta la famiglia **dentro la storia**: immagini concrete e sensoriali (il crepuscolo,
+  il bosco, la luce fatta con le proprie mani, la voce che legge sul palco, il cammino insieme nel
+  buio), così che genitori e bambini sentano che stanno per vivere qualcosa di magico. Concreto non
+  vuol dire scarno: una frase corretta ma piatta o "striminzita" va riscritta. I testi pratici (info,
+  prezzi, FAQ, passaggi della prenotazione) restano **prima la risposta** (`SEO-08`), con parole calde
+  ma senza fronzoli che nascondano l'informazione. La magia non autorizza le formule di `COPY-04` né
+  promesse oltre i fatti (`COPY-03`).
 
 ## Il libro
 
@@ -33,6 +42,7 @@ nell'agente `copy-specialist`.
   riccio Belgiorno, la volpe Stellafiore, la lanterna sotto la quercia) e per la lezione che porta;
   l'acquisto è un invito garbato ("lo trovate ai mercatini della lanternata"), mai un'offerta urlata.
   La lezione di vita del finale **non si svela**: è la sorpresa della lettura animata.
-- **COPY-08** — **La sorpresa delle lanterne accese** (i bambini le ritrovano illuminate dopo la
-  lettura) si racconta ai genitori, che devono sapere come si svolge la serata, ma con parole che la
-  lasciano intatta per i bambini se la leggono insieme: niente foto o titoli che la anticipano.
+- **COPY-08** — **Le lanterne non sono una sorpresa** (decisione dell'utente, 20 ott 2026): i bambini le
+  hanno decorate loro. Dopo la lettura, tornando verso il bar, ognuno riprende la sua, ormai asciutta e
+  già accesa, pronta per la passeggiata. Si racconta come un passaggio della serata, mai come un mistero, un colpo
+  di scena o qualcosa da "non svelare".

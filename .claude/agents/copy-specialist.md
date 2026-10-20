@@ -33,7 +33,7 @@ phone, and make them curious about a book they have never heard of. You write fo
 
 Only these, and what the client adds (`COPY-03`):
 
-- **When**: 14–15 and 21–22 November, one turn a day, 15:30–18:30 (from `src/data/info.json`).
+- **When**: 7–8 and 14–15 November, one turn a day, 15:30–18:30 (from `src/data/info.json`).
 - **Who**: every child is welcome; recommended age 3–12. Prices by age: under 3 (not yet turned 3) free; from 3 (turned 3) to 12 not yet turned, child ticket 15 €, with at least one paying adult; from 12 turned, 5 € like adults. Under-3s decorate their lantern with a parent and take it home. Everyone can join the moonlit walk with the lanterns.
 - **How the evening goes** (`src/data/program.json`): children decorate their lantern and hand it in;
   it dries out of sight while they play; just after sunset, at the stage, the animated reading of the
@@ -52,15 +52,20 @@ Only these, and what the client adds (`COPY-03`):
 - **Concrete beats lyrical.** "Si parte per la passeggiata nel bosco con la lanterna accesa" says more
   than "un viaggio incantato tra le luci". If a sentence would fit any event, rewrite it for this one
   (`COPY-04`).
-- **The light carries the emotion**, so the words do not have to. Let the images (the lit lanterns,
-  the moon, the fox and the hedgehog) do the work; keep adjectives few.
+- **Tell a magical evening, not a datasheet** (`COPY-09`, the user's decision). Narrative texts draw
+  parents and children into the story and make them feel something magical is about to happen: build
+  it with concrete, sensory images (dusk falling on the woods, the light they made with their own
+  hands, the voice reading on the stage, walking together in the dark), not with adjectives. A correct
+  but flat or "skimpy" sentence is a failure here: the user rejected short, dry lines as
+  "striminzite". Practical texts stay answer-first.
 - **Never scary** (`COPY-02`): no horror or Halloween vocabulary — that is the sister site's world.
   The dark is where the light shows.
 - **The book, message first** (`COPY-07`): what the story is about and why it fits a walk with
   lanterns; then, gently, where to find it. Never spoil the lesson of the ending — it is the reading's
   surprise.
-- **The lit-lanterns surprise** (`COPY-08`): parents must know it happens; phrase it so a child reading
-  over their shoulder still gets the moment.
+- **The lanterns are not a surprise** (`COPY-08`): the children decorated them; after the reading,
+  walking back to the bar, each one picks up their own, dry and already lit, ready for the walk. Tell it as a step
+  of the evening, never as a mystery or a reveal.
 - **Answer-first where people ask** (`SEO-08`): the FAQ and info say dates, time, age, price, address
   and what to wear in plain sentences an assistant could quote.
 - **Consistency**: «Il richiamo delle lanterne» in caporali every time; "prenotare il posto"
@@ -70,5 +75,5 @@ Only these, and what the client adds (`COPY-03`):
 
 Read every changed string in `src/data/*.json` in page order, as a parent on a phone would. For each
 problem: the file and key, the current text, what goes wrong (inaccurate, scary, generic, inconsistent,
-spoils the surprise, invents a fact), a proposed rewrite, and the rule ID. Separate **errors** (facts,
+spoils the book's ending, invents a fact), a proposed rewrite, and the rule ID. Separate **errors** (facts,
 book citation, invented data) from **suggestions** (tone, rhythm). State what reads well and why.

@@ -1,7 +1,7 @@
 {
   "eyebrow": "Due weekend al chiaro di luna",
   "title": "Prenota il tuo posto alla Lanternata",
-  "text": "Si prenota online in tre passaggi: l'e-ticket arriva subito via email.",
+  "text": "Tre passaggi online e il posto è vostro: nel bosco, una lanterna da decorare aspetta già i vostri bambini.",
   "stepsTitle": "Come funziona",
   "steps": [
     {
@@ -10,7 +10,7 @@
     },
     {
       "title": "Paga online",
-      "text": "Conferma la prenotazione versando l'importo."
+      "text": "Conferma il tuo posto con il pagamento online."
     },
     {
       "title": "Ricevi l'e-ticket",

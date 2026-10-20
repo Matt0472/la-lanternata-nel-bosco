@@ -1,13 +1,12 @@
 # HANDOFF — La Lanternata al chiaro di luna
 
-Aggiornato: **13 ott 2026, ore 22:00**: anteprima online in HTTPS, età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta. Prima versione: progetto creato da zero (canone, team di agenti
-e skill, sito completo in locale, revisioni di codice, copy, CMS, accessibilità e design già applicate).
-Nessun commit ancora.
+Aggiornato: **20 ott 2026**: date spostate a **7–8 e 14–15 novembre** (su richiesta dell'utente), stesso turno 15:30–18:30. Riscritti il sottotitolo dell'hero e i testi della lettura; le lanterne non sono più «una sorpresa» (`COPY-08`): i bambini ritrovano la loro, asciutta.
+Prima: anteprima online in HTTPS (13 ott), età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta.
 
 ## Obiettivo
 
 **Il sito.** One-page della **Lanternata al chiaro di luna**, evento per famiglie del Bosco della Luna
-(via Cusago 280, Milano): **14–15 e 21–22 novembre 2026**, un turno al giorno **15:30–18:30**.
+(via Cusago 280, Milano): **7–8 e 14–15 novembre 2026**, un turno al giorno **15:30–18:30**.
 Laboratorio della lanterna, lettura animata di «Il richiamo delle lanterne» (Roberta Mari, Gruppo
 Albatros Il Filo), lanterne che si ritrovano accese, passeggiata al chiaro di luna, caccia al tesoro,
 mercatini dove si vende il libro.
@@ -64,7 +63,7 @@ messaggio, venderne qualche copia ai mercatini.
   (quelle del parco parlano di Halloween).
 - **La lanterna si porta a casa**: confermato dall'utente il 13 ott 2026 (anche i bimbi sotto i 3 anni la preparano con i genitori e la portano a casa). La FAQ dedicata era stata tolta: si può rimettere. Resta da sapere se la luce va via con la lanterna.
 - **Età e prezzi** (decisione dell'utente, 13 ott 2026): consigliata 3–12 anni, tutti i bambini benvenuti. Gratis fino a 3 anni non compiuti; 15 € dai 3 compiuti ai 12 non compiuti; 5 € dai 12 compiuti, come gli adulti.
-- **Pioggia**: l'evento si fa lo stesso? Come si avvisano le famiglie? Il voucher del 22 novembre per
+- **Pioggia**: l'evento si fa lo stesso? Come si avvisano le famiglie? Il voucher del 15 novembre per
   quale data? La FAQ riprende la regola del gemello.
 - **Animali** (capre, galline, asinelli) visitabili tra le 15:30 e le 18:30? È nel riquadro dei più
   piccoli, ripreso dal gemello.
@@ -146,7 +145,7 @@ node scripts/generate-image.mjs ...   # illustrazioni Gemini (chiave in .env: GO
 - Nel manuale, i commenti `DA COMPLETARE` su repository e account (3 punti).
 - `PUBLIC_SITE_INDEXABLE=true` solo nella build di produzione, il giorno del go-live (`SEO-10`).
 - GitHub Action IndexNow come sul gemello, con la chiave pubblicata in `public/`.
-- Dopo il 22 novembre: decidere cosa mostra la pagina (evento concluso / prossima edizione).
+- Dopo il 15 novembre: decidere cosa mostra la pagina (evento concluso / prossima edizione).
 
 ## Decisioni aperte
 

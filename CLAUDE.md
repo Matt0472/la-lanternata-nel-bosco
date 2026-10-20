@@ -8,13 +8,13 @@ persone e assistenti: una copia sola, un solo posto dove cambiarle.
 ## Il progetto
 
 One-page della **Lanternata al chiaro di luna**, evento per famiglie del **Bosco della Luna** (parco
-nella natura alle porte di Milano, via Cusago 280). Due weekend: **14–15 e 21–22 novembre 2026**, un
+nella natura alle porte di Milano, via Cusago 280). Due weekend: **7–8 e 14–15 novembre 2026**, un
 turno al giorno (15:30–18:30). Contenuti in **italiano**.
 
 La serata: i bambini **decorano la loro lanterna** e la consegnano; mentre asciuga, lontano dai loro
 occhi, giocano. Poco dopo il tramonto si va al palco per la **lettura animata** del libro **«Il
 richiamo delle lanterne»** di Roberta Mari (Gruppo Albatros Il Filo). Finita la lettura, tornando
-verso il bar, ritrovano **tutte le lanterne accese**: ognuno prende la sua e si parte per la
+verso il bar, ognuno **ritrova la sua lanterna**, asciutta e già accesa (non è una sorpresa: l'hanno fatta loro), e si parte per la
 **passeggiata al chiaro di luna** nel bosco, che finisce con una **caccia al tesoro**. In loco ci sono
 i **mercatini**, dove si può acquistare il libro.
 

@@ -21,6 +21,7 @@ content:
       - { name: eyebrow, label: 'Occhiello (la pillola in alto, porta al sito del parco)', type: string }
       - { name: title, label: Titolo principale, type: string }
       - { name: tagline, label: 'Seconda riga del titolo, in color lanterna (vuoto = nascosta)', type: string }
+      - { name: lead, label: 'Frase sotto il titolo, in maiuscolo (vuoto = nascosta)', type: string, description: 'Una frase breve: in maiuscolo un testo lungo si legge male, soprattutto sul telefono.' }
       - { name: subtitle, label: Sottotitolo, type: text, description: 'Per andare a capo basta un a capo nel testo.' }
       - { name: datesLabel, label: Riga date e orario, type: string }
       - name: ctaLabel
@@ -88,7 +89,7 @@ content:
         type: object
         list: true
         fields:
-          - { name: icon, label: 'Emoji (es. 🎨 📖 ✨ 🌕 🗝️)', type: string }
+          - { name: icon, label: 'Emoji (es. 🎨 🍂 📖 🏮 🌕 🗝️)', type: string }
           - { name: when, label: 'Quando (es. Poco dopo il tramonto)', type: string }
           - { name: title, label: Titolo della tappa, type: string }
           - { name: text, label: Descrizione, type: text }

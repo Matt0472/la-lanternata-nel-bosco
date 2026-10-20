@@ -1,7 +1,7 @@
 # 🏮 La Lanternata al chiaro di luna — Landing page
 
 One-page della Lanternata al chiaro di luna del [Bosco della Luna](https://www.boscodellaluna.it):
-14–15 e 21–22 novembre 2026, laboratorio della lanterna, lettura animata di «Il richiamo delle
+7–8 e 14–15 novembre 2026, laboratorio della lanterna, lettura animata di «Il richiamo delle
 lanterne» di Roberta Mari (Gruppo Albatros Il Filo), passeggiata nel bosco e caccia al tesoro.
 
 Stack: **Astro 7** (sito statico) + **Tailwind 4** + **Motion** e **Lenis** (animazioni e scroll).
