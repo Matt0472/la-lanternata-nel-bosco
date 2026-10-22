@@ -1,47 +1,39 @@
 {
   "eyebrow": "Foto",
-  "title": "Il Bosco della Luna in foto",
-  "intro": "Le foto della Lanternata arrivano presto: qui intanto i segnaposto.",
+  "title": "La Lanternata in foto",
+  "intro": "Le lanterne dell'anno scorso, decorate dai bambini, hanno già illuminato il bosco: quest'anno tocca alle vostre.",
   "images": [
     {
-      "src": "/uploads/segnaposto-01.jpg",
-      "alt": "Segnaposto della galleria, foto 1 di 10: in arrivo"
+      "src": "/uploads/lanternata-01.jpg",
+      "alt": "Il tavolo del laboratorio alla Lanternata dello scorso anno, con le lanterne da decorare e i libri su una tovaglia a quadri rossi"
     },
     {
-      "src": "/uploads/segnaposto-02.jpg",
-      "alt": "Segnaposto della galleria, foto 2 di 10: in arrivo"
+      "src": "/uploads/lanternata-02.jpg",
+      "alt": "La lettura animata dello scorso anno: una pagina del libro, con la volpe e il riccio, proiettata sul telo del palco all'imbrunire"
     },
     {
-      "src": "/uploads/segnaposto-03.jpg",
-      "alt": "Segnaposto della galleria, foto 3 di 10: in arrivo"
+      "src": "/uploads/lanternata-03.jpg",
+      "alt": "Il pubblico della lettura animata dello scorso anno: bambini e genitori seduti davanti al palco, all'imbrunire"
     },
     {
-      "src": "/uploads/segnaposto-04.jpg",
-      "alt": "Segnaposto della galleria, foto 4 di 10: in arrivo"
+      "src": "/uploads/lanternata-04.jpg",
+      "alt": "Bambini e genitori riuniti nel bosco al buio, alla Lanternata dello scorso anno"
     },
     {
-      "src": "/uploads/segnaposto-05.jpg",
-      "alt": "Segnaposto della galleria, foto 5 di 10: in arrivo"
+      "src": "/uploads/lanternata-05.jpg",
+      "alt": "Il banco di legno con le lanterne decorate dai bambini, già accese, mentre scende il buio"
     },
     {
-      "src": "/uploads/segnaposto-06.jpg",
-      "alt": "Segnaposto della galleria, foto 6 di 10: in arrivo"
+      "src": "/uploads/lanternata-06.jpg",
+      "alt": "Primo piano delle lanterne decorate dai bambini, accese e piene di colori nel buio"
     },
     {
-      "src": "/uploads/segnaposto-07.jpg",
-      "alt": "Segnaposto della galleria, foto 7 di 10: in arrivo"
+      "src": "/uploads/lanternata-07.jpg",
+      "alt": "Una lunga fila di lanterne accese nel bosco, al buio"
     },
     {
-      "src": "/uploads/segnaposto-08.jpg",
-      "alt": "Segnaposto della galleria, foto 8 di 10: in arrivo"
-    },
-    {
-      "src": "/uploads/segnaposto-09.jpg",
-      "alt": "Segnaposto della galleria, foto 9 di 10: in arrivo"
-    },
-    {
-      "src": "/uploads/segnaposto-10.jpg",
-      "alt": "Segnaposto della galleria, foto 10 di 10: in arrivo"
+      "src": "/uploads/lanternata-08.jpg",
+      "alt": "Il bosco di notte, con la luce calda delle lanterne in lontananza tra gli alberi"
     }
   ]
 }

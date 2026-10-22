@@ -51,7 +51,7 @@ placeholder) is in `docs/in-development/HANDOFF.md`: read it before touching an 
 ## Choosing the source
 
 1. **A real photo** whenever the image shows the real place, the real event or real families
-   (`MEDIA-02`) — the gallery today holds ten generated «Foto in arrivo» placeholders (`public/uploads/segnaposto-*.jpg`, known debt).
+   (`MEDIA-02`) — the gallery today holds eight real photos of the 2025 Lanternata chosen by the user (`public/uploads/lanternata-*.jpg`); two are 720×900 frames from a reel by @ilibridellamammaestraale, to be replaced by sharper photos when available (known debt).
 2. **SVG drawn by hand** for scenes and marks that must stay light, crisp and editable (hero, the
    section arcs and their lanterns, the mark).
 3. **Gemini** for characters (the mascot) in the house style (`MEDIA-05`).

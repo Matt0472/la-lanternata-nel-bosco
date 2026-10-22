@@ -60,7 +60,7 @@ messaggio, venderne qualche copia.
 
 - **Dominio** (oggi segnaposto `lanternatamilano.it` in `astro.config.mjs`, `CODE-14`).
 - **Widget TicketingHub della lanternata**: oggi c'è quello del Campo di Zucche (`tickets.json`).
-- **Foto vere** per la gallery (oggi 10 segnaposto «Foto in arrivo», `public/uploads/segnaposto-*.jpg`) e **recensioni** da tenere o cambiare
+- **Foto** della gallery: oggi 8 foto vere del 2025 (`public/uploads/lanternata-*.jpg`, scelte dall'utente, da far vedere a Roberta): sei da WhatsApp e due fotogrammi a 720×900 del reel di @ilibridellamammaestraale. Meglio sostituirle con foto ad alta risoluzione quando arrivano. **Recensioni** da tenere o cambiare
   (quelle del parco parlano di Halloween).
 - **La lanterna si porta a casa**: confermato dall'utente il 13 ott 2026 (anche i bimbi sotto i 3 anni la preparano con i genitori e la portano a casa). La FAQ dedicata era stata tolta: si può rimettere. Resta da sapere se la luce va via con la lanterna.
 - **Età e prezzi** (decisione dell'utente, 13 ott 2026): consigliata 3–12 anni, tutti i bambini benvenuti. Gratis fino a 3 anni non compiuti; 15 € dai 3 compiuti ai 12 non compiuti; 5 € dai 12 compiuti, come gli adulti.

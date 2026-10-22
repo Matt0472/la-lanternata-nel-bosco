@@ -69,6 +69,6 @@ come regressioni. Si sistemano quando si tocca quel codice (`GIT-06`), non a vis
 
 | Dove | Regola | Perché è ancora lì |
 |---|---|---|
-| `src/data/gallery.json` e `public/uploads/segnaposto-*.jpg` | `MEDIA-02` (le foto raccontano questo evento) | Dieci segnaposto «Foto in arrivo» al posto delle foto, per scelta dell'utente: arrivano quelle vere della lanternata |
+| `src/data/gallery.json` e `public/uploads/lanternata-*.jpg` | `MEDIA-06` (qualità delle foto) | Otto foto vere della Lanternata 2025: sei da WhatsApp, alcune molto scure, e due fotogrammi del reel di @ilibridellamammaestraale, a 720×900, morbidi nel lightbox. Da sostituire con foto migliori quando arrivano |
 | `src/data/testimonials.json` | `COPY-03` (niente promesse su ciò che non c'è) | Recensioni Google del Bosco della Luna scritte per il Campo di Zucche: sono vere e del parco, ma parlano di zucche e Halloween. Vanno sostituite o filtrate quando il cliente decide |
 | `src/data/tickets.json` (`widgetId`) | `CMS-11` | Codice del widget TicketingHub del Campo di Zucche, usato per ora su indicazione dell'utente: va sostituito con quello della lanternata prima del go-live |
