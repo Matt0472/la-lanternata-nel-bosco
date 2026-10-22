@@ -1,9 +1,9 @@
 {
-  "eyebrow": "La serata",
+  "eyebrow": "Il programma",
   "title": "Come si svolge, passo dopo passo",
-  "intro": "Dalla lanterna ancora da decorare all'ultimo indizio della caccia al tesoro, quando nel bosco è ormai buio: un turno al giorno, uguale in tutte e quattro le date.",
+  "intro": "Dalla lanterna ancora da decorare all'ultimo tesoro trovato al buio: un turno al giorno, uguale in tutte e quattro le date.",
   "weekendsTitle": "Le date",
-  "weekendsNote": "Sabato e domenica · 15:30–18:30",
+  "weekendsNote": "Sabato e domenica · 16:00–18:30",
   "weekends": [
     {
       "date": "7–8 novembre",
@@ -35,27 +35,27 @@
     },
     {
       "icon": "📖",
-      "when": "Poco dopo il tramonto",
+      "when": "Poco prima del tramonto",
       "title": "La lettura animata",
-      "text": "Il cielo si scurisce e tutti, genitori compresi, si raccolgono davanti al palco. Si fa silenzio, e una voce comincia a raccontare."
+      "text": "All'imbrunire, tutti, genitori compresi, si raccolgono davanti al palco. Si fa silenzio, e una voce comincia a raccontare."
     },
     {
       "icon": "🏮",
       "when": "Dopo la storia",
-      "title": "Ognuno ritrova la sua lanterna",
-      "text": "Tornando verso il bar, ogni bambino riprende la lanterna che ha decorato con le sue mani, ormai asciutta, già accesa e pronta per la passeggiata."
+      "title": "Tutte le lanterne, accese",
+      "text": "Eccole lì, ad aspettare i bambini, accese tutte insieme. Negli occhi di ognuno c'è lo stupore di vederle brillare, poi la gioia di riconoscere la propria."
     },
     {
       "icon": "🌕",
       "when": "Subito dopo",
       "title": "La passeggiata al chiaro di luna",
-      "text": "Lanterna in mano, si parte lungo i sentieri: una fila di piccole luci nel buio del bosco."
+      "text": "Lanterna in mano, si parte lungo il sentiero: una fila di piccole luci nel buio del bosco."
     },
     {
       "icon": "🗝️",
       "when": "Per finire",
       "title": "La caccia al tesoro",
-      "text": "La passeggiata si chiude con la caccia al tesoro: gli ultimi passi nel bosco, a cercare indizi alla luce delle lanterne."
+      "text": "La passeggiata si chiude con la caccia al tesoro: piccoli oggetti luminosi nascosti nel bosco, da cercare tutti insieme nel buio."
     }
   ]
 }

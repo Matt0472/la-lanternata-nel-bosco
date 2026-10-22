@@ -47,7 +47,7 @@ The client touches these under pressure, so they must be obvious:
 - the **weekends** and their `soldOut` / `lastSeats` switches (`CMS-15`);
 - **prices and the turn time** in the info section — the JSON-LD reads them, so a format the parser
   cannot read must degrade by omitting the key (`SEO-05`), and the field description must show the
-  expected format ("15:30 – 18:30");
+  expected format ("16:00 – 18:30");
 - the **TicketingHub widget code** (`CMS-11`) — today it is the Campo di Zucche one, known debt;
 - the **book** block: title, author, publisher, cover, link — all content (`COPY-06`).
 

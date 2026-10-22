@@ -9,18 +9,20 @@ persone e assistenti: una copia sola, un solo posto dove cambiarle.
 
 One-page della **Lanternata al chiaro di luna**, evento per famiglie del **Bosco della Luna** (parco
 nella natura alle porte di Milano, via Cusago 280). Due weekend: **7–8 e 14–15 novembre 2026**, un
-turno al giorno (15:30–18:30). Contenuti in **italiano**.
+turno al giorno (16:00–18:30, 2 ore e mezza). Contenuti in **italiano**; nei testi non si parla di
+"serata" (`COPY-10`).
 
-La serata: i bambini **decorano la loro lanterna** e la consegnano; mentre asciuga, lontano dai loro
-occhi, giocano. Poco dopo il tramonto si va al palco per la **lettura animata** del libro **«Il
-richiamo delle lanterne»** di Roberta Mari (Gruppo Albatros Il Filo). Finita la lettura, tornando
-verso il bar, ognuno **ritrova la sua lanterna**, asciutta e già accesa (non è una sorpresa: l'hanno fatta loro), e si parte per la
-**passeggiata al chiaro di luna** nel bosco, che finisce con una **caccia al tesoro**. In loco ci sono
-i **mercatini**, dove si può acquistare il libro.
+Come si svolge: i bambini **decorano la loro lanterna** e la consegnano; mentre asciuga, lontano dai
+loro occhi, giocano. Poco prima del tramonto si va al palco per la **lettura animata** del libro
+**«Il richiamo delle lanterne»** di Roberta Mari (Gruppo Albatros Il Filo). Finita la lettura
+ritrovano **tutte le lanterne accese**: lo stupore dei bambini è il momento più bello (`COPY-08`).
+Ognuno prende la sua e si parte per la **passeggiata al chiaro di luna** lungo il sentiero del bosco,
+che finisce con una **caccia al tesoro** di oggetti luminosi nel buio. In loco, in tutte le date, il libro si
+compra e l'autrice lo **firma**, in collaborazione con la **Libreria Mariclò** (@libreriamariclo).
 
 **Obiettivo primario: vendere i posti**, tutto porta alla **prenotazione (TicketingHub)**.
 **Obiettivo secondario: far conoscere il libro e il suo messaggio** il più possibile, e venderne
-qualche copia ai mercatini. Sito **veloce**, **mobile-first**, aggiornabile in autonomia dal cliente.
+qualche copia. Sito **veloce**, **mobile-first**, aggiornabile in autonomia dal cliente.
 
 **Progetto gemello: `../bosco-della-luna-campo-di-zucche`** (stesso cliente, stesso stack, online su
 campodizucchemilano.it). È l'implementazione di riferimento: struttura, componenti, CMS, manuale,

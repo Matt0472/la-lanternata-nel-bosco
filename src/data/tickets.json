@@ -20,7 +20,7 @@
   "widgetId": "337cf95b-058a-468d-bd6f-3e15d5011a5b",
   "buttonLabel": "Prenota il tuo posto",
   "widgetScript": "https://widget.ticketinghub.com/embedding/latest.js",
-  "limitedSeats": "I posti di ogni serata sono limitati, perché la passeggiata nel bosco resti raccolta e tranquilla.",
+  "limitedSeats": "I posti di ogni turno sono limitati, perché la passeggiata nel bosco resti raccolta e tranquilla.",
   "paymentNote": "Durante il pagamento, premendo sul pulsante PayPal è possibile pagare anche con carta.",
   "fallbackNote": "Problemi con la prenotazione? Chiamateci o scriveteci dalla sezione contatti."
 }

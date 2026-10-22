@@ -1,0 +1,36 @@
+---
+// Text from the panel that may hold links written as [text](https://address).
+// The rest stays plain text (Astro escapes it) and only http/https addresses
+// are accepted.
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+
+const LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+const parts: { text: string; url?: string }[] = [];
+let last = 0;
+for (const m of text.matchAll(LINK)) {
+  if (m.index > last) parts.push({ text: text.slice(last, m.index) });
+  parts.push({ text: m[1], url: m[2] });
+  last = m.index + m[0].length;
+}
+if (last < text.length) parts.push({ text: text.slice(last) });
+---
+
+{
+  parts.map((x) =>
+    x.url ? (
+      <a
+        href={x.url}
+        target="_blank"
+        rel="noopener"
+        class="font-semibold text-lantern-deep underline underline-offset-2 transition-colors duration-300 hover:text-night"
+      >
+        {x.text}
+      </a>
+    ) : (
+      x.text
+    )
+  )
+}

@@ -6,7 +6,7 @@
   "slots": [
     {
       "label": "Turno unico",
-      "time": "15:30 – 18:30"
+      "time": "16:00 – 18:30"
     }
   ],
   "pricesTitle": "Prezzi",
@@ -32,10 +32,10 @@
       "price": "Gratis"
     }
   ],
-  "extrasTitle": "Ai mercatini",
+  "extrasTitle": "Firma copie",
   "extras": [
-    "Il libro «Il richiamo delle lanterne» di Roberta Mari",
-    "Bancarelle, prodotti a km 0 e punto ristoro"
+    "Potete acquistare «Il richiamo delle lanterne» sul posto e farvelo firmare da Roberta Mari, in tutte e quattro le date",
+    "In collaborazione con la [Libreria Mariclò](https://www.instagram.com/libreriamariclo/)"
   ],
   "note": "Bosco della Luna, via Cusago 280, Milano. Parcheggio disponibile vicino all'ingresso, non custodito. L'evento si svolge all'aperto e finisce col buio: vestitevi a strati, con scarpe comode e qualcosa di caldo."
 }

@@ -1,7 +1,7 @@
 {
   "eyebrow": "L'esperienza",
   "title": "Cosa vivrete nel bosco",
-  "intro": "Per bambini dai 3 ai 12 anni, con voi accanto: una serata che comincia di giorno e finisce nel bosco, al buio, con in mano la lanterna che hanno decorato.",
+  "intro": "Un pomeriggio di magia e una storia che lascia ai bambini, e ai grandi, una piccola lezione di vita da custodire nel cuore, anche quando le lanterne si saranno spente.",
   "scrollHint": "Scorri per scoprirle tutte",
   "extraBadge": "Extra a pagamento",
   "items": [
@@ -14,25 +14,19 @@
     {
       "icon": "📖",
       "title": "La lettura animata",
-      "text": "Sul palco prende voce «Il richiamo delle lanterne»: la storia di un riccio, di una volpe e di una piccola lanterna, letta e animata per i bambini.",
+      "text": "Sul palco prende voce «Il richiamo delle lanterne», in una lettura animata che fa vivere ai bambini la storia del riccio Belgiorno e della volpe Stellafiore.",
       "extra": false
     },
     {
       "icon": "🌕",
       "title": "La passeggiata al chiaro di luna",
-      "text": "Ormai è buio: tutti insieme sui sentieri del bosco, piccoli e grandi, illuminati dalla luna e dalle vostre lanterne.",
+      "text": "Ormai è buio: tutti insieme lungo il sentiero del bosco, piccoli e grandi, illuminati dalla luna e dalle vostre lanterne.",
       "extra": false
     },
     {
       "icon": "🗝️",
       "title": "La caccia al tesoro",
-      "text": "L'ultima avventura della sera: indizi da seguire, una lanterna per fare luce e, alla fine, un tesoro da trovare.",
-      "extra": false
-    },
-    {
-      "icon": "🧺",
-      "title": "I mercatini",
-      "text": "Bancarelle di prodotti a km 0, un punto ristoro con bibite, snack e panini e, tra i banchi, il libro della lettura animata.",
+      "text": "L'ultima avventura: nel buio del bosco si nascondono piccoli tesori luminosi, e tocca ai bambini scovarli uno a uno.",
       "extra": false
     }
   ]

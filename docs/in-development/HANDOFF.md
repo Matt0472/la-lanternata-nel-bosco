@@ -1,18 +1,19 @@
 # HANDOFF — La Lanternata al chiaro di luna
 
-Aggiornato: **20 ott 2026**: date spostate a **7–8 e 14–15 novembre** (su richiesta dell'utente), stesso turno 15:30–18:30. Riscritti il sottotitolo dell'hero e i testi della lettura; le lanterne non sono più «una sorpresa» (`COPY-08`): i bambini ritrovano la loro, asciutta.
+Aggiornato: **22 ott 2026**: orario 16:00–18:30, niente "serata" nei testi (`COPY-10`), tolti i mercatini, libro in vendita sul posto con firma copie dell'autrice in tutte le date, con la Libreria Mariclò (info, libro, FAQ), nuova biografia dell'autrice, lanterne accese raccontate con stupore (`COPY-08`), sezione `#come-si-svolge`.
+Prima, **20 ott 2026**: date spostate a **7–8 e 14–15 novembre** (su richiesta dell'utente), stesso turno 15:30–18:30. Riscritti il sottotitolo dell'hero e i testi della lettura; le lanterne non sono più «una sorpresa» (`COPY-08`): i bambini ritrovano la loro, asciutta.
 Prima: anteprima online in HTTPS (13 ott), età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta.
 
 ## Obiettivo
 
 **Il sito.** One-page della **Lanternata al chiaro di luna**, evento per famiglie del Bosco della Luna
-(via Cusago 280, Milano): **7–8 e 14–15 novembre 2026**, un turno al giorno **15:30–18:30**.
+(via Cusago 280, Milano): **7–8 e 14–15 novembre 2026**, un turno al giorno **16:00–18:30**.
 Laboratorio della lanterna, lettura animata di «Il richiamo delle lanterne» (Roberta Mari, Gruppo
 Albatros Il Filo), lanterne che si ritrovano accese, passeggiata al chiaro di luna, caccia al tesoro,
-mercatini dove si vende il libro.
+libro in vendita e firma copie dell'autrice con la Libreria Mariclò.
 
 **Obiettivi di business:** 1) vendere i posti (TicketingHub); 2) far conoscere il libro e il suo
-messaggio, venderne qualche copia ai mercatini.
+messaggio, venderne qualche copia.
 
 **Vincoli.** Stesso lavoro del sito gemello `../bosco-della-luna-campo-di-zucche`, con stile suo e
 **più snello** (niente video, `DES-10`). Regole in `docs/standards/`, indice in `CLAUDE.md`.
@@ -65,9 +66,9 @@ messaggio, venderne qualche copia ai mercatini.
 - **Età e prezzi** (decisione dell'utente, 13 ott 2026): consigliata 3–12 anni, tutti i bambini benvenuti. Gratis fino a 3 anni non compiuti; 15 € dai 3 compiuti ai 12 non compiuti; 5 € dai 12 compiuti, come gli adulti.
 - **Pioggia**: l'evento si fa lo stesso? Come si avvisano le famiglie? Il voucher del 15 novembre per
   quale data? La FAQ riprende la regola del gemello.
-- **Animali** (capre, galline, asinelli) visitabili tra le 15:30 e le 18:30? È nel riquadro dei più
+- **Animali** (capre, galline, asinelli) visitabili tra le 16:00 e le 18:30? È nel riquadro dei più
   piccoli, ripreso dal gemello.
-- **Extra ai mercatini** (truccabimbi, marshmallow?) e **prezzo del libro** ai mercatini.
+- **Firma copie**: a che ora? (Confermati dall'utente: il libro si compra sul posto, firma copie in tutte e quattro le date, Libreria Mariclò.)
 - **Bimbi sotto i 3 anni**: serve una prenotazione gratuita nel widget? **12 anni** = adulto a 5 €,
   e ha la lanterna?
 - **Web3Forms**: si riusa l'access key del gemello (stessa casella e stesso limite mensile).

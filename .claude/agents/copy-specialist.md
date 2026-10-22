@@ -33,19 +33,21 @@ phone, and make them curious about a book they have never heard of. You write fo
 
 Only these, and what the client adds (`COPY-03`):
 
-- **When**: 7–8 and 14–15 November, one turn a day, 15:30–18:30 (from `src/data/info.json`).
+- **When**: 7–8 and 14–15 November, one turn a day, 16:00–18:30, two and a half hours (from `src/data/info.json`). Never call it a "serata" (`COPY-10`).
 - **Who**: every child is welcome; recommended age 3–12. Prices by age: under 3 (not yet turned 3) free; from 3 (turned 3) to 12 not yet turned, child ticket 15 €, with at least one paying adult; from 12 turned, 5 € like adults. Under-3s decorate their lantern with a parent and take it home. Everyone can join the moonlit walk with the lanterns.
-- **How the evening goes** (`src/data/program.json`): children decorate their lantern and hand it in;
-  it dries out of sight while they play; just after sunset, at the stage, the animated reading of the
-  book; walking back towards the bar they find **all the lanterns lit**; each takes theirs and the
-  moonlit walk in the woods begins; it ends with a treasure hunt.
+- **How it goes** (`src/data/program.json`): children decorate their lantern and hand it in; it dries
+  out of sight while they play; just before sunset, at dusk, the animated reading of the book at the
+  stage; then they find **all the lanterns lit** — the children's wonder is the highlight (`COPY-08`),
+  never mention the bar; each takes theirs and the moonlit walk begins along **the** path in the
+  woods (one path); it ends with a treasure hunt for **glowing objects** in the dark (not by lantern
+  light). On site: the book is sold and signed by the author, with Libreria Mariclò.
 - **The book** (publisher's page, `COPY-06`): «Il richiamo delle lanterne», Roberta Mari, Gruppo
   Albatros Il Filo, collana Nuove Voci · Fabulae; 56 illustrated pages; from 3 years. In a wood getting
   ready for winter live Belgiorno, a curious hedgehog who asks about everything, and Stellafiore, a wise
   and gentle fox. The shortening days frighten the hedgehog, so the fox takes him to an old oak where a
-  small antique glass lantern is hidden — the way to an important life lesson. The author, from Milan,
+  small antique glass lantern is hidden — Stellafiore guides him to an important life lesson. Its values (gratitude, kindness, love and respect for oneself and for others) may be hinted, veiled; the ending is never told (`COPY-07`). The author, from Milan,
   wrote it for an educating community she founded with other families in 2025.
-- **Where**: Bosco della Luna, via Cusago 280, Milano. The book is sold at the market stalls on site, on the publisher's site, on Amazon and in other shops, online too (the client asked to name only stalls, publisher and Amazon, then "and others"); the book section's button leads to Amazon.
+- **Where**: Bosco della Luna, via Cusago 280, Milano. No market stalls (removed by the client). The book is sold on the publisher's site, on Amazon and in other shops, online too; the book section's button leads to Amazon. At the event, on all four dates, the book can be bought on site and the author signs it, in collaboration with the bookshop Libreria Mariclò (@libreriamariclo).
 
 ## How to write here
 

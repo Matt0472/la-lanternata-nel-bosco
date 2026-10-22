@@ -1,6 +1,6 @@
 {
   "items": [
-    { "label": "La serata", "target": "#serata" },
+    { "label": "Come si svolge", "target": "#come-si-svolge" },
     { "label": "Il libro", "target": "#libro" },
     { "label": "Foto", "target": "#gallery" },
     { "label": "Info", "target": "#info" },

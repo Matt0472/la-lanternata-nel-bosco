@@ -8,7 +8,8 @@ nell'agente `copy-specialist`.
 
 - **COPY-01** — **Italiano semplice e concreto**, per genitori di bambini dai 3 ai 12 anni che leggono
   dal telefono. Frasi brevi, verbi attivi, una cosa per frase. Ci si rivolge alla famiglia con il
-  **voi** nel testo; i pulsanti usano il **tu** ("Prenota il tuo posto"), come sul sito gemello.
+  **voi** nel testo; i pulsanti usano il **tu** ("Prenota il tuo posto"), come sul sito gemello. Eccezione voluta
+  dall'utente: la frase sotto il titolo dell'hero ("Questo novembre, porta i tuoi bambini dentro una fiaba").
 - **COPY-02** — **Il buio è magico, mai spaventoso.** La serata è un'avventura al chiaro di luna, non
   un'esperienza da brivido: niente lessico horror o di Halloween. È anche il messaggio del libro: la
   paura del buio e dell'inverno si affronta con una piccola luce e con un amico accanto.
@@ -31,6 +32,11 @@ nell'agente `copy-specialist`.
   prezzi, FAQ, passaggi della prenotazione) restano **prima la risposta** (`SEO-08`), con parole calde
   ma senza fronzoli che nascondano l'informazione. La magia non autorizza le formule di `COPY-04` né
   promesse oltre i fatti (`COPY-03`).
+- **COPY-10** — **Non si parla di "serata"** (decisione dell'utente, 22 ott 2026): la Lanternata è un
+  pomeriggio, dalle 16:00 alle 18:30 (2 ore e mezza), che finisce col buio. Si scrive "pomeriggio",
+  "Lanternata", "turno", "come si svolge". Il sentiero della passeggiata è **uno** ("lungo il
+  sentiero"). La caccia al tesoro si fa cercando **oggetti luminosi nel buio**: mai "alla luce delle
+  lanterne", che li renderebbe invisibili.
 
 ## Il libro
 
@@ -40,9 +46,13 @@ nell'agente `copy-specialist`.
   dalla scheda dell'editore o dall'autrice: niente citazioni, premi o recensioni inventati.
 - **COPY-07** — **Prima il messaggio, poi la vendita.** Il libro si presenta per ciò che racconta (il
   riccio Belgiorno, la volpe Stellafiore, la lanterna sotto la quercia) e per la lezione che porta;
-  l'acquisto è un invito garbato ("lo trovate ai mercatini della lanternata"), mai un'offerta urlata.
-  La lezione di vita del finale **non si svela**: è la sorpresa della lettura animata.
-- **COPY-08** — **Le lanterne non sono una sorpresa** (decisione dell'utente, 20 ott 2026): i bambini le
-  hanno decorate loro. Dopo la lettura, tornando verso il bar, ognuno riprende la sua, ormai asciutta e
-  già accesa, pronta per la passeggiata. Si racconta come un passaggio della serata, mai come un mistero, un colpo
-  di scena o qualcosa da "non svelare".
+  l'acquisto è un invito garbato ("lo trovate alla Lanternata, dove Roberta Mari firma le copie"), mai un'offerta
+  urlata. È **Stellafiore** a guidare Belgiorno verso la lezione della storia. La lezione del finale
+  **non si svela**, ma i valori che la lettura trasmette (gratitudine, gentilezza, amore e rispetto
+  per sé stessi e per gli altri) si possono **lasciar intuire con garbo**, per immagini, senza elenchi
+  da quarta di copertina (decisione dell'utente, 22 ott 2026).
+- **COPY-08** — **Lo stupore delle lanterne accese** (decisione dell'utente, 22 ott 2026). Finita la
+  lettura, i bambini ritrovano tutte le lanterne accese: è il momento più emozionante del pomeriggio e
+  si racconta con la meraviglia nei loro occhi. Le lanterne le hanno decorate loro, quindi la sorpresa è
+  vederle tutte accese insieme, non un oggetto misterioso. Nei testi non si nomina il bar: conta il
+  momento, non il luogo.

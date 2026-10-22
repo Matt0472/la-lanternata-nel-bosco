@@ -2,23 +2,8 @@
 import SectionHeading from './SectionHeading.astro';
 import Icon from './Icon.astro';
 import Divider from './Divider.astro';
+import LinkedText from './LinkedText.astro';
 import info from '../data/info.json';
-
-// A price note may hold a link written as [text](https://address): it serves
-// references like the Disability Card. The rest stays plain text (Astro
-// escapes it) and only http/https addresses are accepted.
-const LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
-const noteParts = (note: string) => {
-  const parts: { text: string; url?: string }[] = [];
-  let last = 0;
-  for (const m of note.matchAll(LINK)) {
-    if (m.index > last) parts.push({ text: note.slice(last, m.index) });
-    parts.push({ text: m[1], url: m[2] });
-    last = m.index + m[0].length;
-  }
-  if (last < note.length) parts.push({ text: note.slice(last) });
-  return parts;
-};
 ---
 
 <section id="info" class="bg-paper-warm pb-20 sm:pb-28">
@@ -61,20 +46,7 @@ const noteParts = (note: string) => {
                   <span class="font-semibold">{p.label}</span>
                   {p.note && (
                     <span class="mt-0.5 block text-xs leading-relaxed text-night-soft">
-                      {noteParts(p.note).map((x) =>
-                        x.url ? (
-                          <a
-                            href={x.url}
-                            target="_blank"
-                            rel="noopener"
-                            class="font-semibold text-lantern-deep underline underline-offset-2 transition-colors duration-300 hover:text-night"
-                          >
-                            {x.text}
-                          </a>
-                        ) : (
-                          x.text
-                        )
-                      )}
+                      <LinkedText text={p.note} />
                     </span>
                   )}
                 </span>
@@ -87,7 +59,7 @@ const noteParts = (note: string) => {
 
       <div class="rounded-3xl bg-cream p-8 shadow-sm">
         <h3 class="flex items-center gap-2.5 text-xl">
-          <Icon name="basket" class="h-6 w-6 text-lantern-deep" />
+          <Icon name="pen" class="h-6 w-6 text-lantern-deep" />
           {info.extrasTitle}
         </h3>
         <ul class="mt-5 space-y-3">
@@ -97,7 +69,9 @@ const noteParts = (note: string) => {
                 <span class="text-lantern-deep" aria-hidden="true">
                   ✦
                 </span>
-                {e}
+                <span>
+                  <LinkedText text={e} />
+                </span>
               </li>
             ))
           }

@@ -14,7 +14,7 @@ type Weekend = (typeof program.weekends)[number];
 const status = (w: Weekend) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : null);
 ---
 
-<section id="serata" class="bg-paper-warm pb-20 sm:pb-28">
+<section id="come-si-svolge" class="bg-paper-warm pb-20 sm:pb-28">
   <Divider from="paper" flip class="mb-16 sm:mb-20" />
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <SectionHeading eyebrow={program.eyebrow} title={program.title} intro={program.intro} />

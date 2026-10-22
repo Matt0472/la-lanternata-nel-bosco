@@ -34,7 +34,7 @@ template) sta nell'agente `design-specialist`; i **valori** stanno in `src/style
   `ctaLabel` dell'hero; il pulsante che apre la biglietteria ha la sua (`buttonLabel`), che di norma
   coincide. Le sezioni con un invito proprio (i più piccoli verso la prenotazione, il libro verso
   Amazon) lo tengono **subordinato**: pulsante a contorno. Il link al libro è secondario per
-  costruzione: il libro si compra anzitutto ai mercatini.
+  costruzione: il libro non è il prodotto che il sito vende.
 - **DES-06** — Tipografia: **Fraunces** (variabile, asse SOFT al massimo: terminazioni morbide da
   albo illustrato) per i titoli, **Figtree** per il testo (≥ 16px, interlinea ~1.6). **Cifre
   tabellari** per prezzi, orari e date. Niente corsivo (non è caricato: sarebbe sintetico).

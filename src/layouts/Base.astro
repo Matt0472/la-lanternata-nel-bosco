@@ -122,7 +122,7 @@ const offerFor = (availability: string) =>
 const offers = offerFor('https://schema.org/InStock');
 
 // The turn as a recurring Saturday and Sunday schedule: answers "what time".
-// Times are read from the info table ("15:30 – 18:30"): if one day the client
+// Times are read from the info table ("16:00 – 18:30"): if one day the client
 // writes them differently, the entry is simply omitted.
 const turnHours = (time: string) => {
   const hours = String(time).match(/(\d{1,2})[:.](\d{2})/g);

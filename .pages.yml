@@ -29,7 +29,7 @@ content:
         type: string
         description: 'È lo stesso testo su tutta la pagina: barra in alto, hero, sezione «L''esperienza» e pagina 404.'
       - { name: ctaShortLabel, label: 'Testo breve del pulsante (barra in alto, sul telefono)', type: string }
-      - { name: ctaSecondaryLabel, label: 'Testo del pulsante secondario (porta a «La serata»)', type: string }
+      - { name: ctaSecondaryLabel, label: 'Testo del pulsante secondario (porta a «Come si svolge»)', type: string }
       - { name: image, label: Immagine hero (schermi larghi), type: image }
       - { name: imageMobile, label: Immagine hero (telefono, verticale), type: image }
       - { name: imageAlt, label: Descrizione dell'immagine (per Google e accessibilità), type: string }
@@ -55,7 +55,7 @@ content:
           - { name: extra, label: 'Attività extra a pagamento (mostra il cartellino sulla card)', type: boolean, default: false }
 
   - name: program
-    label: '3 · La serata (programma e date)'
+    label: '3 · Come si svolge (programma e date)'
     type: file
     path: src/data/program.json
     fields:
@@ -63,7 +63,7 @@ content:
       - { name: title, label: Titolo, type: string }
       - { name: intro, label: Introduzione, type: text }
       - { name: weekendsTitle, label: 'Titolo del blocco date (letto dai lettori di schermo)', type: string }
-      - { name: weekendsNote, label: 'Riga sotto ogni data (es. Sabato e domenica · 15:30–18:30)', type: string }
+      - { name: weekendsNote, label: 'Riga sotto ogni data (es. Sabato e domenica · 16:00–18:30)', type: string }
       - name: weekends
         label: I weekend
         type: object
@@ -85,7 +85,7 @@ content:
           - { name: soldOut, label: 'Badge posti finiti (es. Sold out)', type: string }
           - { name: lastSeats, label: 'Badge posti in esaurimento (es. Ultimi posti)', type: string }
       - name: steps
-        label: Le tappe della serata, in ordine (timeline)
+        label: Le tappe, in ordine (timeline)
         type: object
         list: true
         fields:
@@ -177,7 +177,7 @@ content:
         fields:
           - { name: label, label: Nome del turno, type: string }
           - name: time
-            label: 'Orario (es. 15:30 – 18:30)'
+            label: 'Orario (es. 16:00 – 18:30)'
             type: string
             description: 'Scrivete le ore come nell''esempio: Google legge questo orario per i risultati di ricerca.'
       - { name: pricesTitle, label: Titolo del blocco prezzi, type: string }
@@ -193,7 +193,7 @@ content:
             description: 'Per inserire un link scrivete [testo](https://indirizzo), per esempio [Disability Card](https://www.disabilitycard.it/).'
           - { name: price, label: 'Prezzo (es. 15 € oppure Gratis)', type: string }
       - { name: extrasTitle, label: Titolo del terzo blocco, type: string }
-      - { name: extras, label: Voci del terzo blocco, type: string, list: true }
+      - { name: extras, label: Voci del terzo blocco, type: string, list: true, description: 'Per inserire un link scrivete [testo](https://indirizzo).' }
       - { name: note, label: 'Nota finale (riquadro verde; vuoto = nascosta)', type: text }
 
   - name: tickets
@@ -299,7 +299,7 @@ content:
             options:
               values:
                 - { value: '#esperienza', label: "L'esperienza" }
-                - { value: '#serata', label: 'La serata' }
+                - { value: '#come-si-svolge', label: 'Come si svolge' }
                 - { value: '#libro', label: 'Il libro' }
                 - { value: '#piccoli', label: 'I più piccoli' }
                 - { value: '#gallery', label: 'Gallery' }
