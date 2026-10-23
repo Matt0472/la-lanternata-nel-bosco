@@ -43,7 +43,9 @@ generato da `src/pages/robots.txt.ts`.
   - DNS del dominio (registrato su register.it, nameserver Cloudflare) e HTTPS;
   - **www → dominio principale**: Redirect Rule «www → lanternata.it» (301, con percorso e
     parametri);
-  - Bot Preference Sync **spento**: `robots.txt` lo scrive solo il sito.
+  - Bot Preference Sync **spento**: `robots.txt` lo scrive solo il sito;
+  - crawler AI **ammessi**: «Block AI bots» disattivato e tutti i crawler su *Allow* in AI Crawl
+    Control, così gli assistenti (ChatGPT, Claude, Perplexity…) possono leggere la pagina.
 - **Search Console** (proprietà di dominio `lanternata.it`) e **Bing Webmaster Tools**, sitemap
   `https://lanternata.it/sitemap-index.xml`.
 - **IndexNow** (Bing, Yandex e altri; Google no). La chiave è pubblicata in
