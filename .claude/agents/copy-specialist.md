@@ -45,7 +45,7 @@ Only these, and what the client adds (`COPY-03`):
   Albatros Il Filo, collana Nuove Voci · Fabulae; 56 illustrated pages; from 3 years. In a wood getting
   ready for winter live Belgiorno, a curious hedgehog who asks about everything, and Stellafiore, a wise
   and gentle fox. The shortening days frighten the hedgehog, so the fox takes him to an old oak where a
-  small antique glass lantern is hidden — Stellafiore guides him to an important life lesson. Its values (gratitude, kindness, love and respect for oneself and for others) may be hinted, veiled; the ending is never told (`COPY-07`). The author, from Milan,
+  small antique glass lantern is hidden — Stellafiore guides him to an important life lesson. Its values (gratitude, kindness, love and respect for oneself and for what surrounds us) may be named, as the user's sentence in the book section does; the ending is never told (`COPY-07`). The author, from Milan,
   wrote it for an educating community she founded with other families in 2025.
 - **Where**: Bosco della Luna, via Cusago 280, Milano. No market stalls (removed by the client). The book is sold on the publisher's site, on Amazon and in other shops, online too; the book section's button leads to Amazon. At the event, on all four dates, the book can be bought on site and the author signs it, in collaboration with the bookshop Libreria Mariclò (@libreriamariclo).
 

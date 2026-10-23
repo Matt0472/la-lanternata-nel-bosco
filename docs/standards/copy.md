@@ -49,8 +49,8 @@ nell'agente `copy-specialist`.
   l'acquisto è un invito garbato ("lo trovate alla Lanternata, dove Roberta Mari firma le copie"), mai un'offerta
   urlata. È **Stellafiore** a guidare Belgiorno verso la lezione della storia. La lezione del finale
   **non si svela**, ma i valori che la lettura trasmette (gratitudine, gentilezza, amore e rispetto
-  per sé stessi e per gli altri) si possono **lasciar intuire con garbo**, per immagini, senza elenchi
-  da quarta di copertina (decisione dell'utente, 22 ott 2026).
+  per sé stessi e per ciò che ci circonda) **si possono nominare**: la frase del libro che li dice è
+  dell'utente (23 ott 2026) e resta così.
 - **COPY-08** — **Lo stupore delle lanterne accese** (decisione dell'utente, 22 ott 2026). Finita la
   lettura, i bambini ritrovano tutte le lanterne accese: è il momento più emozionante del pomeriggio e
   si racconta con la meraviglia nei loro occhi. Le lanterne le hanno decorate loro, quindi la sorpresa è
