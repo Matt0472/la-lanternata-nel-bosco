@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 // JSON-LD, sitemap and robots.txt all derive from it.
 // The SITE_URL variable builds for another address without touching the file
 // (previews).
-const SITE_URL = process.env.SITE_URL || 'https://lanternatamilano.it';
+const SITE_URL = process.env.SITE_URL || 'https://lanternata.it';
 
 export default defineConfig({
   site: SITE_URL,

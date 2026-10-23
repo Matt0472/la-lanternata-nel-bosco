@@ -8,7 +8,7 @@ Stack: **Astro 7** (sito statico) + **Tailwind 4** + **Motion** e **Lenis** (ani
 Contenuti gestiti via **Pages CMS**, biglietteria **TicketingHub**, modulo con **Web3Forms** (+ hCaptcha).
 Repository **`Matt0472/la-lanternata-nel-bosco`**: ogni push su `main` pubblica l'anteprima
 **https://lanternata-anteprima.mapped-dev.it** (GitHub Pages, `.github/workflows/pages.yml`, sempre
-`noindex`). Hosting di produzione e dominio definitivo si decidono al go-live.
+`noindex`). Al go-live il sito va su **https://lanternata.it** (Cloudflare Pages) e l'anteprima si spegne.
 
 Le regole del progetto stanno in [`docs/standards/`](docs/standards/README.md); la guida per Claude Code
 in [`CLAUDE.md`](CLAUDE.md); lo stato del lavoro in [`docs/in-development/HANDOFF.md`](docs/in-development/HANDOFF.md).
@@ -65,7 +65,6 @@ leggono il meta robots e `robots.txt`, che è generato da `src/pages/robots.txt.
 
 - **TicketingHub** — nel pannello si cambia solo il codice del widget (`widgetId` in `tickets.json`).
   Il pulsante è nostro, lo script di TicketingHub si limita ad agganciarlo e parte solo dopo il
-  consenso ai cookie della biglietteria. **Oggi il codice è quello del Campo di Zucche**: va sostituito
-  prima di aprire le vendite.
-- **Web3Forms** — l'access key sta in `settings.json` (`web3formsKey`). hCaptcha viene caricato solo
+  consenso ai cookie della biglietteria.
+- **Web3Forms** — account della Lanternata; l'access key sta in `settings.json` (`web3formsKey`). hCaptcha viene caricato solo
   alla prima interazione col modulo.

@@ -2,7 +2,8 @@
 
 Si lavora su **`main`** del repository **`Matt0472/la-lanternata-nel-bosco`** (pubblico). **Ogni push
 su `main` va online** sull'anteprima **https://lanternata-anteprima.mapped-dev.it** (GitHub Pages,
-`noindex`). L'hosting di produzione e il dominio definitivo si decidono al go-live; da quando il
+`noindex`). La produzione è **https://lanternata.it** su Cloudflare Pages (go-live in corso), e a
+go-live verificato l'anteprima si spegne; da quando il
 cliente userà Pages CMS, anche i suoi salvataggi saranno commit su `main`.
 
 ## Commit e push

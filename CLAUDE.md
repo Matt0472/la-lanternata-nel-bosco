@@ -68,7 +68,8 @@ Lo **stato del lavoro** (cosa è fatto, cosa manca, cosa manca dal cliente) è i
   contatti), illustrazioni con **Gemini** (`scripts/generate-image.mjs`).
 - **GitHub** `Matt0472/la-lanternata-nel-bosco` (pubblico): ogni push su `main` va online
   sull'**anteprima** https://lanternata-anteprima.mapped-dev.it (GitHub Pages, `noindex`).
-  Produzione e dominio definitivo si decidono al go-live (vedi handoff).
+  Produzione: **https://lanternata.it** su Cloudflare Pages, go-live in corso (vedi handoff); a
+  go-live verificato l'anteprima si spegne.
 
 ## Comandi
 

@@ -17,7 +17,7 @@
       "text": "Dopo il pagamento ricevi subito l'e-ticket via email: è il biglietto di ingresso, da mostrare all'arrivo al Bosco."
     }
   ],
-  "widgetId": "337cf95b-058a-468d-bd6f-3e15d5011a5b",
+  "widgetId": "e3b3d138-f960-4b2d-a4f9-2578697f0484",
   "buttonLabel": "Prenota il tuo posto",
   "widgetScript": "https://widget.ticketinghub.com/embedding/latest.js",
   "limitedSeats": "I posti di ogni turno sono limitati, perché la passeggiata nel bosco resti raccolta e tranquilla.",

@@ -1,6 +1,7 @@
 # HANDOFF — La Lanternata al chiaro di luna
 
-Aggiornato: **22 ott 2026**: orario 16:00–18:30, niente "serata" nei testi (`COPY-10`), tolti i mercatini, libro in vendita sul posto con firma copie dell'autrice in tutte le date, con la Libreria Mariclò (info, libro, FAQ), nuova biografia dell'autrice, lanterne accese raccontate con stupore (`COPY-08`), sezione `#come-si-svolge`.
+Aggiornato: **23 ott 2026**: **go-live in corso** su **lanternata.it** (comprato su register.it, DNS e sito su Cloudflare Pages, come il gemello; runbook in `/Users/mattiapedone/.claude/plans/tranquil-scribbling-eclipse.md`). Messi il widget TicketingHub della Lanternata e l'account Web3Forms nuovo. A go-live verificato l'anteprima GitHub Pages si spegne (decisione dell'utente).
+Prima, **22 ott 2026**: orario 16:00–18:30, niente "serata" nei testi (`COPY-10`), tolti i mercatini, libro in vendita sul posto con firma copie dell'autrice in tutte le date, con la Libreria Mariclò (info, libro, FAQ), nuova biografia dell'autrice, lanterne accese raccontate con stupore (`COPY-08`), sezione `#come-si-svolge`.
 Prima, **20 ott 2026**: date spostate a **7–8 e 14–15 novembre** (su richiesta dell'utente), stesso turno 15:30–18:30. Riscritti il sottotitolo dell'hero e i testi della lettura; le lanterne non sono più «una sorpresa» (`COPY-08`): i bambini ritrovano la loro, asciutta.
 Prima: anteprima online in HTTPS (13 ott), età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta.
 
@@ -58,8 +59,6 @@ messaggio, venderne qualche copia.
 
 ## Dati dal cliente
 
-- **Dominio** (oggi segnaposto `lanternatamilano.it` in `astro.config.mjs`, `CODE-14`).
-- **Widget TicketingHub della lanternata**: oggi c'è quello del Campo di Zucche (`tickets.json`).
 - **Foto** della gallery: oggi 8 foto vere del 2025 (`public/uploads/lanternata-*.jpg`, scelte dall'utente, da far vedere a Roberta): sei da WhatsApp e due fotogrammi a 720×900 del reel di @ilibridellamammaestraale. Meglio sostituirle con foto ad alta risoluzione quando arrivano. **Recensioni** da tenere o cambiare
   (quelle del parco parlano di Halloween).
 - **La lanterna si porta a casa**: confermato dall'utente il 13 ott 2026 (anche i bimbi sotto i 3 anni la preparano con i genitori e la portano a casa). La FAQ dedicata era stata tolta: si può rimettere. Resta da sapere se la luce va via con la lanterna.
@@ -71,7 +70,6 @@ messaggio, venderne qualche copia.
 - **Firma copie**: a che ora? (Confermati dall'utente: il libro si compra sul posto, firma copie in tutte e quattro le date, Libreria Mariclò.)
 - **Bimbi sotto i 3 anni**: serve una prenotazione gratuita nel widget? **12 anni** = adulto a 5 €,
   e ha la lanterna?
-- **Web3Forms**: si riusa l'access key del gemello (stessa casella e stesso limite mensile).
 - Se l'**autrice** sarà presente alla lettura (sarebbe un ottimo contenuto).
 
 ## Separatori (deciso il 13 ott 2026)
@@ -140,10 +138,7 @@ node scripts/generate-image.mjs ...   # illustrazioni Gemini (chiave in .env: GO
 
 ## Da chiudere prima del go-live
 
-- Widget TicketingHub della lanternata al posto di quello del Campo di Zucche (`tickets.json`).
-- Dominio definitivo in `astro.config.mjs` (`SITE_URL`, `CODE-14`).
 - Foto vere nella gallery e recensioni decise (debito noto in `docs/standards/README.md`).
-- Nel manuale, i commenti `DA COMPLETARE` su repository e account (3 punti).
 - `PUBLIC_SITE_INDEXABLE=true` solo nella build di produzione, il giorno del go-live (`SEO-10`).
 - GitHub Action IndexNow come sul gemello, con la chiave pubblicata in `public/`.
 - Dopo il 15 novembre: decidere cosa mostra la pagina (evento concluso / prossima edizione).
