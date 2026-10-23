@@ -108,7 +108,7 @@ content:
       - { name: text, label: La storia, type: text }
       - { name: message, label: 'Frase in evidenza, più grande e con un filetto a sinistra (vuoto = nascosta)', type: text }
       - { name: details, label: 'Dettagli (le pillole: pagine, età, collana…)', type: string, list: true }
-      - { name: authorTitle, label: Titolo del riquadro sull'autrice, type: string }
+      - { name: authorTitle, label: 'Occhiello del riquadro sull''autrice (la riga in maiuscolo sopra il nome)', type: string }
       - { name: authorText, label: 'Testo sull''autrice (vuoto = riquadro nascosto)', type: text }
       - name: authorInstagram
         label: 'Profilo Instagram dell''autrice (vuoto = link nascosto)'

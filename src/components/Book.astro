@@ -41,7 +41,7 @@ import book from '../data/book.json';
       }
     </div>
 
-    <div class="mx-auto max-w-2xl lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:max-w-none">
+    <div class="mx-auto max-w-2xl lg:col-start-2 lg:row-start-1 lg:mx-0 lg:max-w-none">
       <p class="text-sm font-bold tracking-[0.2em] text-lantern uppercase" data-animate="fade-up">{book.eyebrow}</p>
       <h2 class="mt-4 text-4xl leading-tight text-balance text-cream sm:text-5xl" data-animate="fade-up" data-delay="0.1">
         «{book.title}»
@@ -104,32 +104,38 @@ import book from '../data/book.json';
     </div>
 
     <!-- The author: after the text in the reading order (headings stay in
-         order), placed under the cover from lg up so the columns balance -->
+         order), a full-width card under both columns. From lg up it repeats
+         the section's two columns: name and Instagram under the cover, the
+         story under the text, so its lines stay a readable length -->
     {
       book.authorText && (
         <div
-          class="mx-auto w-full max-w-2xl rounded-3xl bg-dusk/70 p-6 ring-1 ring-cream/10 lg:col-start-1 lg:row-start-2 lg:max-w-md"
+          class="mx-auto grid w-full max-w-2xl gap-x-20 gap-y-4 rounded-3xl bg-dusk/70 p-6 ring-1 ring-cream/10 sm:p-8 lg:col-span-2 lg:max-w-none lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:p-10"
           data-animate="fade-up"
         >
-          {book.authorTitle && <h3 class="text-xl text-cream">{book.authorTitle}</h3>}
-          <p class="mt-2 leading-relaxed text-pretty text-cream/80">{book.authorText}</p>
-          {
-            book.authorInstagram && book.authorInstagramLabel && (
-              // one chip, icon and words together: it reads as a single action.
-              // On a phone the words can take two lines: then it is a rounded
-              // box rather than a pill, which would look swollen
-              <a
-                href={book.authorInstagram}
-                target="_blank"
-                rel="noopener"
-                class="lift mt-4 inline-flex min-h-11 max-w-full items-center gap-2.5 rounded-2xl bg-cream/10 px-4 py-2.5 text-sm leading-snug font-semibold text-cream ring-1 ring-cream/20 hover:bg-cream/15 hover:ring-cream/40 sm:rounded-full"
-              >
-                <Icon name="instagram" class="h-5 w-5 shrink-0 text-lantern" />
-                {book.authorInstagramLabel}
-                <span class="sr-only">(si apre in una nuova scheda)</span>
-              </a>
-            )
-          }
+          <div>
+            {/* eyebrow and heading, like the section titles: the name is the heading */}
+            {book.authorTitle && <p class="text-sm font-bold tracking-[0.2em] text-lantern uppercase">{book.authorTitle}</p>}
+            {book.author && <h3 class="mt-2 text-2xl text-cream sm:text-3xl">{book.author}</h3>}
+            {
+              book.authorInstagram && book.authorInstagramLabel && (
+                // one chip, icon and words together: it reads as a single action.
+                // On a phone the words can take two lines: then it is a rounded
+                // box rather than a pill, which would look swollen
+                <a
+                  href={book.authorInstagram}
+                  target="_blank"
+                  rel="noopener"
+                  class="lift mt-5 inline-flex min-h-11 max-w-full items-center gap-2.5 rounded-2xl bg-cream/10 px-4 py-2.5 text-sm leading-snug font-semibold text-cream ring-1 ring-cream/20 hover:bg-cream/15 hover:ring-cream/40 sm:rounded-full"
+                >
+                  <Icon name="instagram" class="h-5 w-5 shrink-0 text-lantern" />
+                  {book.authorInstagramLabel}
+                  <span class="sr-only">(si apre in una nuova scheda)</span>
+                </a>
+              )
+            }
+          </div>
+          <p class="leading-relaxed text-pretty text-cream/80 lg:text-lg">{book.authorText}</p>
         </div>
       )
     }
