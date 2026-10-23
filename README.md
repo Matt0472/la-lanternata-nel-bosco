@@ -6,9 +6,8 @@ lanterne» di Roberta Mari (Gruppo Albatros Il Filo), passeggiata nel bosco e ca
 
 Stack: **Astro 7** (sito statico) + **Tailwind 4** + **Motion** e **Lenis** (animazioni e scroll).
 Contenuti gestiti via **Pages CMS**, biglietteria **TicketingHub**, modulo con **Web3Forms** (+ hCaptcha).
-Repository **`Matt0472/la-lanternata-nel-bosco`**: ogni push su `main` pubblica l'anteprima
-**https://lanternata-anteprima.mapped-dev.it** (GitHub Pages, `.github/workflows/pages.yml`, sempre
-`noindex`). Al go-live il sito va su **https://lanternata.it** (Cloudflare Pages) e l'anteprima si spegne.
+Repository **`Matt0472/la-lanternata-nel-bosco`**: ogni push su `main` va in produzione su
+**https://lanternata.it** (Cloudflare Pages). Vedi «Come va online».
 
 Le regole del progetto stanno in [`docs/standards/`](docs/standards/README.md); la guida per Claude Code
 in [`CLAUDE.md`](CLAUDE.md); lo stato del lavoro in [`docs/in-development/HANDOFF.md`](docs/in-development/HANDOFF.md).
@@ -27,8 +26,38 @@ npm run build     # build di produzione in dist/
 (`npm run manual`) e le miniature WebP della gallery (`npm run thumbnails`, 640px, in
 `public/uploads/thumbnails/`).
 
-Il sito resta **`noindex`** finché la build di go-live non imposta `PUBLIC_SITE_INDEXABLE=true`: lo
-leggono il meta robots e `robots.txt`, che è generato da `src/pages/robots.txt.ts`.
+Le build in locale sono **`noindex`**: il sito è indicizzabile solo con `PUBLIC_SITE_INDEXABLE=true`,
+che è impostato nelle variabili di Production di Cloudflare. Lo leggono il meta robots e `robots.txt`,
+generato da `src/pages/robots.txt.ts`.
+
+## Come va online
+
+- **Ogni push su `main` va in produzione.** Cloudflare Pages (progetto `la-lanternata-nel-bosco`,
+  account dell'utente) è collegato al repository: a ogni push fa `npm run build` e pubblica `dist/` in
+  circa un minuto. L'esito si vede sul commit in GitHub, nel check «Cloudflare Pages». Non c'è un
+  ambiente di prova: quello che arriva su `main` lo vedono subito le famiglie, biglietteria compresa.
+- **Anche i salvataggi da Pages CMS sono commit su `main`**: prima di lavorare in locale, `git pull`.
+- **Nel pannello Cloudflare, non nel repository:**
+  - variabili di Production `PUBLIC_SITE_INDEXABLE=true` (l'interruttore dell'indicizzazione) e
+    `NODE_VERSION=22`;
+  - DNS del dominio (registrato su register.it, nameserver Cloudflare) e HTTPS;
+  - **www → dominio principale**: Redirect Rule «www → lanternata.it» (301, con percorso e
+    parametri);
+  - Bot Preference Sync **spento**: `robots.txt` lo scrive solo il sito.
+- **Search Console** (proprietà di dominio `lanternata.it`) e **Bing Webmaster Tools**, sitemap
+  `https://lanternata.it/sitemap-index.xml`.
+- **IndexNow** (Bing, Yandex e altri; Google no). La chiave è pubblicata in
+  `public/5db542ba5f289263d0acaf5f1d211286.txt`, che deve contenere solo la chiave. La GitHub Action
+  `.github/workflows/indexnow.yml` scatta a ogni push su `main` che tocca il sito, aspetta che il check
+  «Cloudflare Pages» sia verde e segnala la home. Per mandarla a mano:
+
+  ```bash
+  curl -i "https://api.indexnow.org/indexnow?url=https://lanternata.it/&key=5db542ba5f289263d0acaf5f1d211286"
+  ```
+
+Se il dominio cambiasse: `SITE_URL` in `astro.config.mjs`, `PAGE_URL` in
+`.github/workflows/indexnow.yml`, i domini del progetto Cloudflare e le proprietà di Search Console e
+Bing.
 
 ## Asset
 

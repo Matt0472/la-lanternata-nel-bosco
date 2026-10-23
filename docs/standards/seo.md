@@ -41,7 +41,9 @@
 - **SEO-10** — **Fino al go-live il sito NON è indicizzabile**: `robots.txt` `Disallow: /` +
   `<meta name="robots" content="noindex, nofollow">` su ogni pagina. Lo decide un solo flag di build,
   `PUBLIC_SITE_INDEXABLE` (`CODE-15`). Il `noindex` si toglie **solo il giorno del go-live**, sul
-  dominio definitivo, e un'anteprima non è mai indicizzabile.
+  dominio definitivo, e un'anteprima non è mai indicizzabile. Go-live fatto il **23 ott 2026**: il flag
+  è `true` solo nelle variabili di Production del progetto Cloudflare Pages di lanternata.it; ogni
+  build in locale o di prova resta `noindex`.
 - **SEO-11** — Il percorso del manuale cliente **non compare mai** in `robots.txt` (`CMS-13`).
 - **SEO-12** — `public/_headers` contiene **solo regole di cache**: mai un `X-Robots-Tag`, che
   toglierebbe il sito da Google senza che nulla si rompa a vista.

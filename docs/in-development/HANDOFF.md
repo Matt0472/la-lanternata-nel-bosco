@@ -1,6 +1,6 @@
 # HANDOFF — La Lanternata al chiaro di luna
 
-Aggiornato: **23 ott 2026**: **go-live in corso** su **lanternata.it** (comprato su register.it, DNS e sito su Cloudflare Pages, come il gemello; runbook in `/Users/mattiapedone/.claude/plans/tranquil-scribbling-eclipse.md`). Messi il widget TicketingHub della Lanternata e l'account Web3Forms nuovo. A go-live verificato l'anteprima GitHub Pages si spegne (decisione dell'utente).
+Aggiornato: **23 ott 2026**: **online su https://lanternata.it** (Cloudflare Pages, indicizzabile; dominio su register.it, DNS su Cloudflare, `www` → apex). Biglietteria TicketingHub e Web3Forms della Lanternata. Search Console avviata (sitemap inviata, in attesa di lettura), IndexNow a ogni deploy, anteprima GitHub Pages spenta. Riquadro dell'autrice a tutta larghezza sotto il libro.
 Prima, **22 ott 2026**: orario 16:00–18:30, niente "serata" nei testi (`COPY-10`), tolti i mercatini, libro in vendita sul posto con firma copie dell'autrice in tutte le date, con la Libreria Mariclò (info, libro, FAQ), nuova biografia dell'autrice, lanterne accese raccontate con stupore (`COPY-08`), sezione `#come-si-svolge`.
 Prima, **20 ott 2026**: date spostate a **7–8 e 14–15 novembre** (su richiesta dell'utente), stesso turno 15:30–18:30. Riscritti il sottotitolo dell'hero e i testi della lettura; le lanterne non sono più «una sorpresa» (`COPY-08`): i bambini ritrovano la loro, asciutta.
 Prima: anteprima online in HTTPS (13 ott), età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta.
@@ -22,12 +22,13 @@ messaggio, venderne qualche copia.
 ## Stato attuale
 
 - **Repo:** `Matt0472/la-lanternata-nel-bosco` (pubblico), branch `main`.
-  **Anteprima** su GitHub Pages: **https://lanternata-anteprima.mapped-dev.it** (`noindex`, HTTPS
-  obbligatorio attivo dal 13 ott 2026), pubblicata a ogni push da `.github/workflows/pages.yml`. DNS su
-  register.it: CNAME `lanternata-anteprima` → `matt0472.github.io.`. Pages CMS e hosting di
-  produzione **non ancora creati**.
-- **Push:** da questa rete l'SSH verso GitHub va in timeout (porte 22 e 443). Si pubblica via HTTPS
-  con le credenziali di `gh` (che ora ha lo scope `workflow`):
+  **Produzione** su **https://lanternata.it** (Cloudflare Pages, progetto `la-lanternata-nel-bosco`,
+  online e indicizzabile dal 23 ott 2026): ogni push su `main` va online. Dominio su register.it,
+  nameserver e DNS su Cloudflare; `www` → apex con una Redirect Rule. L'anteprima GitHub Pages è
+  spenta.
+- **Push:** dal Mac `git push origin main` (SSH) funziona; `gh` è installato con Homebrew. Su una rete
+  dove l'SSH verso GitHub va in timeout si pubblica via HTTPS con le credenziali di `gh` (serve lo
+  scope `workflow` per toccare `.github/workflows/`):
   `git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push https://github.com/Matt0472/la-lanternata-nel-bosco.git main`.
 - **Canone e team** sul modello di softairmilano: `CLAUDE.md`, `docs/standards/*` (10 file, con
   `copy.md` per il libro e il tono), `design-system/lanternata/MASTER.md`, 9 agenti in
@@ -134,13 +135,11 @@ node scripts/generate-image.mjs ...   # illustrazioni Gemini (chiave in .env: GO
 2. Avvisi di accessibilità rimasti (non bloccanti): galleria con un solo punto di tabulazione e
    ordine visivo (roving tabindex); pausa da tastiera per le recensioni che scorrono (oggi pausa su
    hover, tocco e fuori schermo, `A11Y-07`).
-3. Go-live con runbook (`GIT-07`): dominio, hosting di produzione, Pages CMS, Search Console, IndexNow.
+3. Dopo il go-live: controllare che la sitemap passi a «Riuscito» in Search Console; entrare in Pages CMS con GitHub (repo `Matt0472/la-lanternata-nel-bosco`) e verificare il pannello.
 
-## Da chiudere prima del go-live
+## Da chiudere
 
 - Foto vere nella gallery e recensioni decise (debito noto in `docs/standards/README.md`).
-- `PUBLIC_SITE_INDEXABLE=true` solo nella build di produzione, il giorno del go-live (`SEO-10`).
-- GitHub Action IndexNow come sul gemello, con la chiave pubblicata in `public/`.
 - Dopo il 15 novembre: decidere cosa mostra la pagina (evento concluso / prossima edizione).
 
 ## Decisioni aperte

@@ -66,10 +66,9 @@ Lo **stato del lavoro** (cosa è fatto, cosa manca, cosa manca dal cliente) è i
 - **Pages CMS** (pagescms.org), config in `.pages.yml`, contenuti in `src/data/*.json`.
 - **TicketingHub** (biglietteria in popover, dopo il consenso), **Web3Forms** + hCaptcha (modulo
   contatti), illustrazioni con **Gemini** (`scripts/generate-image.mjs`).
-- **GitHub** `Matt0472/la-lanternata-nel-bosco` (pubblico): ogni push su `main` va online
-  sull'**anteprima** https://lanternata-anteprima.mapped-dev.it (GitHub Pages, `noindex`).
-  Produzione: **https://lanternata.it** su Cloudflare Pages, go-live in corso (vedi handoff); a
-  go-live verificato l'anteprima si spegne.
+- **GitHub** `Matt0472/la-lanternata-nel-bosco` (pubblico): ogni push su `main` va **in produzione**
+  su **https://lanternata.it** (Cloudflare Pages, online e indicizzabile dal 23 ott 2026). Non c'è
+  un'anteprima. Search Console, Bing e IndexNow: vedi README, «Come va online».
 
 ## Comandi
 
@@ -139,9 +138,10 @@ dì in una riga quale usi, poi usala.
 Riguardano come si lavora qui, non come deve essere il codice (quello è in `docs/standards/`).
 
 - **Mai commit né push senza un ok esplicito**: prima si mostrano le modifiche (screenshot, anteprima
-  locale, diff), poi si aspetta (`GIT-01`). Ogni push su `main` va online sull'anteprima.
-- **Il sito resta `noindex` fino al go-live** (`SEO-10`). Mai toccare il flag di indicizzazione, il
-  DNS o Cloudflare di tua iniziativa: gli interruttori di produzione li aziona l'utente (`GIT-08`).
+  locale, diff), poi si aspetta (`GIT-01`). Ogni push su `main` va online su lanternata.it.
+- **Il sito è online e indicizzabile dal 23 ott 2026** (`SEO-10`): il flag sta solo nelle variabili di
+  Production di Cloudflare. Mai toccare quel flag, il DNS o Cloudflare di tua iniziativa: gli
+  interruttori di produzione li aziona l'utente (`GIT-08`).
 - **Mai segreti nei file**: la API key sta in `.env` (`GIT-04`).
 - **Verifica in un browser vero**, a desktop e telefono, sotto la piega e con `prefers-reduced-motion`
   (`GIT-09`). Screenshot in `.playwright-mcp/` (ignorata da git).

@@ -1,20 +1,20 @@
 # Git, verifica e go-live — `GIT-`
 
 Si lavora su **`main`** del repository **`Matt0472/la-lanternata-nel-bosco`** (pubblico). **Ogni push
-su `main` va online** sull'anteprima **https://lanternata-anteprima.mapped-dev.it** (GitHub Pages,
-`noindex`). La produzione è **https://lanternata.it** su Cloudflare Pages (go-live in corso), e a
-go-live verificato l'anteprima si spegne; da quando il
-cliente userà Pages CMS, anche i suoi salvataggi saranno commit su `main`.
+su `main` va in produzione** su **https://lanternata.it** (Cloudflare Pages, online dal 23 ott 2026):
+non c'è un'anteprima, quello che arriva su `main` lo vedono subito le famiglie, biglietteria
+compresa. Anche i salvataggi da Pages CMS sono commit su `main`.
 
 ## Commit e push
 
 - **GIT-01** — **Mai commit né push senza un ok esplicito nella conversazione.** Finito un lavoro, si
   **mostra** cosa è cambiato (screenshot desktop e mobile, anteprima locale, riepilogo del diff) e ci si
   ferma. Vale anche per i fix piccoli. Un ok su una modifica non vale per la successiva.
-- **GIT-02** — Prima di lavorare, `git pull`. Ogni push su `main` fa partire
-  `.github/workflows/pages.yml`, che pubblica l'anteprima in circa un minuto: si segue la run
-  (`gh run watch`) e si controlla l'anteprima online, riportando cosa si è visto. Il workflow non
-  imposta mai `PUBLIC_SITE_INDEXABLE` (`SEO-10`).
+- **GIT-02** — Prima di lavorare, `git pull`. Ogni push su `main` fa partire la build di Cloudflare
+  Pages, che pubblica in circa un minuto: si segue il check «Cloudflare Pages» del commit
+  (`gh api repos/Matt0472/la-lanternata-nel-bosco/commits/<sha>/check-runs`) e si controlla
+  lanternata.it, riportando cosa si è visto. `PUBLIC_SITE_INDEXABLE` sta solo nelle variabili di
+  Production del progetto Cloudflare, mai in un workflow (`SEO-10`).
 - **GIT-03** — Messaggi di commit **in italiano**, nello stile del gemello: una riga che dice cosa
   cambia per chi usa il sito (es. "Biglietteria: il pulsante di acquisto ora è nostro"), con il
   trailer di attribuzione in fondo.

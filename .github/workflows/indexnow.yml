@@ -1,0 +1,85 @@
+# Pings IndexNow (Bing, Yandex, Seznam, Naver, Yep) with the home page after
+# every publish, so search engines come back within hours instead of days.
+# Google does not take part: Search Console covers Google.
+#
+# Runs on every push to main that touches the site, including saves from the
+# CMS panel (Pages CMS commits to main). It does not run for the README, the
+# client manual or other files that never go online: pinging a page that has
+# not changed only costs credibility with the engines.
+#
+# The ping must go out only once the new site is live, otherwise the engine
+# comes by and finds the old version: that is why the job waits for the
+# "Cloudflare Pages" check of the same commit to turn green.
+#
+# If the domain ever changes, update it here too (see README, "Come va online").
+
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+
+# Several CMS saves in a row: only the last one counts, the earlier runs are
+# cancelled while they wait for their deploy.
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
+
+permissions:
+  checks: read
+
+env:
+  PAGE_URL: https://lanternata.it/
+  # The key is public by design: a file with the same name sits at the site root
+  INDEXNOW_KEY: 5db542ba5f289263d0acaf5f1d211286
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Wait for the Cloudflare Pages deploy to be live
+        id: deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 50); do
+            result=$(gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/check-runs" \
+              --jq '[.check_runs[] | select(.name == "Cloudflare Pages")][0] | "\(.status) \(.conclusion)"')
+            echo "attempt $attempt: $result"
+            case "$result" in
+              "completed success")
+                echo "live=yes" >> "$GITHUB_OUTPUT"
+                exit 0
+                ;;
+              completed*)
+                # Failed or cancelled deploy: the Cloudflare check already
+                # reports it, here we just skip the ping.
+                echo "::warning::Deploy did not succeed ($result): IndexNow not notified"
+                echo "live=no" >> "$GITHUB_OUTPUT"
+                exit 0
+                ;;
+            esac
+            sleep 15
+          done
+          echo "::error::The deploy did not finish within 12.5 minutes"
+          exit 1
+
+      - name: Ping IndexNow with the home page
+        if: steps.deploy.outputs.live == 'yes'
+        run: |
+          status=$(curl -sS -o response.txt -w '%{http_code}' --get "https://api.indexnow.org/indexnow" \
+            --data-urlencode "url=$PAGE_URL" --data-urlencode "key=$INDEXNOW_KEY")
+          cat response.txt; echo
+          echo "IndexNow: HTTP $status"
+          # 200 = received, 202 = received, key validation pending
+          case "$status" in
+            200|202) ;;
+            *) echo "::error::IndexNow answered $status"; exit 1 ;;
+          esac

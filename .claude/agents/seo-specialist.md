@@ -52,10 +52,11 @@ Astro components can look right and still render wrong. Verify against **`dist/`
 ## The indexing gate
 
 A leak cannot be undone quickly: once a staging page is indexed it lingers. The only switch is
-`PUBLIC_SITE_INDEXABLE` (`CODE-15`), read by `Base.astro` and `src/pages/robots.txt.ts`; the preview
-workflow (`.github/workflows/pages.yml`, https://lanternata-anteprima.mapped-dev.it) must never set it. Flipping it to
-`true` happens **only on go-live day**, by the user (`GIT-08`), on the final domain, **https://lanternata.it**:
-the flag is a Production environment variable of the Cloudflare Pages project, never in a workflow. If anything touches `robots.txt`, the robots meta,
+`PUBLIC_SITE_INDEXABLE` (`CODE-15`), read by `Base.astro` and `src/pages/robots.txt.ts`; it is `true`
+only as a Production environment variable of the Cloudflare Pages project serving
+**https://lanternata.it** (live and indexable since 23 Oct 2026), set by the user (`GIT-08`), never in
+a workflow; local builds stay noindex. Search Console and Bing Webmaster Tools are set up, and
+`.github/workflows/indexnow.yml` pings IndexNow after every deploy. If anything touches `robots.txt`, the robots meta,
 `public/_headers` or that flag, treat it as delicate and say so first (`SEO-12`).
 
 ## Local search and GEO
