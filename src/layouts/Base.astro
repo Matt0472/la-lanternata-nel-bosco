@@ -100,6 +100,8 @@ const bookSchema = {
 
 // PRICES: one offer per price type instead of a generic range, so results read
 // "adulti 5 €". Free entries go in at price 0: useful information, not a gap.
+// The sales start date comes from the panel; a malformed one is left out.
+const salesStart = /^\d{4}-\d{2}-\d{2}$/.test(String(settings.ticketsOnSaleDate ?? '')) ? settings.ticketsOnSaleDate : undefined;
 const offerFor = (availability: string) =>
   info.prices
     .map((p) => {
@@ -115,6 +117,8 @@ const offerFor = (availability: string) =>
         price: String(price),
         priceCurrency: 'EUR',
         availability,
+        // from when the tickets are on sale: Google asks for it on every offer
+        ...(salesStart ? { validFrom: salesStart } : {}),
         url: `${siteRoot}#biglietti`,
       };
     })
@@ -218,6 +222,7 @@ const subEvent = program.weekends
       organizer,
       performer,
       image: [ogImage.toString()],
+      description: settings.seoDescription,
       offers: offerFor(availability),
     };
   })
@@ -257,7 +262,12 @@ const graph = { '@context': 'https://schema.org', '@graph': [eventSchema, bookSc
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {!indexable && <meta name="robots" content="noindex, nofollow" />}
+    <!-- favicon.svg for browsers; the raster ones (scripts/build-favicons.mjs) for
+         Google's results, which want a multiple of 48px, old browsers and iOS -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     {/* crossorigin is mandatory even for our own fonts: without it the browser

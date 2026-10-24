@@ -42,7 +42,9 @@ script, parametri) sta nell'agente `asset-specialist`; qui ci sono le regole.
   (`public/logo-bosco-419.png`), mai ridisegnato o ricolorato. Il **marchio della lanternata**
   (`public/logo-lanternata.svg`) è un disegno nostro in SVG, modificabile a mano.
 - **MEDIA-09** — La **favicon** è `public/favicon.svg`, la stessa lanterna del marchio semplificata
-  per stare leggibile a 16px.
+  per stare leggibile a 16px. Le versioni raster (`favicon.ico`, `icon-192.png` per i risultati di
+  Google, `apple-touch-icon.png`) si rigenerano con `node scripts/build-favicons.mjs` a ogni modifica
+  dell'SVG.
 
 ## Segreti
 

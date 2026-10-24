@@ -77,6 +77,9 @@ Bing.
   `--cutout` toglie lo sfondo bianco, salvando anche l'originale. Serve la chiave nel file `.env`
   (`GOOGLE_AI_STUDIO_KEY`, fuori da git) e il billing attivo sul progetto Google.
 - **Copertina del libro**: dalla scheda dell'editore, solo convertita in WebP. Non si ritocca.
+- **Favicon**: si disegna in `public/favicon.svg`; `node scripts/build-favicons.mjs` ne ricava
+  `favicon.ico`, `icon-192.png` (l'icona che Google mostra accanto al risultato) e
+  `apple-touch-icon.png`.
 
 ## Struttura
 

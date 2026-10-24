@@ -374,3 +374,4 @@ content:
       - { name: copyrightHolder, label: 'Titolare del copyright (riga in fondo alla pagina)', type: string }
       - { name: eventStartDate, label: 'Data di inizio evento (AAAA-MM-GG)', type: string }
       - { name: eventEndDate, label: 'Data di fine evento (AAAA-MM-GG)', type: string }
+      - { name: ticketsOnSaleDate, label: 'Data di apertura delle vendite (AAAA-MM-GG)', type: string }
