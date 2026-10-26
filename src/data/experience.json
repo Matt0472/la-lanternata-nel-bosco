@@ -28,6 +28,21 @@
       "title": "La caccia al tesoro",
       "text": "L'ultima avventura: nel buio del bosco si nascondono piccoli tesori luminosi, e tocca ai bambini scovarli uno a uno.",
       "extra": false
+    },
+    {
+      "icon": "✍️",
+      "title": "Il firma copie con l'autrice",
+      "text": "Alla Lanternata potete acquistare «Il richiamo delle lanterne» e farvelo firmare da Roberta Mari, in collaborazione con la Libreria Mariclò.",
+      "extra": false
+    },
+    {
+      "icon": "🎀",
+      "image": "/uploads/ideando-labart.webp",
+      "title": "La bancarella di Ideando",
+      "text": "Fermatevi alla bancarella di Silvia Mannu: creazioni fatte a mano, gadget e cose carine con cui «Il richiamo delle lanterne» vi accompagna fino a casa.",
+      "instagramUrl": "https://www.instagram.com/ideando.labart/",
+      "instagramLabel": "ideando.labart",
+      "extra": false
     }
   ]
 }

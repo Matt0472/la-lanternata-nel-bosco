@@ -49,9 +49,12 @@ content:
         type: object
         list: true
         fields:
-          - { name: icon, label: 'Emoji (es. 🏮 📖 🌕 🗝️ 🧺)', type: string }
+          - { name: icon, label: 'Emoji (es. 🏮 📖 🌕 🗝️ ✍️)', type: string }
+          - { name: image, label: 'Immagine al posto dell''emoji (es. il logo di un espositore; vuoto = emoji)', type: image }
           - { name: title, label: Nome dell'attività, type: string }
           - { name: text, label: Descrizione, type: text }
+          - { name: instagramUrl, label: 'Profilo Instagram (vuoto = niente pillola)', type: string }
+          - { name: instagramLabel, label: 'Testo della pillola Instagram (es. ideando.labart)', type: string }
           - { name: extra, label: 'Attività extra a pagamento (mostra il cartellino sulla card)', type: boolean, default: false }
 
   - name: program

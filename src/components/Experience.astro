@@ -1,5 +1,6 @@
 ---
 import Divider from './Divider.astro';
+import Icon from './Icon.astro';
 import experience from '../data/experience.json';
 import hero from '../data/hero.json';
 
@@ -7,11 +8,13 @@ import hero from '../data/hero.json';
 // one, alternating night and paper. On the night cards the pictogram gets a
 // warm glow behind it (.glow), not an amber fill: the accent stays the
 // lantern's (DES-04).
+const dark = { text: 'text-cream', body: 'text-cream/80', chip: 'bg-cream/12 text-cream hover:bg-cream/20', chipIcon: 'text-lantern' };
+const light = { text: 'text-night', body: 'text-night-soft', chip: 'bg-night/8 text-night hover:bg-night/14', chipIcon: 'text-lantern-deep' };
 const skins = [
-  { bg: 'bg-night glow', text: 'text-cream', body: 'text-cream/80', rot: 'lg:-rotate-2' },
-  { bg: 'bg-paper-warm', text: 'text-night', body: 'text-night-soft', rot: 'lg:rotate-1' },
-  { bg: 'bg-dusk glow', text: 'text-cream', body: 'text-cream/80', rot: 'lg:-rotate-1' },
-  { bg: 'bg-cream', text: 'text-night', body: 'text-night-soft', rot: 'lg:rotate-2' },
+  { bg: 'bg-night glow', rot: 'lg:-rotate-2', ...dark },
+  { bg: 'bg-paper-warm', rot: 'lg:rotate-1', ...light },
+  { bg: 'bg-dusk glow', rot: 'lg:-rotate-1', ...dark },
+  { bg: 'bg-cream', rot: 'lg:rotate-2', ...light },
 ];
 ---
 
@@ -62,11 +65,26 @@ const skins = [
                 <article
                   class={`relative overflow-hidden ${skin.bg} ${skin.rot} rounded-[2rem] p-8 shadow-xl shadow-night/15 transition-transform duration-500 ease-soft hover:lg:rotate-0 sm:p-10`}
                 >
-                  <div class="relative flex items-start justify-between gap-4">
-                    <span class="text-5xl" aria-hidden="true">
-                      {item.icon}
-                    </span>
-                    <span class="flex items-center gap-3">
+                  {/* on the narrowest phones the right group (pill and number) wraps
+                      under the picture instead of pushing the number out of the card */}
+                  <div class="relative flex flex-wrap items-start justify-between gap-4">
+                    {item.image ? (
+                      // decorative: the card title below already names it (A11Y-03)
+                      <img
+                        src={item.image}
+                        alt=""
+                        width="80"
+                        height="80"
+                        loading="lazy"
+                        decoding="async"
+                        class="h-16 w-16 rounded-2xl object-cover shadow-md ring-1 shadow-night/20 ring-night/10 sm:h-20 sm:w-20"
+                      />
+                    ) : (
+                      <span class="text-5xl" aria-hidden="true">
+                        {item.icon}
+                      </span>
+                    )}
+                    <span class="ml-auto flex items-center gap-3">
                       {/* in the header row, not at the end: the badge must not
                           change the card height, or the stack loses its rhythm */}
                       {item.extra && experience.extraBadge && (
@@ -75,6 +93,23 @@ const skins = [
                         >
                           {experience.extraBadge}
                         </span>
+                      )}
+                      {/* the Instagram pill sits in the header row too, slim like the
+                          badge: it does not make the card taller. The ::before stretches
+                          the tap area to 44px without making the pill look heavier
+                          (RESP-04) */}
+                      {item.instagramUrl && item.instagramLabel && (
+                        <a
+                          href={item.instagramUrl}
+                          target="_blank"
+                          rel="noopener"
+                          class={`lift relative inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold tracking-wide transition-colors duration-300 before:absolute before:inset-x-0 before:-inset-y-2.5 before:content-[''] ${skin.chip}`}
+                        >
+                          <Icon name="instagram" class={`h-4 w-4 shrink-0 ${skin.chipIcon}`} />
+                          <span class="sr-only">Instagram:</span>
+                          {item.instagramLabel}
+                          <span class="sr-only">(si apre in una nuova scheda)</span>
+                        </a>
                       )}
                       <span class={`font-display text-2xl tabular-nums ${skin.body}`} aria-hidden="true">
                         {String(i + 1).padStart(2, '0')}
