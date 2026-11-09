@@ -1,0 +1,45 @@
+{
+  "tabTitle": "Pagamento | La Lanternata al chiaro di luna",
+  "eyebrow": "Pagamento",
+  "methodsTitle": "Pagamenti elettronici",
+  "intro": "Dal telefono, come vi è più comodo. Ogni dato da copiare ha il suo pulsante.",
+  "paypal": {
+    "url": "https://www.paypal.me/MattiaPedone",
+    "email": "mattia.pedone@protonmail.com",
+    "emailLabel": "Email PayPal",
+    "buttonLabel": "Paga con PayPal",
+    "note": "Selezionate «Amici e familiari» e non «Beni e servizi», grazie mille!"
+  },
+  "satispay": {
+    "buttonLabel": "Paga con Satispay",
+    "note": "Serve l'app di Satispay sul telefono."
+  },
+  "transfer": {
+    "title": "Bonifico istantaneo",
+    "note": "Copiate i dati e incollateli nell'app della vostra banca.",
+    "iban": "IT68A0357601601010009783043",
+    "ibanLabel": "IBAN",
+    "holder": "Mattia Pedone",
+    "holderLabel": "Intestato a",
+    "referenceLabel": "Causale",
+    "amountLabel": "Importo"
+  },
+  "products": [
+    {
+      "slug": "libro",
+      "name": "«Il richiamo delle lanterne»",
+      "detail": "di Roberta Mari",
+      "amount": 12.5,
+      "reference": "Libro Lanternata",
+      "satispayUrl": "https://web.satispay.com/download/qrcode/S6Y-SVN--BFFA2AF9-86F5-4C45-9556-B4C72C57939C"
+    },
+    {
+      "slug": "te",
+      "name": "Tè o tisana",
+      "detail": "+ biscotti",
+      "amount": 2,
+      "reference": "Ristoro Lanternata",
+      "satispayUrl": "https://web.satispay.com/download/qrcode/S6Y-SVN--F176B1C9-4781-462F-9439-51C107BC47DF"
+    }
+  ]
+}

@@ -346,6 +346,112 @@ content:
       - { name: ctaHome, label: Testo del pulsante che riporta all'inizio, type: string }
       - { name: shortcutsTitle, label: 'Riga sopra le scorciatoie (es. Oppure vai dritto a:)', type: string }
 
+  - name: payments
+    label: '💳 Pagamenti (pagina dei QR sui cartelli)'
+    type: file
+    path: src/data/payments.json
+    fields:
+      - { name: tabTitle, label: Titolo per la linguetta del browser, type: string }
+      - { name: eyebrow, label: 'Occhiello sopra il nome del prodotto (es. Pagamento)', type: string }
+      - { name: methodsTitle, label: 'Titolo sopra i modi di pagamento (es. Pagamenti elettronici)', type: string, required: true }
+      - { name: intro, label: 'Introduzione sotto quel titolo (vuoto = nascosta)', type: text }
+      - name: paypal
+        label: PayPal
+        type: object
+        required: true
+        fields:
+          - { name: buttonLabel, label: 'Testo del pulsante (es. Paga con PayPal)', type: string, required: true }
+          - name: url
+            label: Indirizzo PayPal.Me del profilo, senza importo (non modificare)
+            type: string
+            pattern:
+              regex: '^https://(www\.)?paypal\.me/[A-Za-z0-9]+/?$'
+              message: "Solo l'indirizzo PayPal.Me del profilo, senza importo in fondo (es. https://www.paypal.me/NomeProfilo)."
+            description: "L'indirizzo PayPal.Me del profilo che riceve i pagamenti, senza importo in fondo: l'importo lo aggiunge la pagina, da quello del prodotto, e PayPal si apre con la cifra già inserita. Si cambia solo insieme a noi: un indirizzo sbagliato non si apre o manda i soldi a un altro profilo."
+          - { name: note, label: 'Avviso in evidenza sopra il pulsante (vuoto = nascosto)', type: string }
+          - { name: emailLabel, label: "Etichetta dell'email (es. Email PayPal)", type: string }
+          - name: email
+            label: Email PayPal da copiare (non modificare)
+            type: string
+            pattern:
+              regex: '^([^@\s]+@[^@\s]+\.[^@\s]+)?$'
+              message: 'Un indirizzo email completo (es. nome@dominio.it), oppure vuoto per nasconderlo.'
+            description: "L'indirizzo che chi paga copia con il pulsante Copia per mandare i soldi dall'app di PayPal. È lo stesso profilo dell'indirizzo PayPal.Me qui sopra: si cambiano insieme, e solo insieme a noi."
+      - name: satispay
+        label: Satispay
+        type: object
+        required: true
+        description: "Il link del pulsante Satispay è diverso per ogni prodotto: si trova nell'elenco Prodotti, più sotto."
+        fields:
+          - { name: buttonLabel, label: 'Testo del pulsante (es. Paga con Satispay)', type: string, required: true }
+          - { name: note, label: "Riga sopra il pulsante (es. Serve l'app di Satispay sul telefono; vuoto = nascosta)", type: string }
+      - name: transfer
+        label: Bonifico istantaneo
+        type: object
+        required: true
+        description: 'Ogni dato compare con il suo pulsante Copia solo se ha la sua etichetta: non lasciate vuote le etichette.'
+        fields:
+          - { name: title, label: 'Titolo (es. Bonifico istantaneo)', type: string, required: true }
+          - { name: note, label: "Istruzione sotto il titolo (es. Copiate i dati e incollateli nell'app della vostra banca; vuoto = nascosta)", type: string }
+          - { name: ibanLabel, label: "Etichetta dell'IBAN (es. IBAN)", type: string }
+          - name: iban
+            label: IBAN (non modificare; da ricontrollare cifra per cifra)
+            type: string
+            required: true
+            pattern:
+              regex: '^IT[0-9]{2}[A-Z][0-9]{10}[0-9A-Z]{12}$'
+              message: 'IBAN italiano: IT seguito da 25 lettere maiuscole e cifre, tutto attaccato e senza spazi.'
+            description: "Il conto su cui arrivano i bonifici: chi paga lo copia con il pulsante Copia. Si cambia solo insieme a noi, e dopo ogni modifica va confrontato cifra per cifra con quello della banca: un IBAN sbagliato fa respingere il bonifico, o manda i soldi sul conto di qualcun altro."
+          - { name: holderLabel, label: "Etichetta dell'intestatario (es. Intestato a)", type: string }
+          - name: holder
+            label: Intestatario del conto (non modificare)
+            type: string
+            description: "Il nome del titolare del conto, esattamente come l'ha registrato la banca: l'app di chi paga lo confronta con l'IBAN e avvisa se non coincide. Si cambia solo insieme all'IBAN."
+          - name: referenceLabel
+            label: 'Etichetta della causale (es. Causale)'
+            type: string
+            description: "La causale vera e propria è diversa per ogni prodotto: si scrive nell'elenco Prodotti, più sotto."
+          - name: amountLabel
+            label: "Etichetta dell'importo (es. Importo)"
+            type: string
+            description: "L'importo è diverso per ogni prodotto: si scrive nell'elenco Prodotti, più sotto."
+      - name: products
+        label: Prodotti (una pagina e un QR per ciascuno)
+        type: object
+        list: true
+        description: "Ogni voce ha la sua pagina, che si apre dal QR stampato sul cartello. Aggiungere una voce crea una pagina nuova, che serve solo se c'è un QR stampato che la apre; eliminarne una fa aprire al suo QR la pagina «non trovata»."
+        fields:
+          - name: name
+            label: 'Cosa si paga, il titolo della pagina (es. Tè o tisana)'
+            type: string
+            required: true
+            description: 'Per il libro, il titolo esatto e tra «», come adesso.'
+          - { name: detail, label: 'Riga sotto il nome (es. di Roberta Mari, + biscotti; vuoto = nascosta)', type: string }
+          - name: amount
+            label: 'Importo in euro (solo la cifra, es. 12.5)'
+            type: number
+            options: { min: 0, step: 0.01 }
+            description: "Senza il simbolo €: 2 per due euro, 12.5 per 12,50 €. È la cifra grande in cima alla pagina, quella che si copia per il bonifico e quella con cui si apre PayPal. Il link Satispay invece non la riceve: se cambia il prezzo, provate il pulsante Satispay di questo prodotto e, se chiede la cifra vecchia, scriveteci."
+          - name: reference
+            label: 'Causale del bonifico (es. Libro Lanternata)'
+            type: string
+            description: "Il testo che chi paga copia con il pulsante Copia come causale: è quello che leggete sull'estratto conto per capire a cosa si riferisce il bonifico. Breve, senza accenti né simboli: alcune banche li rifiutano."
+          - name: satispayUrl
+            label: Link del pulsante Satispay per questo prodotto (non modificare)
+            type: string
+            pattern:
+              regex: '^(https://\S+)?$'
+              message: 'Un link che comincia con https://, oppure vuoto per nascondere Satispay su questa pagina.'
+            description: "Il link di pagamento creato su Satispay per questo prodotto, comincia con https://. Si cambia solo con un link nuovo preso da Satispay, e solo insieme a noi: un link sbagliato non si apre o manda i soldi a un altro conto. Vuoto, su questa pagina il blocco Satispay non compare."
+          - name: slug
+            label: 'Indirizzo della pagina, dopo /paga/ (non modificare: è nei QR stampati)'
+            type: string
+            required: true
+            pattern:
+              regex: '^[a-z0-9]+(-[a-z0-9]+)*$'
+              message: 'Solo lettere minuscole senza accenti, cifre e trattini, senza spazi (es. libro).'
+            description: "La parola finale dell'indirizzo di questa pagina: libro apre lanternata.it/paga/libro/. È dentro i QR già stampati sui cartelli: cambiarla, o eliminare la voce, fa aprire a quei QR la pagina «non trovata». Per un prodotto nuovo scegliete una parola corta, minuscola e senza accenti (te, non tè), prima di stampare il suo QR."
+
   - name: settings
     label: '⚙️ Impostazioni sito e SEO'
     type: file

@@ -20,8 +20,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Legal pages declare noindex: listing them would be a contradictory
-      // instruction. They stay reachable from the footer.
-      filter: (page) => !/\/(privacy|cookie)\/?$/.test(page),
+      // instruction. They stay reachable from the footer. The payment pages
+      // are noindex too, reached only from the QR codes on the signs.
+      filter: (page) => !/\/(privacy|cookie)\/?$/.test(page) && !/\/paga\//.test(page),
     }),
   ],
   vite: {

@@ -1,0 +1,105 @@
+---
+// One value to copy on the payment pages (IBAN, holder, reference, amount,
+// PayPal email): label, value as read, and a Copy button. Goes inside a <dl>.
+// `copy` is what lands on the clipboard when it differs from what is shown
+// (the IBAN without spaces, the amount without the euro sign).
+//
+// Only dt and dd sit inside the group (a valid <dl>): the button is a second
+// dd, placed beside the value by the grid. The component's script lands in the
+// same <dl>, hence the -of-type selectors.
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  value: string;
+  copy?: string;
+}
+
+const { label, value, copy = value } = Astro.props;
+
+// An email wraps after the @ first, rather than in the middle of a word.
+const parts = value.split(/(?<=@)/);
+---
+
+<div
+  class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 border-b border-night/10 py-3.5 first-of-type:pt-0 last-of-type:border-0 last-of-type:pb-0"
+>
+  <dt class="text-xs font-bold tracking-[0.16em] text-lantern-deep uppercase">{label}</dt>
+  <dd class="col-start-1 mt-1 font-semibold break-words text-night tabular-nums" data-copy-value>
+    {parts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))}
+  </dd>
+  <dd class="col-start-2 row-span-2 row-start-1">
+    <button
+      type="button"
+      data-copy={copy}
+      data-copy-name={label}
+      class="group lift inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-bold text-night ring-1 ring-night/50 hover:bg-night/5 hover:ring-night/70 data-[copied]:bg-forest/10 data-[copied]:text-forest-deep data-[copied]:ring-forest/70"
+    >
+      <Icon name="copy" class="h-[1.15rem] w-[1.15rem] group-data-[copied]:hidden" />
+      <Icon name="check" class="hidden h-[1.15rem] w-[1.15rem] group-data-[copied]:block" />
+      <span class="group-data-[copied]:hidden">Copia</span>
+      <span class="hidden group-data-[copied]:inline">Copiato</span>
+      <span class="sr-only">{` ${label}`}</span>
+    </button>
+  </dd>
+</div>
+
+<script>
+  // The value travels in data-copy. The Clipboard API needs a secure context
+  // (the site is served over HTTPS); a hidden textarea covers in-app browsers
+  // without it. If both fail, the value is selected so the phone offers its
+  // own Copy. The outcome goes to a live region this script owns, emptied
+  // first so that pressing the same button twice is announced twice.
+  const status = document.createElement('p');
+  status.className = 'sr-only';
+  status.setAttribute('aria-live', 'polite');
+  (document.querySelector('main') ?? document.body).append(status);
+  const resets = new WeakMap<HTMLElement, number>();
+
+  function announce(text: string) {
+    status.textContent = '';
+    window.setTimeout(() => (status.textContent = text), 100);
+  }
+
+  async function writeClipboard(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.append(area);
+      area.select();
+      const copied = document.execCommand('copy');
+      area.remove();
+      return copied;
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const copied = await writeClipboard(button.dataset.copy ?? '');
+      // the fallback selects a textarea and removes it: focus comes back here
+      button.focus({ preventScroll: true });
+      if (!copied) {
+        const shown = button.closest('div')?.querySelector('[data-copy-value]');
+        if (shown) window.getSelection()?.selectAllChildren(shown);
+        announce('Copia non riuscita: il testo è selezionato, copiatelo dal menu del telefono.');
+        return;
+      }
+      button.dataset.copied = '';
+      announce(`Copiato: ${button.dataset.copyName}`);
+      window.clearTimeout(resets.get(button));
+      resets.set(
+        button,
+        window.setTimeout(() => {
+          delete button.dataset.copied;
+          status.textContent = '';
+        }, 2500),
+      );
+    });
+  });
+</script>

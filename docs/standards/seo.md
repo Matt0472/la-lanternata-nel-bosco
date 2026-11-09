@@ -20,7 +20,9 @@
   - `FAQPage` sulle FAQ.
   Un campo vuoto o non interpretabile **omette la chiave**, non produce uno schema sbagliato.
 - **SEO-06** — **`sitemap.xml`** via `@astrojs/sitemap`; le **pagine legali** (privacy, cookie) sono
-  `noindex` ed escluse dalla sitemap, come il manuale cliente (`CMS-13`).
+  `noindex` ed escluse dalla sitemap, come il manuale cliente (`CMS-13`). Lo stesso vale per le
+  **pagine di pagamento** `/paga/<slug>/`: si aprono solo dai QR stampati sui cartelli dell'evento,
+  non sono linkate dal sito e non caricano il banner dei cookie (nessuna terza parte).
 - **SEO-07** — **Copy orientato alle ricerche locali** in modo naturale, senza keyword stuffing:
   "lanternata Milano", "evento per bambini a novembre a Milano", "passeggiata con le lanterne",
   "lettura animata", "Bosco della Luna". Le scelte di copy restano del cliente.

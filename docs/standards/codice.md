@@ -16,15 +16,17 @@
 
   ```
   src/components/  una sezione per file, nell'ordine di src/pages/index.astro,
-                   più i pezzi condivisi (Icon, Divider, SectionHeading, BackToTop)
+                   più i pezzi condivisi (Icon, Divider, SectionHeading, BackToTop, CopyField)
   src/layouts/     Base (head, meta, JSON-LD) e LegalPage (privacy, cookie)
-  src/pages/       index, 404, privacy.md, cookie.md, robots.txt.ts
+  src/pages/       index, 404, privacy.md, cookie.md, robots.txt.ts,
+                   paga/[slug].astro (pagine di pagamento dei QR, SEO-06)
   src/data/        contenuti JSON (Pages CMS), uno per sezione
   src/scripts/     script client condivisi (animazioni, consenso)
   src/styles/      stili globali e token (@theme)
   scripts/         script di build e di servizio (manuale, miniature, immagini AI)
   docs/            canone, manuale cliente (sorgente), handoff, audit
   public/uploads/  media del cliente
+  public/brands/   loghi di marchi terzi (PayPal, Satispay), fuori dal CMS
   ```
 
 - **CODE-04** — Un pezzo si estrae in un componente condiviso **quando si riusa**, non prima: niente

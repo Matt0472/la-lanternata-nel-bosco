@@ -1,0 +1,144 @@
+---
+// One payment page per product, opened by the QR code printed on its sign at
+// the event: parents land here from their phone, standing at the stall. Not
+// linked from the site, noindex and outside the sitemap (SEO-06). The slug is
+// part of the printed address: renaming it breaks the signs already printed.
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Divider from '../../components/Divider.astro';
+import LanternMark from '../../components/LanternMark.astro';
+import Icon from '../../components/Icon.astro';
+import CopyField from '../../components/CopyField.astro';
+import payments from '../../data/payments.json';
+
+export function getStaticPaths() {
+  const products = (payments.products ?? []).filter((product) => product.slug);
+  // Astro would keep the first of two equal slugs with only a warning, and the
+  // second sign's QR would open the wrong product: better a failed build, which
+  // leaves the previous version online.
+  const slugs = products.map((product) => product.slug);
+  const duplicate = slugs.find((slug, i) => slugs.indexOf(slug) !== i);
+  if (duplicate) throw new Error(`payments.json: two products share the slug "${duplicate}"`);
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+
+const { product } = Astro.props;
+// Pages CMS drops a group whose fields are all emptied: every group may be
+// missing, and the page must still build (CMS-10).
+const { paypal, satispay, transfer } = payments as Partial<typeof payments>;
+
+// Shown as "12,50 €"; copied as "12,50", what banking apps expect in the
+// amount field. A missing or zero amount hides both.
+const amount = typeof product.amount === 'number' && product.amount > 0 ? product.amount : 0;
+const amountShown = amount ? new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(amount) : '';
+const amountCopied = amount ? amount.toFixed(2).replace('.', ',') : '';
+
+// PayPal.Me takes the amount at the end of the address ("/12.50EUR") and opens
+// the PayPal app with the figure already filled in.
+const paypalUrl = paypal?.url ? `${paypal.url.replace(/\/+$/, '')}${amount ? `/${amount.toFixed(2)}EUR` : ''}` : '';
+
+// The IBAN is read in groups of four and copied without spaces.
+const iban = (transfer?.iban ?? '').replace(/\s+/g, '').toUpperCase();
+
+const transferFields = [
+  { label: transfer?.ibanLabel, value: iban.replace(/(.{4})(?=.)/g, '$1 '), copy: iban },
+  { label: transfer?.holderLabel, value: transfer?.holder },
+  { label: transfer?.referenceLabel, value: product.reference },
+  { label: transfer?.amountLabel, value: amountShown, copy: amountCopied },
+].filter((field): field is { label: string; value: string; copy?: string } => Boolean(field.label && field.value));
+
+// Two open tabs must tell the two products apart (WCAG 2.4.2).
+const tabTitle = [product.name, payments.tabTitle].filter(Boolean).join(' · ');
+
+const card = 'rounded-3xl bg-cream p-6 shadow-sm sm:p-8';
+const payButton =
+  'lift inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-night px-6 py-3.5 font-bold text-cream hover:bg-dusk';
+---
+
+<Base title={tabTitle} noindex cookieBanner={false}>
+  <Header />
+
+  <main id="main">
+    <section class="bg-night pt-28 pb-14 text-center sm:pt-36 sm:pb-20">
+      <div class="mx-auto max-w-2xl px-4 sm:px-6">
+        <LanternMark class="mx-auto h-16 w-auto text-cream" />
+        {payments.eyebrow && <p class="mt-4 text-sm font-bold tracking-[0.2em] text-lantern uppercase">{payments.eyebrow}</p>}
+        <h1 class="mt-3 text-4xl leading-tight text-balance text-cream sm:text-5xl">{product.name}</h1>
+        {product.detail && <p class="mt-2 text-lg text-cream/80">{product.detail}</p>}
+        {amountShown && <p class="mt-5 font-display text-6xl leading-none text-lantern tabular-nums sm:text-7xl">{amountShown}</p>}
+      </div>
+    </section>
+
+    <section class="overflow-x-clip bg-paper pb-20 sm:pb-28">
+      <Divider from="night" flip class="mb-12 sm:mb-16" />
+      <div class="mx-auto max-w-4xl px-4 sm:px-6">
+        <h2 class="text-center text-3xl leading-tight text-balance sm:text-4xl">{payments.methodsTitle}</h2>
+        {payments.intro && <p class="mx-auto mt-3 max-w-xl text-center leading-relaxed text-pretty text-night-soft">{payments.intro}</p>}
+
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 sm:gap-6">
+          {
+            paypalUrl && paypal?.buttonLabel && (
+              <article class={card}>
+                <h3>
+                  <img src="/brands/paypal.svg" alt="PayPal" width="124" height="33" class="h-8 w-auto" />
+                </h3>
+                {/* the warning comes before the button: it is read before paying */}
+                <div class="mt-5 space-y-4">
+                  {paypal.note && (
+                    <p class="rounded-2xl bg-lantern/15 px-4 py-3 text-sm leading-relaxed font-semibold text-pretty text-night ring-1 ring-lantern/45">
+                      {paypal.note}
+                    </p>
+                  )}
+                  <a href={paypalUrl} class={payButton}>
+                    {paypal.buttonLabel}
+                  </a>
+                </div>
+                {paypal.email && paypal.emailLabel && (
+                  <dl class="mt-5">
+                    <CopyField label={paypal.emailLabel} value={paypal.email} />
+                  </dl>
+                )}
+              </article>
+            )
+          }
+
+          {
+            product.satispayUrl && satispay?.buttonLabel && (
+              <article class={card}>
+                <h3>
+                  <img src="/brands/satispay.svg" alt="Satispay" width="128" height="30" class="h-7 w-auto" />
+                </h3>
+                <div class="mt-5 space-y-4">
+                  {satispay.note && <p class="text-sm leading-relaxed text-pretty text-night-soft">{satispay.note}</p>}
+                  <a href={product.satispayUrl} class={payButton}>
+                    {satispay.buttonLabel}
+                  </a>
+                </div>
+              </article>
+            )
+          }
+
+          {
+            transfer?.title && transferFields.length > 0 && (
+              <article class={`${card} sm:col-span-2`}>
+                <h3 class="flex items-center gap-2.5 text-xl">
+                  <Icon name="bank" class="h-6 w-6 text-lantern-deep" />
+                  {transfer.title}
+                </h3>
+                {transfer.note && <p class="mt-2 leading-relaxed text-pretty text-night-soft">{transfer.note}</p>}
+                <dl class="mt-5">
+                  {transferFields.map((field) => (
+                    <CopyField label={field.label} value={field.value} copy={field.copy} />
+                  ))}
+                </dl>
+              </article>
+            )
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer cookieBanner={false} />
+</Base>

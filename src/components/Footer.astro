@@ -6,6 +6,12 @@ import contact from '../data/contact.json';
 import settings from '../data/settings.json';
 import hero from '../data/hero.json';
 
+interface Props {
+  // false where the cookie banner is not loaded (see Base): the link would do nothing
+  cookieBanner?: boolean;
+}
+const { cookieBanner = true } = Astro.props;
+
 const year = new Date().getFullYear();
 
 // Google reviews badge: static and editable from the panel (no Trustindex
@@ -176,13 +182,17 @@ const badgeAttrs = g.url ? { href: g.url, target: '_blank', rel: 'noopener' } : 
       <nav class="flex flex-wrap justify-center gap-x-4" aria-label="Note legali">
         <a href="/privacy/" class="inline-flex min-h-11 items-center underline transition-colors duration-300 hover:text-lantern">Privacy Policy</a>
         <a href="/cookie/" class="inline-flex min-h-11 items-center underline transition-colors duration-300 hover:text-lantern">Cookie Policy</a>
-        <button
-          type="button"
-          class="min-h-11 cursor-pointer underline transition-colors duration-300 hover:text-lantern"
-          onclick="window.showCookiePreferences?.()"
-        >
-          Preferenze cookie
-        </button>
+        {
+          cookieBanner && (
+            <button
+              type="button"
+              class="min-h-11 cursor-pointer underline transition-colors duration-300 hover:text-lantern"
+              onclick="window.showCookiePreferences?.()"
+            >
+              Preferenze cookie
+            </button>
+          )
+        }
       </nav>
     </div>
   </div>

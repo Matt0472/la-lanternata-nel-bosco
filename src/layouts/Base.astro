@@ -17,9 +17,12 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  // false on pages that load no third party (the payment pages): nothing to
+  // consent to, and the banner would cover their buttons on a phone.
+  cookieBanner?: boolean;
 }
 
-const { title = settings.seoTitle, description = settings.seoDescription, noindex = false } = Astro.props;
+const { title = settings.seoTitle, description = settings.seoDescription, noindex = false, cookieBanner = true } = Astro.props;
 
 // Indexing gate (SEO-10): the whole site stays noindex until go-live. Only the
 // go-live build sets PUBLIC_SITE_INDEXABLE=true; robots.txt reads the same flag.
@@ -303,8 +306,8 @@ const graph = { '@context': 'https://schema.org', '@graph': [eventSchema, bookSc
     </a>
     <slot />
     <BackToTop />
-    <CookiePreferences />
+    {cookieBanner && <CookiePreferences />}
     <script src="../scripts/animations.js"></script>
-    <script src="../scripts/consent.ts"></script>
+    {cookieBanner && <script src="../scripts/consent.ts"></script>}
   </body>
 </html>
