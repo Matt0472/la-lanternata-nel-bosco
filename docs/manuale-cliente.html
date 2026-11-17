@@ -436,8 +436,8 @@
     <p class="kicker">Manuale d'uso</p>
     <h1>Il sito della Lanternata</h1>
     <p class="standfirst">
-      Come aggiornare testi, date, prezzi e foto della pagina, e come segnare un weekend come
-      esaurito, senza toccare una riga di codice e senza passare da noi.
+      Come aggiornare testi, date, prezzi e foto della pagina, e come segnare una data come
+      esaurita o conclusa, senza toccare una riga di codice e senza passare da noi.
     </p>
     <p class="meta">
       <span>Best Creations — Bosco della Luna</span>
@@ -461,7 +461,7 @@
         <ol>
           <li><a href="#hero">Hero</a></li>
           <li><a href="#esperienza">L'esperienza</a></li>
-          <li><a href="#come-si-svolge">Come si svolge e i weekend</a></li>
+          <li><a href="#come-si-svolge">Come si svolge e le date</a></li>
           <li><a href="#libro">Il libro</a></li>
           <li><a href="#piccoli">I più piccoli</a></li>
           <li><a href="#gallery">Gallery</a></li>
@@ -669,8 +669,16 @@
             </thead>
             <tbody>
               <tr>
-                <td>Segnare un weekend come esaurito</td>
-                <td><em>3 · Come si svolge</em>, interruttore «SOLD OUT» del weekend: capitolo <a href="#come-si-svolge">07</a></td>
+                <td>Segnare una data come esaurita</td>
+                <td><em>3 · Come si svolge</em>, interruttore «SOLD OUT» della data: capitolo <a href="#come-si-svolge">07</a></td>
+              </tr>
+              <tr>
+                <td>Segnare una data come conclusa</td>
+                <td><em>3 · Come si svolge</em>, interruttore «CONCLUSO» della data: capitolo <a href="#come-si-svolge">07</a></td>
+              </tr>
+              <tr>
+                <td>Aggiungere una data</td>
+                <td><em>3 · Come si svolge</em>, una voce nuova in «Le date» con «NUOVA DATA»: capitolo <a href="#come-si-svolge">07</a></td>
               </tr>
               <tr>
                 <td>Cambiare un prezzo</td>
@@ -836,12 +844,13 @@
       </section>
 
       <section id="come-si-svolge">
-        <h2><span class="num">07</span> Come si svolge e i weekend</h2>
+        <h2><span class="num">07</span> Come si svolge e le date</h2>
         <p class="where">Nel pannello: <strong>3 · Come si svolge (programma e date)</strong></p>
         <p>
-          È la sezione che i genitori cercano per prima: in alto le card dei weekend, ognuna con la sua
-          data e, quando serve, il badge della disponibilità; sotto, la timeline del pomeriggio, tappa
-          per tappa. Chi tocca la card di un weekend arriva ai biglietti.
+          È la sezione che i genitori cercano per prima: in alto le card delle date ancora in vendita,
+          ognuna con il suo badge quando serve, e sotto quelle già concluse, piccole e spente; poi la
+          timeline del pomeriggio, tappa per tappa. Chi tocca la card di una data in vendita arriva ai
+          biglietti.
         </p>
         <div class="scroller">
           <table>
@@ -854,34 +863,42 @@
             <tbody>
               <tr>
                 <td>Occhiello, Titolo, Introduzione</td>
-                <td>L'intestazione della sezione. L'introduzione oggi conta le date («tutte e quattro le date»): se cambia il loro numero, va corretta.</td>
+                <td>L'intestazione della sezione. L'introduzione dice «in tutte le date», senza contarle: va bene anche se le date cambiano.</td>
               </tr>
               <tr>
                 <td>Titolo del blocco date (letto dai lettori di schermo)</td>
                 <td>Non si vede: lo annunciano i programmi per non vedenti prima delle date («Le date»). Lasciatelo così.</td>
               </tr>
               <tr>
-                <td>Riga sotto ogni data (es. Sabato e domenica · 16:00–18:30)</td>
-                <td>La riga piccola sotto ciascuna data, uguale per tutti i weekend. È testo libero: se l'orario cambia, va corretta a mano.</td>
+                <td>Annuncio sopra le date (facoltativo)</td>
+                <td>Una frase in evidenza sopra le card, per una novità sulle date (oggi: «Vista la grande affluenza dei primi due weekend, abbiamo aggiunto un sabato in più.»). Lasciatelo vuoto quando non serve: la riga sparisce.</td>
               </tr>
               <tr>
-                <td>I weekend</td>
+                <td>Riga sotto ogni data in vendita (es. Sabato · 15:30–18:00)</td>
+                <td>La riga piccola sotto ciascuna data ancora in vendita, uguale per tutte; sulle date concluse non compare. È testo libero: se l'orario cambia, va corretta a mano.</td>
+              </tr>
+              <tr>
+                <td>Le date (weekend o giorno singolo)</td>
                 <td>
-                  <p>Una voce per weekend, nell'ordine in cui volete vederli. Per ognuno:</p>
+                  <p>Una voce per data, nell'ordine in cui volete vederle: un weekend o un giorno solo. Per ognuna:</p>
                   <ul>
-                    <li><strong>Date del weekend (es. 14–15 novembre)</strong>: il formato conta, vedi sotto;</li>
+                    <li><strong>Data (es. 14–15 novembre per un weekend, 21 novembre per un giorno solo)</strong>: il formato conta, vedi sotto;</li>
                     <li><strong>SOLD OUT: mostra il badge «posti finiti»</strong>;</li>
-                    <li><strong>ULTIMI POSTI: mostra il badge «posti in esaurimento» (ignorato se è attivo Sold out)</strong>.</li>
+                    <li><strong>ULTIMI POSTI: mostra il badge «posti in esaurimento» (ignorato se è attivo Sold out)</strong>;</li>
+                    <li><strong>NUOVA DATA: mostra il badge di data aggiunta (ignorato se è attivo Sold out o Ultimi posti)</strong>: per una data appena aggiunta (oggi il badge dice «Nuova data»);</li>
+                    <li><strong>CONCLUSO: la data è passata</strong>: la card diventa piccola e spenta, con il badge di data passata (oggi «Concluso»), e scende sotto quelle in vendita; non porta più ai biglietti e Google non la riceve più.</li>
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td>Testo dei due badge di disponibilità</td>
+                <td>Testo dei badge delle date</td>
                 <td>
-                  <p>Le parole scritte nei due badge:</p>
+                  <p>Le parole scritte nei badge:</p>
                   <ul>
                     <li><strong>Badge posti finiti (es. Sold out)</strong>;</li>
-                    <li><strong>Badge posti in esaurimento (es. Ultimi posti)</strong>.</li>
+                    <li><strong>Badge posti in esaurimento (es. Ultimi posti)</strong>;</li>
+                    <li><strong>Badge data aggiunta (es. Nuova data)</strong>;</li>
+                    <li><strong>Badge data passata (es. Concluso)</strong>.</li>
                   </ul>
                   <p>Tenetele brevi e chiare: sono la parte del badge che si legge anche senza distinguere i colori.</p>
                 </td>
@@ -901,13 +918,13 @@
           </table>
         </div>
 
-        <h3>Segnare un weekend come esaurito</h3>
+        <h3>Segnare una data come esaurita</h3>
         <div class="callout">
           <span class="label">Durante l'evento</span>
           <ol>
-            <li>Aprite <em>3 · Come si svolge (programma e date)</em> e, nell'elenco <em>I weekend</em>, il weekend che si è riempito.</li>
+            <li>Aprite <em>3 · Come si svolge (programma e date)</em> e, nell'elenco <em>Le date</em>, quella che si è riempita.</li>
             <li>Accendete l'interruttore <strong>SOLD OUT</strong>.</li>
-            <li>Premete <strong>Save</strong>. In un paio di minuti la card di quel weekend mostra il badge «Sold out», con la sua lucina, e appare leggermente sbiadita.</li>
+            <li>Premete <strong>Save</strong>. In un paio di minuti la card di quella data mostra il badge «Sold out», con la sua lucina, e appare leggermente sbiadita.</li>
           </ol>
           <p>
             Quando restano pochi posti, accendete invece <strong>ULTIMI POSTI</strong>. Se per sbaglio
@@ -916,17 +933,27 @@
           </p>
           <p>
             <strong>L'interruttore non ferma le vendite.</strong> Mostra il badge e avvisa Google, che
-            nei risultati di ricerca può indicare quel weekend come esaurito. Quanti posti si vendono
+            nei risultati di ricerca può indicare quella data come esaurita. Quanti posti si vendono
             lo decide solo TicketingHub: chiudete la disponibilità lì, prima o insieme all'interruttore.
           </p>
         </div>
 
-        <h3>Come si scrive la data di un weekend</h3>
+        <h3>Una data passata o una data nuova</h3>
+        <div class="callout">
+          <span class="label">Durante l'evento</span>
+          <ul>
+            <li>Finito un weekend, accendete <strong>CONCLUSO</strong> sulla sua voce: la card si spegne e scende sotto le date in vendita.</li>
+            <li>Per aggiungere una data, aggiungete una voce all'elenco <em>Le date</em> e accendete <strong>NUOVA DATA</strong>. Poi correggete gli altri punti che citano le date (capitolo 22) e aprite la data su TicketingHub.</li>
+          </ul>
+        </div>
+
+        <h3>Come si scrive una data</h3>
         <p>
-          Il campo <em>Date del weekend</em> non serve solo alla pagina: Google lo legge per capire in
-          quali giorni c'è la Lanternata e se ci sono ancora posti. Per questo va scritto sempre allo
-          stesso modo: <strong>primo giorno, trattino, secondo giorno, mese per esteso</strong>. L'anno
-          non si scrive: Google lo prende dalla <em>Data di inizio evento</em> nelle Impostazioni.
+          Il campo <em>Data</em> non serve solo alla pagina: Google lo legge per capire in quali giorni
+          c'è la Lanternata e se ci sono ancora posti. Per questo va scritto sempre allo stesso modo:
+          <strong>primo giorno, trattino, secondo giorno, mese per esteso</strong> per un weekend;
+          <strong>giorno e mese per esteso</strong> per un giorno solo. L'anno non si scrive: Google lo
+          prende dalla <em>Data di inizio evento</em> nelle Impostazioni.
         </p>
         <div class="scroller">
           <table>
@@ -946,6 +973,10 @@
                 <td>Sì: il trattino normale della tastiera va bene quanto quello lungo.</td>
               </tr>
               <tr>
+                <td><code>21 novembre</code></td>
+                <td>Sì: un giorno solo si scrive così, senza trattino.</td>
+              </tr>
+              <tr>
                 <td><code>28 novembre – 1 dicembre</code></td>
                 <td>Sì: un weekend a cavallo di due mesi si scrive così.</td>
               </tr>
@@ -961,8 +992,8 @@
           </table>
         </div>
         <p>
-          Una data scritta male non rompe niente: la card si vede comunque, ma Google non riceve quel
-          weekend né il suo «sold out». Il modo più sicuro è modificare la data che c'è già, cambiando
+          Una data scritta male non rompe niente: la card si vede comunque, ma Google non riceve quella
+          data né il suo «sold out». Il modo più sicuro è modificare la data che c'è già, cambiando
           solo i numeri.
         </p>
         <div class="callout nota">
@@ -1341,7 +1372,7 @@
             <tbody>
               <tr>
                 <td>Frase d'impatto (in alto)</td>
-                <td>La pillola ambra in cima alla sezione («Due weekend al chiaro di luna»).</td>
+                <td>La pillola ambra in cima alla sezione (oggi «Sabato 21 novembre, al chiaro di luna»). Se cita una data, va corretta quando le date cambiano (capitolo <a href="#date">22</a>).</td>
               </tr>
               <tr>
                 <td>Titolo</td>
@@ -2061,11 +2092,11 @@
               </tr>
               <tr>
                 <td>Data di inizio evento (AAAA-MM-GG)</td>
-                <td>Il primo giorno della Lanternata, nella forma anno-mese-giorno con i trattini: <code>2026-11-07</code>. Non si vede: lo legge Google, e da qui il sito prende anche l'anno dei weekend.</td>
+                <td>Il primo giorno della Lanternata, nella forma anno-mese-giorno con i trattini: <code>2026-11-07</code>. Non si vede: da qui il sito prende l'anno delle date. Google la legge solo quando non resta nessuna data in vendita: finché ce n'è una, inizio e fine dell'evento vengono dalle date di <em>3 · Come si svolge</em>.</td>
               </tr>
               <tr>
                 <td>Data di fine evento (AAAA-MM-GG)</td>
-                <td>L'ultimo giorno, nella stessa forma: <code>2026-11-15</code>.</td>
+                <td>L'ultimo giorno, nella stessa forma: <code>2026-11-21</code>.</td>
               </tr>
               <tr>
                 <td>Data di apertura delle vendite (AAAA-MM-GG)</td>
@@ -2180,10 +2211,12 @@
                 <td>Una data</td>
                 <td>
                   <ul>
-                    <li><em>3 · Come si svolge</em> › I weekend › Date del weekend (lo legge Google);</li>
-                    <li><em>⚙️ Impostazioni</em> › Data di inizio e Data di fine evento (le legge Google), e la Descrizione per Google, che cita le date;</li>
+                    <li><em>3 · Come si svolge</em> › Le date › Data (lo legge Google), e gli interruttori NUOVA DATA e CONCLUSO;</li>
+                    <li><em>⚙️ Impostazioni</em> › Data di inizio e Data di fine evento, e la Descrizione per Google, che cita le date;</li>
+                    <li><em>3 · Come si svolge</em> › Annuncio sopra le date e Riga sotto ogni data in vendita, che dice il giorno («Sabato»);</li>
                     <li><em>1 · Hero</em> › Riga date e orario;</li>
                     <li><em>7 · Info pratiche</em> › Testo delle date;</li>
+                    <li><em>8 · Biglietti</em> › Frase d'impatto, che oggi cita la data;</li>
                     <li><em>10 · FAQ</em> › la risposta a «Quando e dove si svolge la Lanternata?»;</li>
                     <li><em>⚙️ Impostazioni</em> › Immagine per le condivisioni social, che riporta le date: chiedeteci di rifarla;</li>
                     <li>fuori dal sito: le date in vendita su TicketingHub.</li>
@@ -2196,7 +2229,7 @@
                   <ul>
                     <li><em>7 · Info pratiche</em> › Turni › Orario (lo legge Google);</li>
                     <li><em>1 · Hero</em> › Riga date e orario;</li>
-                    <li><em>3 · Come si svolge</em> › Riga sotto ogni data;</li>
+                    <li><em>3 · Come si svolge</em> › Riga sotto ogni data in vendita;</li>
                     <li><em>10 · FAQ</em> › la risposta a «Quando e dove si svolge la Lanternata?»;</li>
                     <li><em>⚙️ Impostazioni</em> › Descrizione per Google, che cita l'orario;</li>
                     <li>fuori dal sito: i turni su TicketingHub.</li>
@@ -2204,8 +2237,8 @@
                 </td>
               </tr>
               <tr>
-                <td>Il numero di weekend</td>
-                <td>Oltre ai punti delle date, le frasi che contano weekend o date: <em>3 · Come si svolge</em> › Introduzione («tutte e quattro le date») e <em>8 · Biglietti</em> › Frase d'impatto («Due weekend al chiaro di luna»).</td>
+                <td>Il numero di date</td>
+                <td>Oltre ai punti delle date, le frasi che annunciano o contano le date: <em>3 · Come si svolge</em> › Annuncio sopra le date e <em>8 · Biglietti</em> › Frase d'impatto (oggi «Sabato 21 novembre, al chiaro di luna»). Le altre frasi dicono «in tutte le date», senza contarle.</td>
               </tr>
               <tr>
                 <td>Un prezzo</td>
@@ -2220,7 +2253,7 @@
               </tr>
               <tr>
                 <td>L'anno (una nuova edizione)</td>
-                <td>Tutti i punti delle date, a cominciare da <em>⚙️ Impostazioni</em> › Data di inizio evento: è da lì che il sito prende l'anno dei weekend.</td>
+                <td>Tutti i punti delle date, a cominciare da <em>⚙️ Impostazioni</em> › Data di inizio evento: è da lì che il sito prende l'anno delle date.</td>
               </tr>
             </tbody>
           </table>

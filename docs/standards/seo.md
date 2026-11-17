@@ -14,7 +14,9 @@
   così se il cliente cambia una data o un prezzo lo schema segue):
   - `Event` della lanternata con luogo (`Place` con indirizzo e `geo`), organizzatore (il Bosco della
     Luna, con i profili social e la scheda Google in `sameAs`), offerte per tipologia di prezzo,
-    orario del turno, e **un `subEvent` per weekend** con la sua disponibilità;
+    date e orario presi dalle date ancora in vendita, e **un `subEvent` per ogni data ancora in
+    vendita** (weekend o giorno singolo) con la sua disponibilità; le date concluse escono dallo
+    schema;
   - `Book` per «Il richiamo delle lanterne» (autrice, editore, codice EAN, età di lettura, pagine),
     collegato all'evento: la lettura animata è di quel libro;
   - `FAQPage` sulle FAQ.

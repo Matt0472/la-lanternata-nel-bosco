@@ -126,35 +126,16 @@ const offerFor = (availability: string) =>
       };
     })
     .filter(Boolean);
-const offers = offerFor('https://schema.org/InStock');
 
-// The turn as a recurring Saturday and Sunday schedule: answers "what time".
-// Times are read from the info table ("16:00 – 18:30"): if one day the client
-// writes them differently, the entry is simply omitted.
+// The turn's hours, read from the info table ("15:30 – 18:00"): they give the
+// time of every date's sub-event and the duration. If one day the client
+// writes them differently, the times are simply omitted.
 const turnHours = (time: string) => {
   const hours = String(time).match(/(\d{1,2})[:.](\d{2})/g);
   if (!hours || hours.length < 2) return null;
   const norm = (h: string) => h.replace('.', ':').padStart(5, '0');
   return { start: norm(hours[0]), end: norm(hours[1]) };
 };
-
-const eventSchedule = info.slots
-  .map((s) => {
-    const hours = turnHours(s.time);
-    if (!hours) return null;
-    return {
-      '@type': 'Schedule',
-      name: s.label,
-      byDay: ['https://schema.org/Saturday', 'https://schema.org/Sunday'],
-      startDate: settings.eventStartDate,
-      endDate: settings.eventEndDate,
-      startTime: hours.start,
-      endTime: hours.end,
-      repeatFrequency: 'P1W',
-      scheduleTimezone: 'Europe/Rome',
-    };
-  })
-  .filter(Boolean);
 
 const firstTurn = info.slots.map((s) => turnHours(s.time)).find(Boolean);
 const minutesOf = (hhmm: string) => {
@@ -168,10 +149,11 @@ const duration = firstTurn
     })()
   : undefined;
 
-// ONE SUB-EVENT PER WEEKEND, with its availability: it answers "are there
-// still places on the 14th". The weekend dates are written for people
-// ("14–15 novembre") and translated into ISO dates here; a text that cannot be
-// read leaves the weekend out of the schema without breaking anything.
+// ONE SUB-EVENT PER DATE STILL ON SALE, with its availability: it answers
+// "are there still places on the 21st". The dates are written for people
+// ("14–15 novembre" for a weekend, "21 novembre" for a single day) and
+// translated into ISO dates here; a text that cannot be read leaves the date
+// out of the schema without breaking anything. Concluded dates are left out.
 const MONTHS = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
 const year = Number(String(settings.eventStartDate).slice(0, 4));
 
@@ -181,15 +163,17 @@ const isoDate = (day: number, month?: string) => {
   return `${year}-${String(m).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 };
 
-const weekendIso = (text: string) => {
+const datesIso = (text: string) => {
   const parts = String(text).split(/[–—-]/).map((x) => x.trim());
-  if (parts.length < 2) return null;
+  // a single day has one number (a year does not count): "14 e 15 novembre"
+  // (no dash) is not read
+  if (parts.length < 2 && (parts[0].match(/\b\d{1,2}\b/g) || []).length !== 1) return null;
   const read = (x: string) => ({
     day: Number((x.match(/\d{1,2}/) || [])[0]),
     month: (x.toLowerCase().match(new RegExp(MONTHS.join('|'))) || [])[0],
   });
   const a = read(parts[0]);
-  const b = read(parts[1]);
+  const b = read(parts[parts.length - 1]);
   const start = isoDate(a.day, a.month || b.month);
   const end = isoDate(b.day, b.month || a.month);
   return start && end ? { start, end } : null;
@@ -205,15 +189,17 @@ const romeOffset = (date: string) => {
 };
 const withTime = (date: string, time?: string) => (time ? `${date}T${time}:00${romeOffset(date)}` : date);
 
-const subEvent = program.weekends
+const SOLD_OUT = 'https://schema.org/SoldOut';
+const LIMITED = 'https://schema.org/LimitedAvailability';
+const IN_STOCK = 'https://schema.org/InStock';
+const onSale = program.weekends.filter((w) => !w.ended);
+const availabilityOf = (w: (typeof onSale)[number]) => (w.soldOut ? SOLD_OUT : w.lastSeats ? LIMITED : IN_STOCK);
+
+const subEvent = onSale
   .map((w) => {
-    const dates = weekendIso(w.date);
+    const dates = datesIso(w.date);
     if (!dates) return null;
-    const availability = w.soldOut
-      ? 'https://schema.org/SoldOut'
-      : w.lastSeats
-        ? 'https://schema.org/LimitedAvailability'
-        : 'https://schema.org/InStock';
+    const availability = availabilityOf(w);
     return {
       '@type': 'Event',
       name: `${settings.siteName} · ${w.date}`,
@@ -231,13 +217,29 @@ const subEvent = program.weekends
   })
   .filter(Boolean);
 
+// THE MAIN EVENT is what Google shows: it runs from the first to the last date
+// still on sale, with the turn's times (the settings' dates are only the
+// fallback when none is left or readable). Its offers follow those dates: sold
+// out when all are, limited when none is fully free, none once all are over.
+const starts = subEvent.map((e) => e?.startDate).filter(Boolean).sort();
+const ends = subEvent.map((e) => e?.endDate).filter(Boolean).sort();
+const states = onSale.map(availabilityOf);
+const mainAvailability = !states.length
+  ? null
+  : states.every((a) => a === SOLD_OUT)
+    ? SOLD_OUT
+    : states.includes(IN_STOCK)
+      ? IN_STOCK
+      : LIMITED;
+const offers = mainAvailability ? offerFor(mainAvailability) : [];
+
 const eventSchema = {
   '@type': 'Event',
   name: settings.siteName,
   description: settings.seoDescription,
   url: siteRoot,
-  startDate: settings.eventStartDate,
-  endDate: settings.eventEndDate,
+  startDate: starts[0] ?? settings.eventStartDate,
+  endDate: ends.at(-1) ?? settings.eventEndDate,
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   eventStatus: 'https://schema.org/EventScheduled',
   inLanguage: 'it-IT',
@@ -247,7 +249,6 @@ const eventSchema = {
   performer,
   workPerformed: { '@id': bookId },
   ...(offers.length ? { offers } : {}),
-  ...(eventSchedule.length ? { eventSchedule } : {}),
   ...(duration ? { duration } : {}),
   ...(subEvent.length ? { subEvent } : {}),
   isAccessibleForFree: false,

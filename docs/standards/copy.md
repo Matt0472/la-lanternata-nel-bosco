@@ -33,7 +33,8 @@ nell'agente `copy-specialist`.
   ma senza fronzoli che nascondano l'informazione. La magia non autorizza le formule di `COPY-04` né
   promesse oltre i fatti (`COPY-03`).
 - **COPY-10** — **Non si parla di "serata"** (decisione dell'utente, 22 ott 2026): la Lanternata è un
-  pomeriggio, dalle 16:00 alle 18:30 (2 ore e mezza), che finisce col buio. Si scrive "pomeriggio",
+  pomeriggio di 2 ore e mezza che finisce col buio (16:00–18:30 nei due weekend, 15:30–18:00 sabato
+  21 novembre). Si scrive "pomeriggio",
   "Lanternata", "turno", "come si svolge". Il sentiero della passeggiata è **uno** ("lungo il
   sentiero"). La caccia al tesoro si fa cercando **oggetti luminosi nel buio**: mai "alla luce delle
   lanterne", che li renderebbe invisibili.

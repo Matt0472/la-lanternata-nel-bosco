@@ -1,4 +1,4 @@
-// Builds the social sharing image, public/uploads/og-image.jpg (1200×630,
+// Builds the social sharing image at the path set in the panel (1200×630,
 // MEDIA-12, SEO-04), from the hero scene, the title, the dates and the book
 // cover — rendered by headless Chrome so it uses the site's real fonts.
 //
@@ -61,7 +61,9 @@ const dir = mkdtempSync(join(tmpdir(), 'og-'));
 const page = join(dir, 'og.html');
 writeFileSync(page, html);
 const shot = join(dir, 'og.png');
-const out = resolve(root, 'public/uploads/og-image.jpg');
+// written where the panel points (⚙️ Impostazioni › social image): a new name
+// makes WhatsApp and Facebook fetch it again instead of the cached one
+const out = resolve(root, `public${settings.ogImage}`);
 execFileSync(
   process.env.CHROME || '/usr/bin/google-chrome',
   [
@@ -80,4 +82,4 @@ execFileSync(
 // JPEG: a fraction of the PNG's weight, and every social network takes it
 await sharp(shot).jpeg({ quality: 86, mozjpeg: true }).toFile(out);
 rmSync(dir, { recursive: true, force: true });
-console.log(`social image → public/uploads/og-image.jpg`);
+console.log(`social image → public${settings.ogImage}`);

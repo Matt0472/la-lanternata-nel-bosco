@@ -7,11 +7,20 @@ import program from '../data/program.json';
 // The evening as a vertical timeline, the same pattern as the sister site's
 // weekly labs: medallions on the line with the step's pictogram, the "when"
 // label on the side opposite the card (from md up), cards alternating left and
-// right. Above it, the two weekends with their availability badges: each one
-// leads to the booking.
-type Weekend = (typeof program.weekends)[number];
-// One badge excludes the other: sold out always wins (CMS-15)
-const status = (w: Weekend) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : null);
+// right. Above it, the dates: those still on sale as cards with their badge,
+// each one leading to the booking; below them, the concluded ones, small and
+// switched off, no longer links.
+type DateEntry = (typeof program.weekends)[number];
+// One badge excludes the other; the code decides the precedence (CMS-15):
+// sold out, then last seats, then new date. Concluded dates have their own list.
+const status = (w: DateEntry) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : w.isNew ? 'new' : null);
+const badgeText = {
+  sold: program.badge.soldOut,
+  last: program.badge.lastSeats,
+  new: program.badge.isNew,
+};
+const onSale = program.weekends.filter((w) => !w.ended);
+const ended = program.weekends.filter((w) => w.ended);
 ---
 
 <section id="come-si-svolge" class="bg-paper-warm pb-20 sm:pb-28">
@@ -19,47 +28,80 @@ const status = (w: Weekend) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : null
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <SectionHeading eyebrow={program.eyebrow} title={program.title} intro={program.intro} />
 
-    <!-- The two weekends: what a parent looks for first -->
+    <!-- The dates: what a parent looks for first -->
     <div class="mx-auto mt-12 max-w-3xl">
       {
         program.weekendsTitle && (
           <h3 class="sr-only">{program.weekendsTitle}</h3>
         )
       }
-      <ul class:list={['grid gap-4', program.weekends.length > 1 && 'sm:grid-cols-2']} data-animate-group>
-        {
-          program.weekends.map((w) => {
-            const s = status(w);
-            return (
-              <li>
-                <a
-                  href="#biglietti"
-                  class="lift flex h-full items-center gap-4 rounded-3xl bg-cream p-5 shadow-sm hover:shadow-lg hover:shadow-night/10 sm:p-6"
-                >
-                  <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-night text-lantern">
-                    <Icon name="moon" class="h-7 w-7" />
-                  </span>
-                  <span class="min-w-0 grow">
-                    <span class="block font-display text-2xl leading-tight tabular-nums">
-                      {w.date}
-                      <span class="sr-only">: vai alla prenotazione</span>
-                    </span>
-                    {program.weekendsNote && (
-                      <span class="mt-0.5 block text-sm text-night-soft tabular-nums">{program.weekendsNote}</span>
-                    )}
-                  </span>
-                  {s && (
-                    <span class:list={['badge', s === 'sold' ? 'badge-sold' : 'badge-last']}>
-                      <span class="badge-light" aria-hidden="true" />
-                      {s === 'sold' ? program.badge.soldOut : program.badge.lastSeats}
-                    </span>
+      {
+        program.weekendsLead && (
+          <p class="mb-8 text-center text-lg leading-snug font-semibold text-balance text-night sm:mb-6" data-animate="fade-up">
+            {program.weekendsLead}
+          </p>
+        )
+      }
+      {
+        onSale.length > 0 && (
+          <ul class:list={['grid gap-4', onSale.length > 1 && 'sm:grid-cols-2']} data-animate-group>
+            {
+              onSale.map((w) => {
+                const s = status(w);
+                return (
+                  <li>
+                    <a
+                      href="#biglietti"
+                      class="lift relative flex h-full items-center gap-4 rounded-3xl bg-cream p-5 shadow-sm hover:shadow-lg hover:shadow-night/10 sm:p-6"
+                    >
+                      <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-night text-lantern">
+                        <Icon name="moon" class="h-7 w-7" />
+                      </span>
+                      <span class="min-w-0 grow">
+                        <span class="block font-display text-2xl leading-tight tabular-nums">
+                          {w.date}
+                          <span class="sr-only">: vai alla prenotazione</span>
+                        </span>
+                        {program.weekendsNote && (
+                          <span class="mt-0.5 block text-sm text-night-soft tabular-nums">{program.weekendsNote}</span>
+                        )}
+                      </span>
+                      {/* on phones on the card's top edge: in the flow it pushed the
+                          card past a 375 px screen */}
+                      {s && badgeText[s] && (
+                        <span class:list={['badge max-sm:absolute max-sm:-top-3 max-sm:right-5', `badge-${s}`]}>
+                          <span class="badge-light" aria-hidden="true" />
+                          {badgeText[s]}
+                        </span>
+                      )}
+                    </a>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        )
+      }
+      {
+        ended.length > 0 && (
+          <ul
+            class:list={['grid gap-3', onSale.length > 0 && 'mt-4', ended.length > 1 && 'sm:grid-cols-2']}
+            data-animate-group
+          >
+            {ended.map((w) => (
+              <li class="flex items-center gap-3 rounded-2xl border border-night/15 px-4 py-3 text-night-soft">
+                <Icon name="moon" class="h-5 w-5 shrink-0" />
+                <span class="min-w-0">
+                  <span class="block font-display text-lg leading-tight whitespace-nowrap tabular-nums">{w.date}</span>
+                  {program.badge.ended && (
+                    <span class="mt-0.5 block text-xs font-bold tracking-[0.1em] uppercase">{program.badge.ended}</span>
                   )}
-                </a>
+                </span>
               </li>
-            );
-          })
-        }
-      </ul>
+            ))}
+          </ul>
+        )
+      }
     </div>
 
     <ol class="tl mt-16" style="perspective: 1200px">
@@ -93,7 +135,7 @@ const status = (w: Weekend) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : null
 </section>
 
 <style>
-  /* Availability badge on a weekend: in the flow, pushed to the right */
+  /* Badge on a date: in the flow, pushed to the right */
   .badge {
     display: flex;
     flex: none;
@@ -115,6 +157,11 @@ const status = (w: Weekend) => (w.soldOut ? 'sold' : w.lastSeats ? 'last' : null
     background: color-mix(in srgb, var(--color-lantern) 14%, var(--color-cream));
     color: var(--color-lantern-deep);
     border: 1px solid color-mix(in srgb, var(--color-lantern) 45%, transparent);
+  }
+  /* a date just added: a lantern lit on the night */
+  .badge-new {
+    background: var(--color-night);
+    color: var(--color-lantern);
   }
   /* the little light that pulses twice when the page opens, then rests */
   .badge-light {

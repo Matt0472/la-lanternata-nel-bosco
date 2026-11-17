@@ -1,24 +1,38 @@
 {
   "eyebrow": "Il programma",
   "title": "Come si svolge, passo dopo passo",
-  "intro": "Dalla lanterna ancora da decorare all'ultimo tesoro trovato al buio: un turno al giorno, uguale in tutte e quattro le date.",
+  "intro": "Dalla lanterna ancora da decorare all'ultimo tesoro trovato al buio: un turno unico di due ore e mezza.",
   "weekendsTitle": "Le date",
-  "weekendsNote": "Sabato e domenica · 16:00–18:30",
+  "weekendsLead": "Vista la grande affluenza dei primi due weekend, abbiamo aggiunto un sabato in più.",
+  "weekendsNote": "Sabato · 15:30–18:00",
   "weekends": [
     {
       "date": "7–8 novembre",
       "soldOut": false,
-      "lastSeats": false
+      "lastSeats": false,
+      "isNew": false,
+      "ended": true
     },
     {
       "date": "14–15 novembre",
       "soldOut": false,
-      "lastSeats": false
+      "lastSeats": false,
+      "isNew": false,
+      "ended": true
+    },
+    {
+      "date": "21 novembre",
+      "soldOut": false,
+      "lastSeats": false,
+      "isNew": true,
+      "ended": false
     }
   ],
   "badge": {
     "soldOut": "Sold out",
-    "lastSeats": "Ultimi posti"
+    "lastSeats": "Ultimi posti",
+    "isNew": "Nuova data",
+    "ended": "Concluso"
   },
   "steps": [
     {

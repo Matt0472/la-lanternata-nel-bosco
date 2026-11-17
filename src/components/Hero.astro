@@ -135,7 +135,9 @@ const fireflies = Array.from({ length: 18 }, (_, i) => {
                 {' · '}
               </span>
             )}
-            <span class="whitespace-nowrap max-sm:block">{part}</span>
+            {/* each part on its own line on phones, wrapping evenly only if it
+                does not fit (a long label on a 320 px screen) */}
+            <span class="max-sm:block max-sm:text-balance sm:whitespace-nowrap">{part}</span>
           </>
         ))
       }

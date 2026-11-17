@@ -1,8 +1,8 @@
 {
   "siteName": "La Lanternata al chiaro di luna",
   "seoTitle": "La Lanternata al chiaro di luna · Bosco della Luna, Milano",
-  "seoDescription": "Lanterne da decorare, lettura animata e passeggiata nel bosco al chiaro di luna, per bambini dai 3 ai 12 anni. 7–8 e 14–15 novembre, 16:00–18:30, Milano.",
-  "ogImage": "/uploads/og-image.jpg",
+  "seoDescription": "Nuova data sabato 21 novembre, 15:30–18:00: lanterne da decorare, lettura animata e passeggiata al chiaro di luna per bambini dai 3 ai 12 anni, a Milano.",
+  "ogImage": "/uploads/og-image-21-novembre.jpg",
   "parkUrl": "https://www.boscodellaluna.it",
   "phone": "+39 375 686 7225",
   "email": "info@boscodellaluna.it",
@@ -22,6 +22,6 @@
   "web3formsKey": "d5df5670-d7bc-42b3-8ef7-1ecdd255427a",
   "copyrightHolder": "Best Creations",
   "eventStartDate": "2026-11-07",
-  "eventEndDate": "2026-11-15",
+  "eventEndDate": "2026-11-21",
   "ticketsOnSaleDate": "2026-10-23"
 }

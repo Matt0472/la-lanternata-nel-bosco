@@ -8,8 +8,9 @@ persone e assistenti: una copia sola, un solo posto dove cambiarle.
 ## Il progetto
 
 One-page della **Lanternata al chiaro di luna**, evento per famiglie del **Bosco della Luna** (parco
-nella natura alle porte di Milano, via Cusago 280). Due weekend: **7–8 e 14–15 novembre 2026**, un
-turno al giorno (16:00–18:30, 2 ore e mezza). Contenuti in **italiano**; nei testi non si parla di
+nella natura alle porte di Milano, via Cusago 280). Due weekend, **7–8 e 14–15 novembre 2026**
+(16:00–18:30), più una data extra, **sabato 21 novembre** (15:30–18:00): un turno al giorno di 2 ore e
+mezza. Contenuti in **italiano**; nei testi non si parla di
 "serata" (`COPY-10`).
 
 Come si svolge: i bambini **decorano la loro lanterna** e la consegnano; mentre asciuga, lontano dai

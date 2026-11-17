@@ -66,27 +66,42 @@ content:
       - { name: title, label: Titolo, type: string }
       - { name: intro, label: Introduzione, type: text }
       - { name: weekendsTitle, label: 'Titolo del blocco date (letto dai lettori di schermo)', type: string }
-      - { name: weekendsNote, label: 'Riga sotto ogni data (es. Sabato e domenica · 16:00–18:30)', type: string }
+      - name: weekendsLead
+        label: 'Annuncio sopra le date (facoltativo)'
+        type: text
+        description: 'Una frase in evidenza sopra le card delle date, es. «Vista la grande affluenza dei primi due weekend, abbiamo aggiunto un sabato in più.». Vuoto: non compare.'
+      - { name: weekendsNote, label: 'Riga sotto ogni data in vendita (es. Sabato · 15:30–18:00)', type: string }
       - name: weekends
-        label: I weekend
+        label: 'Le date (weekend o giorno singolo)'
         type: object
         list: true
         fields:
           - name: date
-            label: 'Date del weekend (es. 14–15 novembre)'
+            label: 'Data (es. 14–15 novembre per un weekend, 21 novembre per un giorno solo)'
             type: string
-            description: 'Scrivete giorno, trattino e mese come nell''esempio: Google legge questa data per i risultati di ricerca.'
+            description: 'Scrivete il giorno (o i due giorni con il trattino) e il mese per intero, come negli esempi: Google legge questa data per i risultati di ricerca.'
           - { name: soldOut, label: 'SOLD OUT: mostra il badge «posti finiti»', type: boolean, default: false }
           - name: lastSeats
             label: 'ULTIMI POSTI: mostra il badge «posti in esaurimento» (ignorato se è attivo Sold out)'
             type: boolean
             default: false
+          - name: isNew
+            label: 'NUOVA DATA: mostra il badge di data aggiunta (ignorato se è attivo Sold out o Ultimi posti)'
+            type: boolean
+            default: false
+          - name: ended
+            label: 'CONCLUSO: la data è passata'
+            description: 'La card diventa piccola e spenta, con il badge di data passata, scende sotto le date in vendita e non porta più ai biglietti; Google non la riceve più.'
+            type: boolean
+            default: false
       - name: badge
-        label: Testo dei due badge di disponibilità
+        label: Testo dei badge delle date
         type: object
         fields:
           - { name: soldOut, label: 'Badge posti finiti (es. Sold out)', type: string }
           - { name: lastSeats, label: 'Badge posti in esaurimento (es. Ultimi posti)', type: string }
+          - { name: isNew, label: 'Badge data aggiunta (es. Nuova data)', type: string }
+          - { name: ended, label: 'Badge data passata (es. Concluso)', type: string }
       - name: steps
         label: Le tappe, in ordine (timeline)
         type: object

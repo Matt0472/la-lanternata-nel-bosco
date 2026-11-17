@@ -1,6 +1,7 @@
 # HANDOFF — La Lanternata al chiaro di luna
 
-Aggiornato: **23 ott 2026**: **online su https://lanternata.it** (Cloudflare Pages, indicizzabile; dominio su register.it, DNS su Cloudflare, `www` → apex). Biglietteria TicketingHub e Web3Forms della Lanternata. Search Console avviata (sitemap inviata, in attesa di lettura), IndexNow a ogni deploy, anteprima GitHub Pages spenta. Riquadro dell'autrice a tutta larghezza sotto il libro.
+Aggiornato: **17 nov 2026**: data extra **sabato 21 novembre, 15:30–18:00**, aggiunta vista la grande affluenza dei primi due weekend. Le date passate restano con il badge «Concluso» (interruttori `ended` e `isNew` nel programma, annuncio `weekendsLead`); hero, info, FAQ, biglietti e descrizione per Google aggiornati; JSON-LD con un sotto-evento per ogni data ancora in vendita e senza `eventSchedule`; immagine social rifatta.
+Prima, **23 ott 2026**: **online su https://lanternata.it** (Cloudflare Pages, indicizzabile; dominio su register.it, DNS su Cloudflare, `www` → apex). Biglietteria TicketingHub e Web3Forms della Lanternata. Search Console avviata (sitemap inviata, in attesa di lettura), IndexNow a ogni deploy, anteprima GitHub Pages spenta. Riquadro dell'autrice a tutta larghezza sotto il libro.
 Prima, **22 ott 2026**: orario 16:00–18:30, niente "serata" nei testi (`COPY-10`), tolti i mercatini, libro in vendita sul posto con firma copie dell'autrice in tutte le date, con la Libreria Mariclò (info, libro, FAQ), nuova biografia dell'autrice, lanterne accese raccontate con stupore (`COPY-08`), sezione `#come-si-svolge`.
 Prima, **20 ott 2026**: date spostate a **7–8 e 14–15 novembre** (su richiesta dell'utente), stesso turno 15:30–18:30. Riscritti il sottotitolo dell'hero e i testi della lettura; le lanterne non sono più «una sorpresa» (`COPY-08`): i bambini ritrovano la loro, asciutta.
 Prima: anteprima online in HTTPS (13 ott), età e prezzi, Instagram dell'autrice, footer sui tablet, riga sottile sui bordi tolta.
@@ -8,7 +9,8 @@ Prima: anteprima online in HTTPS (13 ott), età e prezzi, Instagram dell'autrice
 ## Obiettivo
 
 **Il sito.** One-page della **Lanternata al chiaro di luna**, evento per famiglie del Bosco della Luna
-(via Cusago 280, Milano): **7–8 e 14–15 novembre 2026**, un turno al giorno **16:00–18:30**.
+(via Cusago 280, Milano): **7–8 e 14–15 novembre 2026** (16:00–18:30), più la data extra di
+**sabato 21 novembre** (15:30–18:00), un turno al giorno.
 Laboratorio della lanterna, lettura animata di «Il richiamo delle lanterne» (Roberta Mari, Gruppo
 Albatros Il Filo), lanterne che si ritrovano accese, passeggiata al chiaro di luna, caccia al tesoro,
 libro in vendita e firma copie dell'autrice con la Libreria Mariclò.
@@ -140,7 +142,7 @@ node scripts/generate-image.mjs ...   # illustrazioni Gemini (chiave in .env: GO
 ## Da chiudere
 
 - Foto vere nella gallery e recensioni decise (debito noto in `docs/standards/README.md`).
-- Dopo il 15 novembre: decidere cosa mostra la pagina (evento concluso / prossima edizione).
+- Dopo il 21 novembre: decidere cosa mostra la pagina (evento concluso / prossima edizione). Intanto, il 22: interruttore «CONCLUSO» sul 21 (lo schema perde le offerte da solo) e via «Nuova data» da hero, biglietti, info, FAQ e descrizione per Google.
 
 ## Decisioni aperte
 
